@@ -12,7 +12,7 @@ install_yay() {
 
 install_package() {
   # Install the package
-  yay -Syu bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git sddm starship thunar-thunar-archive-plugin thunar-volman vscodium-bin webcord-bin wl-clipboard librewolf-bin chatgpt-desktop-bin
+  yay -Syu bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git sddm starship thunar-thunar-archive-plugin thunar-volman vscodium-bin webcord-bin wl-clipboard librewolf-bin chatgpt-desktop-bin ttf-nerd-fonts-symbols-2048-em ttf-nerd-fonts-symbols-common
 }
 
 install_repository(){
