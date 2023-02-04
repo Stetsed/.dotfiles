@@ -1,0 +1,6 @@
+[user]
+	signingkey = C5D184E877B017D600FC3C041692BF3D5214DA36
+	name = Stetsed
+	email = stetsed@protonmail.com
+[commit]
+	gpgsign = false 
