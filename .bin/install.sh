@@ -23,7 +23,7 @@ install_package() {
   yay -Syu --noconfirm gdm dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman vscodium-bin webcord-bin wl-clipboard librewolf-bin chatgpt-desktop-bin ttf-nerd-fonts-symbols-2048-em ttf-nerd-fonts-symbols-common neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian
 }
 
-install_repository(){
+install_dotfiles(){
   git clone --bare https://github.com/Stetsed/.dotfiles.git $HOME/.dotfiles
   function config {
    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
@@ -38,23 +38,23 @@ extra_configuration() {
   sudo mount -t nfs 192.168.1.11:/mnt/vault/data /mnt/data
   sudo systemctl enable --now bluetooth
   sudo systemctl enable gdm
-}
 
-symlinks_configuration(){
   ln -s /mnt/data/Stetsed/Storage ~/Storage
   ln -s /mnt/data/Stetsed/Documents ~/Documents
 }
 
-install_yay && install_package && install_repository
 
-if [[ $@ == *"--extra"* ]]; then
-  extra_configuration
-else
-  echo "--extra not passed"
-fi
+# Install Gum to allow nice UI
+sudo pacman -Syu --noconfirm gum
 
-if [[ $@ == *"--symlinks"* ]]; then
-  symlinks_configuration
-else
-  echo "--symlinks not passed"
-fi
+clear
+
+echo "What parts of my dotfiles would you like to install, be warned to install packages yay needs to be selected aswell. And the Extra Configuration files are just personal so you probally just want Yay Packages and dotfiles"
+
+YAY="Yay"; PACKAGES="Packages"; DOTFILES="Dotfiles"; EXTRA="Extra Personal Configuration"
+INSTALL=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " --no-limit "$YAY" "$PACKAGES" "$DOTFILES" "$EXTRA" )
+
+grep -q "$YAY" <<< "$INSTALL" && install_yay
+grep -q "$PACKAGES" <<< "$INSTALL" && install_package
+grep -q "$DOTFILES" <<< "$INSTALL" && install_dotfiles
+grep -q "$EXTRA" <<< "$INSTALL" && extra_configuration
