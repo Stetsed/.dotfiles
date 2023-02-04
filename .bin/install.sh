@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# curl https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.bin/install.sh -o ./script.sh && chmod +x script.sh && ./script.sh
+# curl -Lks https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.bin/install.sh | /bin/bash
 
 install_yay() {
   sudo pacman -Syu git
