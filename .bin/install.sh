@@ -30,6 +30,7 @@ install_repository(){
   }
   config checkout -f 
   config config status.showUntrackedFiles no
+  config remote set-url origin git@github.com:Stetsed/.dotfiles.git
 }
 
 extra_configuration() {
