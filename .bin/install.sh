@@ -33,10 +33,13 @@ install_repository(){
 extra_configuration() {
   echo "192.168.1.11:/mnt/vault/data /mnt/data nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
   sudo mount -t nfs 192.168.1.11:/mnt/vault/data /mnt/data nfs defaults,_netdev 0 0
-  ln -s /mnt/data/storage ~/Storage
   sudo systemctl enable --now bluetooth
   sudo systemctl enable gdm
+}
 
+symlinks_configuration(){
+  ln -s /mnt/data/Storage ~/Storage
+  ln -s /mnt/data/Documents ~/Documents
 }
 
 install_yay && install_package && install_repository
@@ -44,5 +47,11 @@ install_yay && install_package && install_repository
 if [[ $@ == *"--extra"* ]]; then
   extra_configuration
 else
-  exit
+  echo "--extra not passed"
+fi
+
+if [[ $@ == *"--symlinks"* ]]; then
+  symlinks_configuration
+else
+  echo "--symlinks not passed"
 fi
