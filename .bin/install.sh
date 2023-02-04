@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# curl -Lks https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.bin/install.sh | /bin/bash
+
 install_yay() {
   sudo pacman -Syu git
 
