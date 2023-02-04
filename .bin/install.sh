@@ -8,6 +8,10 @@ install_yay() {
   cd yay-bin
 
   makepkg -si
+
+  cd ..
+
+  rm -rf yay-bin
 }
 
 install_package() {
