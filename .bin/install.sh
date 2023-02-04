@@ -49,7 +49,7 @@ sudo pacman -Syu --noconfirm gum
 
 clear
 
-echo "What parts of my dotfiles would you like to install, be warned to install packages yay needs to be selected aswell. And the Extra Configuration files are just personal so you probally just want Yay Packages and dotfiles"
+echo "What parts of my dotfiles would you like to install, be warned to install packages yay needs to be selected aswell. And the Extra Configuration files are just personal so you probally just want Yay, Packages and dotfiles"
 
 YAY="Yay"; PACKAGES="Packages"; DOTFILES="Dotfiles"; EXTRA="Extra Personal Configuration"
 INSTALL=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " --no-limit "$YAY" "$PACKAGES" "$DOTFILES" "$EXTRA" )
