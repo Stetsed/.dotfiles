@@ -7,7 +7,9 @@ install_yay() {
 
   cd yay-bin
 
-  makepkg -si
+  makepkg -s
+
+  sudo pacman -U yay-bin*
 
   cd ..
 
