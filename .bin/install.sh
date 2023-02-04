@@ -22,7 +22,7 @@ install_package() {
 }
 
 install_repository(){
-  git clone --bare git@github.com:Stetsed/.dotfiles.git $HOME/.dotfiles
+  git clone --bare https://github.com/Stetsed/.dotfiles.git $HOME/.dotfiles
   function config {
    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
   }
