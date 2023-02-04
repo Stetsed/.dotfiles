@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# curl -Lks https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.bin/install.sh | /bin/bash
+# curl https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.bin/install.sh -o ./script.sh && chmod +x script.sh && ./script.sh
 
 install_yay() {
   sudo pacman -Syu git
@@ -41,8 +41,8 @@ extra_configuration() {
 }
 
 symlinks_configuration(){
-  ln -s /mnt/data/Storage ~/Storage
-  ln -s /mnt/data/Documents ~/Documents
+  ln -s /mnt/data/Stetsed/Storage ~/Storage
+  ln -s /mnt/data/Stetsed/Documents ~/Documents
 }
 
 install_yay && install_package && install_repository
