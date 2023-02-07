@@ -34,8 +34,8 @@ install_dotfiles(){
 }
 
 extra_configuration() {
-  echo "192.168.1.11:/mnt/vault/data /mnt/data nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
-  sudo mount -t nfs 192.168.1.11:/mnt/vault/data /mnt/data
+  echo "192.168.1.190:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
+  sudo mount -t nfs 192.168.1.190:/mnt/Vault/Storage /mnt/data
   sudo systemctl enable --now bluetooth
   sudo systemctl enable gdm
 
