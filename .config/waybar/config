@@ -54,10 +54,10 @@
         "on-click": "bash ~/.config/waybar/scripts/brightness.sh",
     },
     "network": {
-        "format-wifi": "直 {signalStrength}%",
+        "format-wifi": "{essid}({signalStrength}%)",
         "format-ethernet": " wired",
         "format-disconnected": "睊",
-        "on-click": "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh",
+        "on-click": "alacritty -e nmtui",
         "format-disconnected": "Disconnected  ",
     },
 
@@ -79,7 +79,7 @@
     },
 
     "bluetooth": {
-        "on-click": "~/.config/waybar/scripts/rofi-bluetooth &",
+        "on-click": "blueman-manager",
         "format": " {status}",
     },
 
