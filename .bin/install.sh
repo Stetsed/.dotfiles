@@ -20,7 +20,7 @@ install_yay() {
 
 install_package() {
   # Install the package
-  yay -Syu gdm dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman vscodium-bin webcord-bin wl-clipboard librewolf-bin ttf-nerd-fonts-symbols-2048-em ttf-nerd-fonts-symbols-common neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland-git xdg-desktop-portal-wlr xdg-desktop-portal-hyprland-git exa alacritty noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy
+  yay -Syu gdm dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman vscodium-bin webcord-bin wl-clipboard librewolf-bin ttf-nerd-fonts-symbols-2048-em ttf-nerd-fonts-symbols-common neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland-git xdg-desktop-portal-wlr xdg-desktop-portal-hyprland-git exa alacritty noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl
 }
 
 install_dotfiles(){
@@ -35,6 +35,7 @@ install_dotfiles(){
 
 extra_configuration() {
   echo "192.168.1.190:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
+  sudo mkdir /mnt/data
   sudo mount -t nfs 192.168.1.190:/mnt/Vault/Storage /mnt/data
   sudo systemctl enable --now bluetooth
   sudo systemctl enable gdm
