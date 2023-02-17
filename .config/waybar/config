@@ -7,7 +7,7 @@
     "margin-right": 10,
     "spacing": 5, // Gaps between modules (4px)
     "modules-left": ["custom/launcher", "cpu", "memory", "wlr/workspaces"],
-    "modules-center": ["custom/spotify"],
+    "modules-center": [],
     "modules-right": ["tray", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
     "wlr/workspaces": {
       "format": "{icon}",
@@ -95,15 +95,6 @@
       "format-alt": "{icon} {time}",
       "format-full": "  {capacity}%",
       "format-icons": [" ", " ", " ", " ", " "],
-    },
-
-   "custom/spotify": {
-    "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
-    "format": "{}  ",
-    "return-type": "json",
-    "on-click": "playerctl play-pause",
-    "on-double-click-right": "playerctl next",
-    "on-scroll-down": "playerctl previous",
     },
     "custom/power-menu": {
         "format": " <span color='#6a92d7'>⏻ </span>",
