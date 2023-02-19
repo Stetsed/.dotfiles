@@ -52,3 +52,4 @@ unset MANPATH
 export QT_QPA_PLATFORM=wayland
 export MOZ_ENABLE_WAYLAND=1
 export TERM=xterm-256color
+export EDITOR=nvim
