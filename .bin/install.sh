@@ -20,7 +20,7 @@ install_yay() {
 
 install_package() {
   # Install the package
-  yay -Syu dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman vscodium-bin webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland-git xdg-desktop-portal-wlr xdg-desktop-portal-hyprland-git exa alacritty noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd
+  yay -Syu dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman vscodium-bin webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland-git xdg-desktop-portal-wlr xdg-desktop-portal-hyprland-git exa alacritty noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd lazygit
 }
 
 install_dotfiles(){
