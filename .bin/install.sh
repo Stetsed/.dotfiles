@@ -46,7 +46,7 @@ extra_configuration() {
   # Add autologin to the sddm.conf and create the group.
   echo -e "[Autologin]\nUser=stetsed\nSession=hyprland" | sudo tee -a /etc/sddm.conf
   sudo groupadd autologin
-  sudo usermod -aG autlogin stetsed
+  sudo usermod -aG autologin stetsed
 
   ln -s /mnt/data/Stetsed/Storage ~/Storage
   ln -s /mnt/data/Stetsed/Documents ~/Documents
