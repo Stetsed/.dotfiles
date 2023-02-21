@@ -41,7 +41,8 @@ extra_configuration() {
   sudo mount -t nfs 192.168.1.190:/mnt/Vault/Storage /mnt/data
   # Enable services
   sudo systemctl enable --now bluetooth
-  sudo systemctl enable sddm 
+  sudo systemctl enable sddm
+  systemctl --user enable --now pipewire
 
   # Add autologin to the sddm.conf and create the group.
   echo -e "[Autologin]\nUser=stetsed\nSession=hyprland" | sudo tee -a /etc/sddm.conf
