@@ -3,3 +3,8 @@ env:
 
 window:
   opacity: 0.8
+
+font:
+  normal:
+    family: JetBrainsMono Nerd font
+
