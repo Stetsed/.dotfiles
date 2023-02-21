@@ -51,6 +51,8 @@ extra_configuration() {
 
   ln -s /mnt/data/Stetsed/Storage ~/Storage
   ln -s /mnt/data/Stetsed/Documents ~/Documents
+
+  sudo timedatectl set-ntp true
 }
 
 
