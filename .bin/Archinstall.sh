@@ -1,5 +1,13 @@
 #!/bin/bash
 
+run ()
+{
+  Setup_ZFS
+  Install_Packages
+  user
+  final
+}
+
 Setup_ZFS ()
 {
   echo -e '[archzfs]\nServer = https://archzfs.com/$repo/$arch' >> /etc/pacman.conf
@@ -29,3 +37,5 @@ final ()
 
   echo "default arch" >> /boot/loader/loader.conf
 }
+
+run
