@@ -6,11 +6,20 @@ run ()
 
   clear
 
+  Get_ZFS
+
   Partition_Drive
 
   Setup_Filesystem
 
   Setup_BaseSystem
+}
+
+Get_ZFS ()
+{
+  curl -s https://raw.githubusercontent.com/eoli3n/archiso-zfs/master/init | bash
+
+  return
 }
 
 Partition_Drive ()
@@ -33,6 +42,7 @@ Setup_Filesystem ()
  zfs set atime=off zroot
  zfs set xattr=sa zroot
  zfs set acltype=posixacl zroot
+ zfs set autotrim=on zroot
 
  zfs create -o mountpoint=none zroot/data
  zfs create -o mountpoint=/home zroot/data/home
