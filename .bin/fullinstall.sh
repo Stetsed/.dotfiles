@@ -146,9 +146,6 @@ Chroot_Final ()
   echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
   echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard"
-
-  timedatectl set-ntp true
-  timedatectl set-timezone Europe/Amsterdam
 }
 
 User_Run ()
@@ -216,6 +213,9 @@ User_Extra ()
 
   ln -s /mnt/data/Stetsed/Storage ~/Storage
   ln -s /mnt/data/Stetsed/Documents ~/Documents
+
+  timedatectl set-ntp true
+  timedatectl set-timezone Europe/Amsterdam
 }
 
 Main_Run ()
