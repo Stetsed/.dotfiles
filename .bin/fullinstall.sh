@@ -145,11 +145,24 @@ Chroot_Final ()
 
   echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
+  systemctl enable zfs.target
+  systemctl enable zfs-import-cache
+  systemctl enable zfs-mount
+  zgenhostid $(hostid)
+
   echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard"
 }
 
 User_Run ()
 {
+  sudo mkdir /home/stetsed
+
+  sudo chown stetsed:stetsed -R /home/stetsed
+
+  sudo chown 700 -R /home/stetsed
+  
+  cd /home/stetsed
+
   clear
   User_Yay
 
@@ -216,12 +229,6 @@ User_Extra ()
 
   timedatectl set-ntp true
   timedatectl set-timezone Europe/Amsterdam
-
-  systemctl enable zfs.target
-  systemctl enable zfs-import-cache
-  systemctl enable zfs-mount
-  zgenhostid $(hostid)
-  mkinitcpio -p linux
 
 }
 
