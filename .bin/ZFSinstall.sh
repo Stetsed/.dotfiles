@@ -78,6 +78,14 @@ Setup_BaseSystem ()
   pacstrap /mnt base base-devel linux linux-firmware neovim networkmanager intel-ucode
 
   arch-chroot /mnt
+
+  umount -R /mnt
+
+  zfs umount -a
+
+  zpool export zroot
+
+  reboot
 }
 
 Select_Drive (){
