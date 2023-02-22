@@ -36,6 +36,8 @@ final ()
   echo -e "title Arch Linux\nlinux vmlinuz-linux\ninitrd intel-ucode.img\ninitrd initramfs-linux.img\noptions zfs=zroot/ROOT/default rw" > /boot/loader/entries/arch.conf
 
   echo "default arch" >> /boot/loader/loader.conf
+
+  echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard"
 }
 
 run
