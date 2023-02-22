@@ -3,7 +3,7 @@
 
 run ()
 {
-  sudo pacman -Syu --noconfirm gum
+  sudo pacman -Syu gum
 
   clear
 
