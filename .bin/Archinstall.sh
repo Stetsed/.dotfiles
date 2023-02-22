@@ -37,6 +37,8 @@ final ()
 
   echo "default arch" >> /boot/loader/loader.conf
 
+  echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
+
   echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard"
 }
 
