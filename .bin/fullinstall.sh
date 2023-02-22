@@ -226,7 +226,7 @@ Main_Run ()
 
   echo "What part of the installation are you on"
   ZFS="ZFS"; CHROOT="Chroot"; USER="User" 
-  SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "USER" )
+  SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "$USER" )
   grep -q "$ZFS" <<< "$SELECTION" && ZFS_Run
   grep -q "$CHROOT" <<< "$SELECTION" && Chroot_Run
   grep -q "$USER" <<< "$SELECTION" && User_Run 
