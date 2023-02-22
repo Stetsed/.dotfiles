@@ -216,6 +216,13 @@ User_Extra ()
 
   timedatectl set-ntp true
   timedatectl set-timezone Europe/Amsterdam
+
+  systemctl enable zfs.target
+  systemctl enable zfs-import-cache
+  systemctl enable zfs-mount
+  zgenhostid $(hostid)
+  mkinitcpio -p linux
+
 }
 
 Main_Run ()
