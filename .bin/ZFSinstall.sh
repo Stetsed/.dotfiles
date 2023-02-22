@@ -26,7 +26,7 @@ Get_ZFS ()
 
 Partition_Drive ()
 {
-  sgdisk --zap-all /dev/disk/$SELECTED_DRIVE
+  sgdisk --zap-all /dev/disk/by-id/$SELECTED_DRIVE
   sgdisk -n1:0:+550M -t1:ef00 /dev/disk/by-id/$SELECTED_DRIVE
   sgdisk -n2:0:0 -t2:bf00 /dev/disk/by-id/$SELECTED_DRIVE
 
