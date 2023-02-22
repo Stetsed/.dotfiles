@@ -2,7 +2,7 @@
 
 Setup_ZFS ()
 {
-  echo -e "[archzfs]\nServer = https://archzfs.com/$repo/$arch" >> /etc/pacman.conf
+  echo -e '[archzfs]\nServer = https://archzfs.com/$repo/$arch' >> /etc/pacman.conf
   pacman-key -r DDF7DB817396A49B2A2723F7403BD972F75D9D76
   pacman-key --lsign-key DDF7DB817396A49B2A2723F7403BD972F75D9D76
   pacman -Syu
@@ -10,13 +10,13 @@ Setup_ZFS ()
 
 Install_Packages ()
 {
-  pacman -S linux-headers zfs-dkms openssh networkmanager
+  pacman -S linux-headers zfs-dkms openssh networkmanager fish
 }
 
 user ()
 {
   useradd -m -G wheel -S /usr/bin/fish stetsed
-  echo "BlahBlah" | passwd stetsed -stdin
+  (echo "BlahBlah"; echo "BlahBlah") | passwd stetsed
 }
 
 final ()
