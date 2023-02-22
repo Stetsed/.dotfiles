@@ -155,13 +155,8 @@ Chroot_Final ()
 
 User_Run ()
 {
-  sudo mkdir /home/stetsed
-
-  sudo chown stetsed:stetsed -R /home/stetsed
-
-  sudo chmod 700 -R /home/stetsed
-  
-  cd /home/stetsed
+  clear
+  User_Home
 
   clear
   User_Yay
@@ -174,6 +169,17 @@ User_Run ()
 
   clear
   User_Extra
+}
+
+User_Home ()
+{
+  sudo mkdir /home/stetsed
+
+  sudo chown stetsed:stetsed -R /home/stetsed
+
+  sudo chmod 700 -R /home/stetsed
+  
+  cd /home/stetsed
 }
 
 User_Yay ()
@@ -227,6 +233,7 @@ User_Extra ()
 
   ln -s /mnt/data/Stetsed/Storage ~/Storage
   ln -s /mnt/data/Stetsed/Documents ~/Documents
+  mkdir Downloads
 
   timedatectl set-ntp true
   timedatectl set-timezone Europe/Amsterdam
