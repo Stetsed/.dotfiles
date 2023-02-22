@@ -159,7 +159,7 @@ User_Run ()
 
   sudo chown stetsed:stetsed -R /home/stetsed
 
-  sudo chown 700 -R /home/stetsed
+  sudo chmod 700 -R /home/stetsed
   
   cd /home/stetsed
 
