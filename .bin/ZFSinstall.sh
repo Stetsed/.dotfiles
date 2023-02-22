@@ -8,6 +8,8 @@ run ()
 
   Get_ZFS
 
+  Select_Drive
+
   Partition_Drive
 
   Setup_Filesystem
