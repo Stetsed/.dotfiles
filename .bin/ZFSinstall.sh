@@ -3,7 +3,7 @@
 
 run ()
 {
-  sudo pacman -Syu gum
+  sudo pacman -S gum
 
   clear
 
