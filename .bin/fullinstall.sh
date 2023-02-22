@@ -195,7 +195,7 @@ User_Yay ()
 
 User_Packages ()
 {
-  yay -Syu dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland-git xdg-desktop-portal-wlr xdg-desktop-portal-hyprland-git exa alacritty noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd lazygit
+  yay -Syu pavucontrol pipewire-pulse dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland-git xdg-desktop-portal-wlr xdg-desktop-portal-hyprland-git exa alacritty noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd lazygit
 }
 
 User_Dotfiles ()
@@ -218,6 +218,7 @@ User_Extra ()
   sudo systemctl enable --now bluetooth
   sudo systemctl enable sddm
   systemctl --user enable --now pipewire
+  systemctl --user enable --now pipewire-pulse
 
   # Add autologin to the sddm.conf and create the group.
   echo -e "[Autologin]\nUser=stetsed\nSession=hyprland" | sudo tee -a /etc/sddm.conf
