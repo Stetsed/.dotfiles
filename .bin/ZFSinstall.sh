@@ -1,4 +1,5 @@
 #!/bin/bash
+# Before running this script run sgdisk --zap-all /dev/disk/by-id/(name of disk), this is to avoid an error that the partition tables are not updated.
 
 run ()
 {
@@ -26,7 +27,6 @@ Get_ZFS ()
 
 Partition_Drive ()
 {
-  sgdisk --zap-all /dev/disk/by-id/$SELECTED_DRIVE
   sgdisk -n1:0:+550M -t1:ef00 /dev/disk/by-id/$SELECTED_DRIVE
   sgdisk -n2:0:0 -t2:bf00 /dev/disk/by-id/$SELECTED_DRIVE
 
@@ -53,7 +53,7 @@ Setup_Filesystem ()
  zpool export zroot
  zpool import -d /dev/disk/by-id -R /mnt zroot
 
- zfs mount /zroot/ROOT/default
+ zfs mount zroot/ROOT/default
  zpool set bootfs=zroot/ROOT/default zroot
 
  mkdir /mnt/boot 
