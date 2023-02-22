@@ -31,7 +31,9 @@ final ()
 {
   zpool set cachefile=/etc/zfs/zpool.cache zroot
 
-  bootctl install 
+  bootctl install
+
+  systemctl enable NetworkManager
 
   echo -e "title Arch Linux\nlinux vmlinuz-linux\ninitrd intel-ucode.img\ninitrd initramfs-linux.img\noptions zfs=zroot/ROOT/default rw" > /boot/loader/entries/arch.conf
 
@@ -40,6 +42,9 @@ final ()
   echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
   echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard"
+
+  timedatectl set-ntp true
+  timedatectl set-timezone Europe/Amsterdam
 }
 
 run
