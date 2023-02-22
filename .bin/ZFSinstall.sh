@@ -30,6 +30,10 @@ Partition_Drive ()
   sgdisk -n1:0:+550M -t1:ef00 /dev/disk/by-id/$SELECTED_DRIVE
   sgdisk -n2:0:0 -t2:bf00 /dev/disk/by-id/$SELECTED_DRIVE
 
+
+  sleep 10
+
+
   mkfs.vfat /dev/disk/by-id/$SELECTED_DRIVE-part1
 
   return
@@ -37,14 +41,18 @@ Partition_Drive ()
 
 Setup_Filesystem ()
 {
- zpool create -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
+ zpool import zroot
+ zpool destroy zroot
+
+ sleep 10 
+
+ zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
  zfs create -o canmount=off -o mountpoint=none zroot/ROOT
  zfs create -o canmount=noauto -o mountpoint=/ zroot/ROOT/default
  zfs set compression=on zroot
  zfs set atime=off zroot
  zfs set xattr=sa zroot
  zfs set acltype=posixacl zroot
- zfs set autotrim=on zroot
 
  zfs create -o mountpoint=none zroot/data
  zfs create -o mountpoint=/home zroot/data/home
@@ -67,7 +75,7 @@ Setup_BaseSystem ()
 {
   genfstab -U /mnt >> /mnt/etc/fstab
 
-  pacstrap /mnt base base-devel linux linux-firmware nvim networkmanager intel-ucode
+  pacstrap /mnt base base-devel linux linux-firmware neovim networkmanager intel-ucode
 
   arch-chroot /mnt
 }
