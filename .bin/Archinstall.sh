@@ -15,7 +15,7 @@ Install_Packages ()
 
 user ()
 {
-  useradd -m -G wheel -S /usr/bin/fish stetsed
+  useradd -m -G wheel -s /usr/bin/fish stetsed
   (echo "BlahBlah"; echo "BlahBlah") | passwd stetsed
 }
 
