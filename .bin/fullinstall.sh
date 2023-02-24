@@ -55,7 +55,7 @@ ZFS_Setup_Filesystem ()
 
   sleep 10 
 
-  zpool create -f -O canmount=off -o ashift=12 -o encryption=aes-256-gcm -o keylocation=prompt -o keyformat=passphrase zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
+  zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
   zfs create -o canmount=off -o mountpoint=none zroot/ROOT
   zfs create -o canmount=noauto -o mountpoint=/ zroot/ROOT/default
   zfs set compression=on zroot
@@ -69,7 +69,6 @@ ZFS_Setup_Filesystem ()
   zfs umount -a 
   zpool export zroot
 
-  zfs load-key -r zroot
   zpool import -d /dev/disk/by-id -R /mnt zroot
 
   zfs mount zroot/ROOT/default
