@@ -50,7 +50,7 @@ ZFS_Partition_Drive ()
 
 ZFS_Setup_Filesystem ()
 {
-  zpool labelclear /dev/disk/by-id/$SELECTED_DRIVE
+  zpool labelclear -f /dev/disk/by-id/$SELECTED_DRIVE
   sleep 10 
 
   zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
