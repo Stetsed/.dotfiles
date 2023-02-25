@@ -37,6 +37,10 @@ ZFS_Get_ZFS ()
 
 ZFS_Partition_Drive ()
 {
+  zpool labelclear -f /dev/disk/by-id/$SELECTED_DRIVE
+  
+  sleep 10
+
   sgdisk -n1:0:+550M -t1:ef00 /dev/disk/by-id/$SELECTED_DRIVE
   sgdisk -n2:0:0 -t2:bf00 /dev/disk/by-id/$SELECTED_DRIVE
 
@@ -50,8 +54,6 @@ ZFS_Partition_Drive ()
 
 ZFS_Setup_Filesystem ()
 {
-  zpool labelclear -f /dev/disk/by-id/$SELECTED_DRIVE
-  sleep 10 
 
   zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
   zfs create -o canmount=off -o mountpoint=none zroot/ROOT
@@ -216,9 +218,9 @@ User_Dotfiles ()
 
 User_Extra ()
 {
-  echo "192.168.1.190:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
+  echo "10.4.78.251:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
   sudo mkdir /mnt/data
-  sudo mount -t nfs 192.168.1.190:/mnt/Vault/Storage /mnt/data
+  sudo mount -t nfs 10.4.78.251:/mnt/Vault/Storage /mnt/data
   # Enable services
   sudo systemctl enable --now bluetooth
   sudo systemctl enable sddm
