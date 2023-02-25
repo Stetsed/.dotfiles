@@ -108,7 +108,7 @@ Comment[zh_TW]=連線到網際網路
 StartupNotify=true
 StartupWMClass=brave-browser
 TryExec=brave
-Exec=brave --incognito --proxy-server="http://192.168.1.154:4444" %U
+Exec=brave --incognito --proxy-server="http://10.7.90.30:4444" %U
 Terminal=false
 Icon=brave-desktop
 Type=Application
