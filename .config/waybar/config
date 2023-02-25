@@ -8,7 +8,7 @@
     "spacing": 5, // Gaps between modules (4px)
     "modules-left": ["custom/launcher", "cpu", "memory", "wlr/workspaces"],
     "modules-center": [],
-    "modules-right": ["tray", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
+    "modules-right": ["tray", "bluetooth", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
     "wlr/workspaces": {
       "format": "{icon}",
       "on-click": "activate",
@@ -46,12 +46,6 @@
         "format": " {}%",
         "format-alt":" {used:0.1f}G",
         "max-length": 10,
-    },
-    "backlight": {
-        "device": "eDP-1",
-        "format": "{icon} {percent}%",
-        "format-icons": ["", "", "", "", "", "", "", "", ""],
-        "on-click": "bash ~/.config/waybar/scripts/brightness.sh",
     },
     "network": {
         "format-wifi": "{essid}({signalStrength}%)",
@@ -95,6 +89,12 @@
       "format-alt": "{icon} {time}",
       "format-full": "  {capacity}%",
       "format-icons": [" ", " ", " ", " ", " "],
+    },
+    "bluetooth": {
+	    "format": "",
+  	  "format-disabled": "",
+  	  "format-connected": "",
+      "on-click": "blueman-manager"
     },
     "custom/power-menu": {
         "format": " <span color='#6a92d7'>⏻ </span>",
