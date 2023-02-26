@@ -218,9 +218,8 @@ User_Dotfiles ()
 
 User_Extra ()
 {
-  echo "10.4.78.251:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
+  echo "10.4.78.251:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev,x-systemd.automount,x-systemd.mount-timeout=10,noauto 0 0" | sudo tee -a /etc/fstab
   sudo mkdir /mnt/data
-  sudo mount -t nfs 10.4.78.251:/mnt/Vault/Storage /mnt/data
   # Enable services
   sudo systemctl enable --now bluetooth
   sudo systemctl enable sddm
