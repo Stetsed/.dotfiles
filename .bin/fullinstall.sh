@@ -146,10 +146,12 @@ Chroot_Final ()
 
   echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
+  systemctl enable zfs-scrub-weekly@zroot.timer
   systemctl enable zfs.target
   systemctl enable zfs-import-cache
   systemctl enable zfs-mount
   zgenhostid $(hostid)
+
 
   echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard"
 }
