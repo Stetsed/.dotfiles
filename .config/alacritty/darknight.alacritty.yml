@@ -1,0 +1,53 @@
+env:
+  TERM: xterm-256color
+
+window:
+  opacity: 0.8 
+
+
+font:
+  normal:
+    family: JetBrainsMono Nerd font
+    style: Regular
+
+  bold:
+    family: JetBrainsMono Nerd font
+    style: Bold
+
+  italic:
+    family: JetBrainsMono Nerd font
+    style: Italic
+
+  bold_italic:
+    family: JetBrainsMono Nerd font
+    style: Bold Italic
+
+  size: 11
+
+colors:
+  # Default colors
+  primary:
+    background: '0x010002'
+    foreground: '0x89ced6'
+
+  # Normal colors
+  normal:
+    black:   '0x010002'
+    red:     '0x644f6b'
+    green:   '0xb13c4a'
+    yellow:  '0xe99a71'
+    blue:    '0x0b6792'
+    magenta: '0x4b4aa5'
+    cyan:    '0xbe45b3'
+    white:   '0x89ced6'
+
+  # Bright colors
+  bright:
+    black:   '0x5f9095'
+    red:     '0x644f6b'
+    green:   '0xb13c4a'
+    yellow:  '0xe99a71'
+    blue:    '0x0b6792'
+    magenta: '0x4b4aa5'
+    cyan:    '0xbe45b3'
+    white:   '0x89ced6'
