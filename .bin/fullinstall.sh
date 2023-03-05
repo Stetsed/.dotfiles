@@ -154,7 +154,7 @@ Chroot_Final ()
   zgenhostid $(hostid)
 
 
-  echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard"
+  echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard and regenerate with mkinitcpio -P"
 }
 
 User_Run ()
