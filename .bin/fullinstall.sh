@@ -88,6 +88,8 @@ ZFS_Setup_Basesystem ()
 
   pacstrap /mnt base base-devel linux linux-firmware neovim networkmanager intel-ucode
 
+  cp fullinstall.sh /mnt/fullinstall.sh
+
   arch-chroot /mnt
 
   umount -R /mnt
