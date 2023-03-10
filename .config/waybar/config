@@ -13,8 +13,8 @@
       "format": "{icon}",
       "on-click": "activate",
       "format-icons": {
-        "1": " ",
-        "2": "",
+        "1": "󰈹",
+        "2": "󰙯",
         "3": "",
         "4": "",
         "5": "",
@@ -30,8 +30,8 @@
         "spacing": 10
     },
     "clock": {
-        "format": "<span color='#bf616a'> </span>{:%a %b %d}",
-        "format-alt": "<span color='#bf616a'> </span>{:%I:%M %p}",
+        "format": "<span color='#bf616a'> </span>{:%I:%M %p}",
+        "format-alt": "<span color='#bf616a'> </span>{:%a %b %d}",
         "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
     },
 
