@@ -48,7 +48,7 @@
         "max-length": 10,
     },
     "network": {
-        "format-wifi": "{essid}({signalStrength}%)",
+        "format-wifi": "󰖩 {essid}",
         "format-ethernet": " wired",
         "format-disconnected": "睊",
         "on-click": "alacritty -e nmtui",
@@ -69,7 +69,7 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol" 
     },
 
     "battery": {
