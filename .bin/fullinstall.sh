@@ -245,6 +245,47 @@ User_Extra ()
 
 }
 
+File_Run ()
+{
+  clear
+  echo "Would you like to transfer files from the server, or too the server."
+  TOO="To the Server"; FROM="From the Server"
+  TRANSFER_SELECTION=$(gum choose "$TOO" "$FROM")
+  grep -q "$TOO" <<< "$TRANSFER_SELECTION" && File_Too
+  grep -q "$FROM" <<< "$TRANSFER_SELECTION" && File_From
+}
+
+File_Too ()
+{
+  pkill librewolf
+  pkill webcord
+
+  cp -r ~/.librewolf ~/Storage/Transfer/
+
+  rm -rf ~/.config/WebCord/Cache/
+
+  cp -r ~/.config/WebCord ~/Storage/Transfer/
+
+  cp -r ~/.ssh ~/Storage/Transfer/
+
+  exit
+}
+
+File_From ()
+{
+  pkill librewolf
+  pkill webcord
+
+  rm -rf ~/.librewolf
+  cp -r ~/Storage/Transfer/.librewolf ~/
+
+  rm -rf ~/.config/WebCord
+  cp -r ~/Storage/Transfer/WebCord ~/.config/
+
+  rm -rf ~/.ssh
+  cp -r ~/Storage/Transfer/.ssh ~/
+}
+
 Main_Run ()
 {
   sudo pacman -Sy gum
@@ -252,11 +293,12 @@ Main_Run ()
   clear
 
   echo "What part of the installation are you on"
-  ZFS="ZFS"; CHROOT="Chroot"; USER="User" 
-  SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "$USER" )
+  ZFS="ZFS"; CHROOT="Chroot"; USER="User"; FILE_TRANSFER="File Transfer"
+  SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "$USER" "$FILE_TRANSFER" )
   grep -q "$ZFS" <<< "$SELECTION" && ZFS_Run
   grep -q "$CHROOT" <<< "$SELECTION" && Chroot_Run
   grep -q "$USER" <<< "$SELECTION" && User_Run 
+  grep -q "$FILE_TRANSFER" <<< "$SELECTION" && File_Run
 }
 
 Main_Run
