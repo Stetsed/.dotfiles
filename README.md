@@ -10,6 +10,6 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 
 
 ## Screenshots
-![[/.bin/screenshot1.png]]
-![[/.bin/screenshot2.png]]
-![[/.bin/screenshot3.png]]
+[/.bin/screenshot1.png](/.bin/screenshot1.png)
+[/.bin/screenshot2.png](/.bin/screenshot2.png)
+[/.bin/screenshot3.png](/.bin/screenshot3.png)
