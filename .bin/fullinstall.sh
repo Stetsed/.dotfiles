@@ -147,7 +147,9 @@ Chroot_Final() {
 	systemctl enable zfs-mount
 	zgenhostid $(hostid)
 
-	echo "Remember to edit the mkinciptio.conf file and add the zfs hook after the keyboard and regenerate with mkinitcpio -P"
+	sed -i 's/keyboard keymap/keyboard zfs keymap/g' /etc/mkinitcpio.conf
+
+	mkinitcpio -P
 }
 
 User_Run() {
