@@ -33,7 +33,7 @@ ZFS_Get_ZFS() {
 }
 
 ZFS_Partition_Drive() {
-	zpool labelclear -f /dev/disk/by-id/$SELECTED_DRIVE-part1
+	zpool labelclear -f /dev/disk/by-id/$SELECTED_DRIVE
 
 	blkdiscard -f /dev/disk/by-id/$SELECTED_DRIVE
 	sleep 10
