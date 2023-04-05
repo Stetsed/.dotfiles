@@ -68,6 +68,7 @@ ZFS_Setup_Filesystem() {
 	zpool import -d /dev/disk/by-id -R /mnt zroot
 
 	zfs mount zroot/ROOT/default
+	zfs mount zroot/data/home
 	zpool set bootfs=zroot/ROOT/default zroot
 
 	mkdir /mnt/boot
@@ -154,9 +155,6 @@ Chroot_Final() {
 
 User_Run() {
 	clear
-	User_Home
-
-	clear
 	User_Yay
 
 	clear
@@ -167,16 +165,6 @@ User_Run() {
 
 	clear
 	User_Extra
-}
-
-User_Home() {
-	sudo mkdir /home/stetsed
-
-	sudo chown stetsed:stetsed -R /home/stetsed
-
-	sudo chmod 700 -R /home/stetsed
-
-	cd /home/stetsed
 }
 
 User_Yay() {
