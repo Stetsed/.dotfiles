@@ -21,7 +21,9 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 ```
 imagemagick kitty ripgrep unzip bat pavucontrol pipewire-pulse dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman  webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git btop tldr swaylock-effects obsidian fish hyprland-bin npm xdg-desktop-portal-hyprland-git exa noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd lazygit swayidle
 ````
+## Linked Repositories
 
+- [Installation Script Rust](https://github.com/Stetsed/install) : My implementation of the fullinstall.sh script in the Rust Programming language, it was my first time coding in rust so it's pretty basic and mostly runs terminal commands but it was my first rust project so yes.
 
 ## Acknowledgements
 
