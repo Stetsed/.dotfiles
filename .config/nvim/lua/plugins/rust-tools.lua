@@ -5,4 +5,12 @@ return {
       require("rust-tools").setup({})
     end,
   },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "rust-analyzer",
+      },
+    },
+  },
 }
