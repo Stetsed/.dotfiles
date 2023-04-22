@@ -4,6 +4,9 @@ return {
     opts = {
       servers = {
         svelte = {},
+        tsserver = {},
+        html = {},
+        cssls = {},
       },
     },
   },
