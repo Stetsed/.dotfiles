@@ -8,3 +8,4 @@ export QT_QPA_PLATFORM=wayland
 export MOZ_ENABLE_WAYLAND=1
 export EDITOR=nvim
 export LIBVIRT_DEFAULT_URI=qemu:///system
+set PATH $PATH ~/.cargo/bin
