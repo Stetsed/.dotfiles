@@ -272,6 +272,47 @@ File_From() {
 	cp -r ~/Storage/Transfer/.ssh ~/
 }
 
+Server_Setup(){
+  source /etc/os-release
+
+  if [[ $ID == "debian" ]]; then
+    Server_Setup_Debian
+  elif [[ $ID == "arch" ]]; then
+    Server_Setup_Arch
+  else
+    echo "Unsupported operating system: $ID"
+  fi
+}
+
+Server_Setup_Arch(){
+  sudo pacman -Syu kitty fish starship
+  sudo chsh -s /usr/bin/fish
+  echo "Please exit this terminal with the exit command, this is to generate the fish start config"
+  fish
+  echo "starship init fish | source" >> ~/.config/fish/config.fish
+
+  mkdir -p ~/.config/fish/functions
+  curl -sL https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.config/fish/functions/nano.fish > ~/.config/fish/functions/nano.fish
+}
+
+Server_Setup_Debian(){
+  curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+  ln -s ~/.local/kitty.app/bin/kitty /bin/kitty
+  ln -s ~/.local/kitty.app/bin/kitten /bin/kitten
+
+  sudo chsh -s /usr/bin/fish
+
+  curl -sS https://starship.rs/install.sh | sh
+
+  echo "Please exit this terminal with the exit command, this is to generate the fish start config"
+  fish
+  echo "starship init fish | source" >> ~/.config/fish/config.fish
+
+  mkdir -p ~/.config/fish/functions
+  curl -sL https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.config/fish/functions/nano.fish > ~/.config/fish/functions/nano.fish
+}
+)
+
 Main_Run() {
 	sudo pacman -Sy gum
 
@@ -282,11 +323,14 @@ Main_Run() {
 	CHROOT="Chroot"
 	USER="User"
 	FILE_TRANSFER="File Transfer"
-	SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "$USER" "$FILE_TRANSFER")
+  SERVER_SHELL="Server Shell"
+	SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "$USER" "$FILE_TRANSFER" "$SERVER_SHELL")
 	grep -q "$ZFS" <<<"$SELECTION" && ZFS_Run
 	grep -q "$CHROOT" <<<"$SELECTION" && Chroot_Run
 	grep -q "$USER" <<<"$SELECTION" && User_Run
 	grep -q "$FILE_TRANSFER" <<<"$SELECTION" && File_Run
+  grep -q "$SERVER_SHELL" <<<"$SELECTION" && Server_Setup
+
 }
 
 Main_Run
