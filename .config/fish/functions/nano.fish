@@ -1,10 +1,10 @@
 function nano --description 'Edit File with sudo if needed'
     set file $argv[1]
-    if test ! -e $file
-        echo "File $file does not exist"
+    if test (count $argv) = 0
+        set file ''
+    else if test ! -e $file
         return 1
-    end
-    if test -w $file
+    else if test -w $file
         kitten edit-in-kitty $argv
     else
         sudo kitten edit-in-kitty $argv
