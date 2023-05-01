@@ -1,3 +1,8 @@
-function nano --wraps=nvim --description 'alias nano=nvim'
-  nvim $argv; 
+function nano --description 'Edit File with sudo if needed'
+    set file $argv[1]
+    if test -w $file
+        edit-in-kitty $argv
+    else
+        sudo kitten edit-in-kitty $argv
+    end
 end
