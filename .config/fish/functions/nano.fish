@@ -1,7 +1,7 @@
 function nano --description 'Edit File with sudo if needed'
     set file $argv[1]
     if test -w $file
-        edit-in-kitty $argv
+        kitten edit-in-kitty $argv
     else
         sudo kitten edit-in-kitty $argv
     end
