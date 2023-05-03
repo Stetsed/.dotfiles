@@ -8,4 +8,9 @@ function nano --description 'Edit File with sudo if needed'
             sudo kitten edit-in-kitty $argv
         end
     end
+    if test -w $file
+        kitten edit-in-kitty $argv
+    else
+        sudo kitten edit-in-kitty $argv
+    end
 end
