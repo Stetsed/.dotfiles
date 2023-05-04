@@ -118,7 +118,7 @@ Chroot_Setup_ZFS() {
 }
 
 Chroot_Install_Packages() {
-	pacman -S linux-headers zfs-dkms openssh networkmanager fish
+	pacman -S linux-headers zfs-dkms-git openssh networkmanager fish
 }
 
 Chroot_User() {
