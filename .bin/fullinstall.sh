@@ -106,6 +106,9 @@ Chroot_Run() {
 	clear
 	Chroot_User
 
+  clear
+  Chroot_Setup_UKI 
+
 	clear
 	Chroot_Final
 }
@@ -129,10 +132,17 @@ Chroot_User() {
 	) | passwd stetsed
 }
 
+Chroot_Setup_UKI(){
+  echo "zfs=zroot/ROOT/default rw" > /etc/kernel/cmdline
+
+  mkdir -p /boot/EFI/BOOT
+
+  sed -i 's/keyboard keymap/keyboard zfs keymap/g' /etc/mkinitcpio.conf
+  sed -i 's/default_image="\/boot\/initramfs-linux.img"/#&\ndefault_uki="\/boot\/EFI\/BOOT\/BOOTX64.EFI"/; s/fallback_image="/#&/' /etc/mkinitcpio.d/linux.preset
+}
+
 Chroot_Final() {
 	zpool set cachefile=/etc/zfs/zpool.cache zroot
-
-	bootctl install
 
 	systemctl enable NetworkManager
 
@@ -147,8 +157,6 @@ Chroot_Final() {
 	systemctl enable zfs-import-cache
 	systemctl enable zfs-mount
 	zgenhostid $(hostid)
-
-	sed -i 's/keyboard keymap/keyboard zfs keymap/g' /etc/mkinitcpio.conf
 
 	mkinitcpio -P
 }
