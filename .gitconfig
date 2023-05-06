@@ -3,4 +3,31 @@
 	name = Stetsed
 	email = stetsed@protonmail.com
 [commit]
-	gpgsign = false 
+  gpgsign = false 
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+  colorMoved = default
+
+[delta]
+    features = decorations
+
+[delta "interactive"]
+    keep-plus-minus-markers = true
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
