@@ -16,3 +16,4 @@ export FZF_DEFAULT_OPTS=" \
 set BAT_THEME Catppuccin-mocha
 set fzf_dir_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 set PATH $PATH ~/.cargo/bin
+set fzf_preview_dir_cmd exa --all --color=always
