@@ -4,9 +4,11 @@ if status is-interactive
 end
 
 set fish_greeting ""
-export QT_QPA_PLATFORM=wayland
-export MOZ_ENABLE_WAYLAND=1
-export EDITOR=nvim
-export LIBVIRT_DEFAULT_URI=qemu:///system
+set QT_QPA_PLATFORM wayland
+set MOZ_ENABLE_WAYLAND 1
+set EDITORnvim
+set LIBVIRT_DEFAULT_URI "qemu:///system"
+set MANPAGER "sh -c 'col -bx | bat -l man -p'"
+set BAT_THEME Catppuccin-mocha
 set fzf_dir_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 set PATH $PATH ~/.cargo/bin
