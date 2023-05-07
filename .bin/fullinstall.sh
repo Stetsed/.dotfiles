@@ -197,7 +197,7 @@ User_Yay() {
 
 	makepkg -s
 
-	sopenudo pacman -U paru-bin*
+	sudo pacman -U paru-bin*
 
 	cd ..
 
