@@ -191,21 +191,21 @@ User_Home() {
 User_Yay() {
 	sudo pacman -Syu git
 
-	git clone https://aur.archlinux.org/yay-bin.git
+	git clone https://aur.archlinux.org/paru-bin.git
 
-	cd yay-bin
+	cd paru-bin
 
 	makepkg -s
 
-	sudo pacman -U yay-bin*
+	sopenudo pacman -U paru-bin*
 
 	cd ..
 
-	rm -rf yay-bin
+	rm -rf paru-bin
 }
 
 User_Packages() {
-	yay -Syu man-db delta fd fzf rust-analyzer ripgrep unzip bat pavucontrol pipewire-pulse dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland npm xdg-desktop-portal-hyprland-git exa noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd lazygit swayidle
+	paru -Syu man-db delta fd fzf rust-analyzer ripgrep unzip bat pavucontrol pipewire-pulse dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland npm xdg-desktop-portal-hyprland-git exa noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd lazygit swayidle
 }
 
 User_Dotfiles() {

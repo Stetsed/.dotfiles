@@ -15,6 +15,10 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 - Browser: [LibreWolf](https://librewolf.net/) + [Catppuccin Mocha Saphire](https://github.com/catppuccin/firefox/releases/download/old/catppuccin_mocha_sapphire.xpi)
 - Discord: [WebCord](https://github.com/SpacingBat3/WebCord) + [Catppuccin Mocha](https://github.com/catppuccin/discord)
 - Note Taking App: [Obsidian](https://obsidian.md/) + [Catppuccin Mocha](https://github.com/catppuccin/obsidian)
+## Modifications that need to be made to use Dotfiles
+
+- For Paru I use a custom pacman.conf which is hardcoded to my user directory, change this in ~/.config/paru/paru.conf
+- Other changes which I might not have noted here, please don't just copy some random persons dotfiles and expect them to work.
 
 ## Packages
 
