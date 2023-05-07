@@ -3,7 +3,7 @@ font=Work Sans
 clock
 timestr=%R
 
-image=~/.bin/Estradiol.svg
+image=~/.bin/Estradiol_non_bin.svg
 
 fade-in=0.2
 
