@@ -1,3 +1,3 @@
 function ls --wraps='exa -lhg' --description 'alias ls=exa -lhg'
-  exa -lhg $argv; 
+    exa -lhg --icons $argv
 end
