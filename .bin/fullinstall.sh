@@ -125,10 +125,17 @@ Chroot_Install_Packages() {
 }
 
 Chroot_User() {
-	useradd -m -G wheel -s /usr/bin/fish stetsed
+
+  echo -n 'Enter Username You Wanna Use: '
+  read username
+
+  echo -n 'Enter Password You Wanna Use: '
+  read password
+
+	useradd -m -G wheel -s /usr/bin/fish $username
 	(
-		echo "BlahBlah"
-		echo "BlahBlah"
+		echo $password
+		echo $password
 	) | passwd stetsed
 }
 
@@ -145,10 +152,6 @@ Chroot_Final() {
 	zpool set cachefile=/etc/zfs/zpool.cache zroot
 
 	systemctl enable NetworkManager
-
-	echo -e "title Arch Linux\nlinux vmlinuz-linux\ninitrd intel-ucode.img\ninitrd initramfs-linux.img\noptions zfs=zroot/ROOT/default rw" >/boot/loader/entries/arch.conf
-
-	echo "default arch" >>/boot/loader/loader.conf
 
 	echo "%wheel ALL=(ALL:ALL) ALL" >>/etc/sudoers
 
@@ -179,13 +182,15 @@ User_Run() {
 }
 
 User_Home() {
-	sudo mkdir /home/stetsed
+  username=$(whoami)
 
-	sudo chown stetsed:stetsed -R /home/stetsed
+	sudo mkdir /home/$username
 
-	sudo chmod 700 -R /home/stetsed
+	sudo chown $username:$username -R /home/$username
 
-	cd /home/stetsed
+	sudo chmod 700 -R /home/$username
+
+	cd /home/$username
 }
 
 User_Yay() {
@@ -227,10 +232,12 @@ User_Extra() {
 	systemctl --user enable --now pipewire
 	systemctl --user enable --now pipewire-pulse
 
+  username=$(whoami)
+
 	# Add autologin to the sddm.conf and create the group.
-	echo -e "[Autologin]\nUser=stetsed\nSession=hyprland" | sudo tee -a /etc/sddm.conf
+	echo -e "[Autologin]\nUser=$username\nSession=hyprland" | sudo tee -a /etc/sddm.conf
 	sudo groupadd autologin
-	sudo usermod -aG autologin stetsed
+	sudo usermod -aG autologin $username
 
 	ln -s /mnt/data/Stetsed/Storage ~/Storage
 	ln -s /mnt/data/Stetsed/Documents ~/Documents
