@@ -79,9 +79,13 @@ ZFS_Setup_Filesystem() {
 }
 
 ZFS_Setup_Basesystem() {
+
+  echo -n 'Do you use AMD or INTEL(ex: intel/amd): '
+  read cpu
+
 	genfstab -U /mnt >>/mnt/etc/fstab
 
-	pacstrap /mnt base base-devel linux linux-firmware neovim networkmanager intel-ucode
+	pacstrap /mnt base base-devel linux linux-firmware neovim networkmanager $cpu-ucode
 
 	cp fullinstall.sh /mnt/fullinstall.sh
 
@@ -149,6 +153,12 @@ Chroot_Setup_UKI(){
 }
 
 Chroot_Final() {
+  echo "LANG=en_US.UTF-8" >/etc/locale.conf
+
+  echo -n 'What hostname do you wanna use(ex: archlinux): '
+  read hostname
+
+  echo $hostname > /etc/hostname
 	zpool set cachefile=/etc/zfs/zpool.cache zroot
 
 	systemctl enable NetworkManager
