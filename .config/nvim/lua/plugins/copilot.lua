@@ -1,10 +1,10 @@
 return {
   "zbirenbaum/copilot-cmp",
   dependencies = "copilot.lua",
-  opts = {},
-  config = function(_, opts)
+  optscmp = {},
+  config = function(_, optscmp)
     local copilot_cmp = require("copilot_cmp")
-    copilot_cmp.setup(opts)
+    copilot_cmp.setup(optscmp)
     -- attach cmp source whenever copilot attaches
     -- fixes lazy-loading issues with the copilot cmp source
     require("lazyvim.util").on_attach(function(client)
@@ -13,4 +13,12 @@ return {
       end
     end)
   end,
+  "zbirenbaum/copilot.lua",
+  cmd = "Copilot",
+  build = ":Copilot auth",
+  opts = {
+    suggestion = { enabled = false },
+    panel = { enabled = false },
+    fix_pairs = false,
+  },
 }

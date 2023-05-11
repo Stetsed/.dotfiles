@@ -12,7 +12,6 @@ require("lazy").setup({
     {
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
-      opts = { suggestion = { enabled = false }, panel = { enabled = false } },
     },
     { import = "lazyvim.plugins.extras.coding.copilot" },
     -- { import = "lazyvim.plugins.extras.lang.typescript" },
