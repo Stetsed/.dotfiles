@@ -1,4 +1,7 @@
-function config --wraps='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME' --description 'alias config=/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-  /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $argv
-        
+function config --wraps='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME' --description 'alias config=lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+    if count $argv >0
+        /usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME $argv
+    else
+        lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME
+    end
 end

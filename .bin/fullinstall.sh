@@ -174,11 +174,23 @@ User_Run() {
 	clear
 	User_Packages
 
+  echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
+  echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles):'
+  read repository
+
 	clear
 	User_Dotfiles
 
 	clear
 	User_Extra
+
+  echo -n 'Are you Stetsed and do you wanna use Stetsed Specific Configuration for Storage(ex: yes): '
+  read stetsed
+  if [[ $stetsed == "yes" ]]; then
+    User_Stetsed
+  fi
+
+  echo -n 'Program is Finished Executing, have a wonderful day :D'
 }
 
 User_Home() {
@@ -209,23 +221,26 @@ User_Yay() {
 	rm -rf paru-bin
 }
 
-User_Packages() {
-	paru -Syu man-db delta fd fzf rust-analyzer ripgrep unzip bat pavucontrol pipewire-pulse dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland npm xdg-desktop-portal-hyprland-git exa noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd lazygit swayidle
-}
 
 User_Dotfiles() {
-	git clone --bare https://github.com/Stetsed/.dotfiles.git $HOME/.dotfiles
+	git clone --bare https://github.com/$repository.git $HOME/.dotfiles
 	function config {
 		/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
 	}
 	config checkout -f
 	config config status.showUntrackedFiles no
-	config remote set-url origin git@github.com:Stetsed/.dotfiles.git
+	config remote set-url origin git@github.com:$repository.git
+}
+
+User_Packages() {
+  if [[ -f .packages.list ]]; then
+    cat .packages.list | paru -Syu --needed --noconfirm
+  else
+    echo "No .packages.list file found. Skipping package installation."
+  fi
 }
 
 User_Extra() {
-	echo "10.4.78.251:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev,x-systemd.automount,x-systemd.mount-timeout=10,noauto 0 0" | sudo tee -a /etc/fstab
-	sudo mkdir /mnt/data
 	# Enable services
 	sudo systemctl enable --now bluetooth
 	sudo systemctl enable sddm
@@ -234,17 +249,25 @@ User_Extra() {
 
   username=$(whoami)
 
+  echo -e "We add an autologin entry for Hyprland, if you do use another please modify /etc/sddm.conf"
 	# Add autologin to the sddm.conf and create the group.
 	echo -e "[Autologin]\nUser=$username\nSession=hyprland" | sudo tee -a /etc/sddm.conf
 	sudo groupadd autologin
 	sudo usermod -aG autologin $username
 
+	timedatectl set-ntp true
+	timedatectl set-timezone Europe/Amsterdam
+
+}
+
+User_Stetsed() {
+	echo "10.4.78.251:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev,x-systemd.automount,x-systemd.mount-timeout=10,noauto 0 0" | sudo tee -a /etc/fstab
+	sudo mkdir /mnt/data
+
 	ln -s /mnt/data/Stetsed/Storage ~/Storage
 	ln -s /mnt/data/Stetsed/Documents ~/Documents
 	mkdir Downloads
 
-	timedatectl set-ntp true
-	timedatectl set-timezone Europe/Amsterdam
 
 }
 
