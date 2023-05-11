@@ -21,11 +21,8 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 - For Paru I use a custom pacman.conf which is hardcoded to my user directory, change this in ~/.config/paru/paru.conf
 - Other changes which I might not have noted here, please don't just copy some random persons dotfiles and expect them to work.
 
-## Packages
+### [Package](https://github.com/Stetsed/.dotfiles/blob/main/.packages.list)
 
-```
-fd fzf rust-analyzer ripgrep unzip bat pavucontrol pipewire-pulse dunst bluedevil bluez-utils brightnessctl grimblast-git neovim network-manager-applet rofi-lbonn-wayland-git starship thunar thunar-archive-plugin thunar-volman webcord-bin wl-clipboard librewolf-bin neofetch swaybg waybar-hyprland-git nfs-utils btop tldr swaylock-effects obsidian fish hyprland npm xdg-desktop-portal-hyprland-git exa noto-fonts-emoji qt5-wayland qt6-wayland blueman swappy playerctl wlogout sddm-git nano ttf-jetbrains-mono-nerd lazygit swayidle
-````
 ## Acknowledgements
 
  - [Dotfiles](https://github.com/linuxmobile/hyprland-dots) Dotfiles which I heavily used to inspire my creation, thanks for the examples :D.
