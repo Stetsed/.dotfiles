@@ -13,10 +13,19 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
     },
-    { import = "lazyvim.plugins.extras.coding.copilot" },
+    {
+      import = "lazyvim.plugins.extras.coding.copilot",
+      opts = {
+        suggestion = { enabled = true },
+        panel = { enabled = false },
+        fix_pairs = false,
+      },
+    },
     { import = "lazyvim.plugins.extras.lang.typescript" },
-    -- { import = "lazyvim.plugins.extras.lang.json" },
-    -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    { import = "lazyvim.plugins.extras.lang.tailwind" },
+    { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    { import = "lazyvim.plugins.extras.ui.mini-starter" },
     -- import/override with your plugins
     { import = "plugins" },
   },
