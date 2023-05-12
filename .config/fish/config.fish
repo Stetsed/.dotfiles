@@ -20,4 +20,5 @@ set -x fzf_preview_dir_cmd exa --all --color=always
 
 if [ (tty) = /dev/tty1 ]
     Hyprland
+    vlock -a
 end
