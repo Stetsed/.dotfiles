@@ -17,3 +17,7 @@ set -x BAT_THEME Catppuccin-mocha
 set -x fzf_dir_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 set -x PATH $PATH ~/.cargo/bin
 set -x fzf_preview_dir_cmd exa --all --color=always
+
+if [ (tty) = /dev/tty1 ]
+    Hyprland
+end

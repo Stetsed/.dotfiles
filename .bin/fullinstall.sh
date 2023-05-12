@@ -265,6 +265,10 @@ User_Extra() {
 	sudo groupadd autologin
 	sudo usermod -aG autologin $username
 
+  sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
+  echo -e "[Service]\nExecStart=\nExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM" | sudo tee -a /etc/systemd/system/getty@tty1.service.d/skip-prompt.conf
+  sudo systemctl enable getty@tty1.service
+
 	timedatectl set-ntp true
 	timedatectl set-timezone Europe/Amsterdam
 
