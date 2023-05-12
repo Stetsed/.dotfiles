@@ -303,6 +303,8 @@ File_Too() {
 
 	cp -r ~/.ssh ~/Storage/Transfer/
 
+  cp -r ~/.env ~/Storage/Transfer/
+
 	exit
 }
 
@@ -318,6 +320,8 @@ File_From() {
 
 	rm -rf ~/.ssh
 	cp -r ~/Storage/Transfer/.ssh ~/
+
+  cp -r ~/Storage/Transfer/.env ~/
 }
 
 Server_Setup(){
