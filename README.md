@@ -27,8 +27,11 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 
  - [Dotfiles](https://github.com/linuxmobile/hyprland-dots) Dotfiles which I heavily used to inspire my creation, thanks for the examples :D.
 
+## Video
+
+[/.bin/show/video1.gif](/.bin/show/video1.gif)
 
 ## Screenshots
-![/.bin/screenshot1.png](/.bin/screenshot1.png)
-![/.bin/screenshot2.png](/.bin/screenshot2.png)
-![/.bin/screenshot3.png](/.bin/screenshot3.png)
+![/.bin/show/screenshot1.png](/.bin/show/screenshot1.png)
+![/.bin/show/screenshot2.png](/.bin/show/screenshot2.png)
+![/.bin/show/screenshot3.png](/.bin/show/screenshot3.png)
