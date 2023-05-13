@@ -18,4 +18,7 @@ if [ "$selection" = "change" ]; then
 		new_wallpaper="catppuccin_wallpaper.png"
 		swww img ~/.bin/backgrounds/pngs/$new_wallpaper --transition-type center
 	fi
+else
+	new_wallpaper = "Estradiol_trans.png"
+	swww img ~/.bin/backgrounds/pngs/$new_wallpaper --transition-step 255
 fi
