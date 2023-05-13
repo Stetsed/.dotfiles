@@ -7,7 +7,7 @@
     "margin-right": 10,
     "spacing": 5, // Gaps between modules (4px)
     "modules-left": ["custom/launcher", "cpu", "memory", "wlr/workspaces"],
-    "modules-center": [],
+    "modules-center": ["custom/wallpaper"],
     "modules-right": ["tray", "bluetooth", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
     "wlr/workspaces": {
       "format": "{icon}",
@@ -103,6 +103,10 @@
     "custom/launcher": {
         "format": " <span color='#6a92d7'> </span>",
         "on-click": "rofi -show drun -theme ~/.config/rofi/global/rofi.rasi",
+    },
+    "custom/wallpaper": {
+        "format": " <span color='#6a92d7'> </span>",
+        "on-click": "~/.bin/scripts/wallpaper.sh change",
     },
 }
 
