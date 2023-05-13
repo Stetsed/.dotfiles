@@ -181,9 +181,6 @@ User_Run() {
 	clear
 	User_Yay
 
-	clear
-	User_Packages
-
   echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
   echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles):'
   read repository
@@ -192,11 +189,14 @@ User_Run() {
 	User_Dotfiles
 
 	clear
+	User_Packages
+
+	clear
 	User_Extra
 
-  echo -n 'Are you Stetsed and do you wanna use Stetsed Specific Configuration for Storage(ex: yes): '
+  echo -n 'Are you Stetsed and do you wanna use Stetsed Specific Configuration for Storage(ex: y/n): '
   read stetsed
-  if [[ $stetsed == "yes" ]]; then
+  if [[ $stetsed == "y" ]]; then
     User_Stetsed
   fi
 
@@ -253,17 +253,10 @@ User_Packages() {
 User_Extra() {
 	# Enable services
 	sudo systemctl enable --now bluetooth
-	sudo systemctl enable sddm
 	systemctl --user enable --now pipewire
 	systemctl --user enable --now pipewire-pulse
 
   username=$(whoami)
-
-  echo -e "We add an autologin entry for Hyprland, if you do use another please modify /etc/sddm.conf"
-	# Add autologin to the sddm.conf and create the group.
-	echo -e "[Autologin]\nUser=$username\nSession=hyprland" | sudo tee -a /etc/sddm.conf
-	sudo groupadd autologin
-	sudo usermod -aG autologin $username
 
   sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
   echo -e "[Service]\nExecStart=\nExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM" | sudo tee -a /etc/systemd/system/getty@tty1.service.d/skip-prompt.conf
