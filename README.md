@@ -29,7 +29,7 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 
 ## Video
 
-[/.bin/show/video1.gif](/.bin/show/video1.gif)
+![/.bin/show/video1.gif](/.bin/show/video1.gif)
 
 ## Screenshots
 ![/.bin/show/screenshot1.png](/.bin/show/screenshot1.png)
