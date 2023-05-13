@@ -98,7 +98,7 @@
     },
     "custom/power-menu": {
         "format": " <span color='#6a92d7'>⏻ </span>",
-        "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh",
+        "on-click": "wlogout --protocol layer-shell -b 5 -T 400 -B 400",
     }, 
     "custom/launcher": {
         "format": " <span color='#6a92d7'> </span>",
