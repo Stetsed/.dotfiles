@@ -8,13 +8,15 @@
 # 5. Make the file executable with the following command: chmod +x screenshot.sh
 # 6. Update the URL's to match your pocketbase instance. So you want to replace pocketbase.selfhostable.net
 
+mode=$1
+
 AUTH_POCKETBASE=$(cat ~/.env)
 
 time=$(date -u +%Y-%m-%dT%H:%M:%S%Z)
 
 file_path=~/Documents/Screenshots/$time.png
 
-grim $file_path
+grimblast --notify save $mode $file_path
 
 json=$(curl -X POST -H "$AUTH_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/images/records --form "file=@\"$file_path\"")
 
