@@ -17,8 +17,8 @@ if [ "$selection" = "change" ]; then
 	elif [ "$current_wallpaper" = "Estradiol_trans.png" ]; then
 		new_wallpaper="catppuccin_wallpaper.png"
 		swww img ~/.bin/backgrounds/pngs/$new_wallpaper --transition-type center
+	else
+		new_wallpaper="Estradiol_trans.png"
+		swww img ~/.bin/backgrounds/pngs/$new_wallpaper --transition-step 255
 	fi
-else
-	new_wallpaper="Estradiol_trans.png"
-	swww img ~/.bin/backgrounds/pngs/$new_wallpaper --transition-step 255
 fi
