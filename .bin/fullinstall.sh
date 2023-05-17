@@ -53,25 +53,36 @@ ZFS_Partition_Drive() {
 
 ZFS_Setup_Filesystem() {
 
-	zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
-	zfs create -o canmount=off -o mountpoint=none zroot/ROOT
-	zfs create -o canmount=noauto -o mountpoint=/ zroot/ROOT/default
+  zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
+
+
+  echo "Do you want to encrypt your drive? (y/n)"
+  read encrypt
+
+  if [ "encrypt" == "y"] || [ "encrypt" == "Y"]; then
+    zfs create -o canmount=off -o mountpoint=none -o encryption=on -o keylocation=prompt -o keyformat=passphrase zroot/arch 
+  else
+    zfs create -o canmount=off -o mountpoint=none zroot/arch 
+  fi
+
+	zfs create -o canmount=off -o mountpoint=none zroot/arch/ROOT
+	zfs create -o canmount=noauto -o mountpoint=/ zroot/arch/ROOT/default
 	zfs set compression=on zroot
 	zfs set atime=off zroot
 	zfs set xattr=sa zroot
 	zfs set acltype=posixacl zroot
 
-	zfs create -o mountpoint=none zroot/data
-	zfs create -o mountpoint=/home zroot/data/home
+	zfs create -o mountpoint=none zroot/arch/data
+	zfs create -o mountpoint=/home zroot/arch/data/home
 
 	zfs umount -a
 	zpool export zroot
 
-	zpool import -d /dev/disk/by-id -R /mnt zroot
+	zpool import -l -d /dev/disk/by-id -R /mnt zroot
 
-	zfs mount zroot/ROOT/default
-	zfs mount zroot/data/home
-	zpool set bootfs=zroot/ROOT/default zroot
+	zfs mount zroot/arch/ROOT/default
+	zfs mount zroot/arch/data/home
+	zpool set bootfs=zroot/arch/ROOT/default zroot
 
 	mkdir /mnt/boot
 	mount /dev/disk/by-id/$SELECTED_DRIVE-part1 /mnt/boot
@@ -99,7 +110,7 @@ ZFS_Setup_Basesystem() {
 
 	zpool export zroot
 
-	reboot
+  echo "Installation Complete, Please Reboot"
 }
 
 Chroot_Run() {
@@ -146,7 +157,7 @@ Chroot_User() {
 }
 
 Chroot_Setup_UKI(){
-  echo "zfs=zroot/ROOT/default rw" > /etc/kernel/cmdline
+  echo "zfs=zroot/arch/ROOT/default rw" > /etc/kernel/cmdline
 
   mkdir -p /boot/EFI/BOOT
 
@@ -184,7 +195,7 @@ User_Run() {
 	User_Yay
 
   echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
-  echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles):'
+  echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles): '
   read repository
 
 	clear
