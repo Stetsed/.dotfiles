@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ZFS_Run() {
 	clear
 	ZFS_Select_Drive
@@ -311,14 +313,18 @@ File_From() {
 
 	rm -rf ~/.librewolf
 	cp -r ~/Storage/Transfer/.librewolf ~/
+  rm -rf ~/Storage/Transfer/.librewolf/
 
 	rm -rf ~/.config/WebCord
 	cp -r ~/Storage/Transfer/WebCord ~/.config/
+  rm -rf ~/Storage/Transfer/WebCord
 
 	rm -rf ~/.ssh
 	cp -r ~/Storage/Transfer/.ssh ~/
+  rm -rf ~/Storage/Transfer/.ssh
 
   cp -r ~/Storage/Transfer/.env ~/
+  rm -rf ~/Storage/Transfer/.env
 }
 
 Server_Setup(){
