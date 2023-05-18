@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
 ZFS_Run() {
-	
+
 	ZFS_Select_Drive
 
-  if [ "$SELECTED_DRIVE" == "" ]; then
-    echo "No drive selected, exiting"
-    exit 0
-  fi
+	if [ "$SELECTED_DRIVE" == "" ]; then
+		echo "No drive selected, exiting"
+		exit 0
+	fi
 
 	ZFS_Get_ZFS
 
 	ZFS_Partition_Drive
-	
+
 	ZFS_Setup_Filesystem
 
 	ZFS_Setup_Basesystem
 
-  exit 0
+	exit 0
 }
 
 ZFS_Select_Drive() {
@@ -54,17 +54,16 @@ ZFS_Partition_Drive() {
 
 ZFS_Setup_Filesystem() {
 
-  zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
+	zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
 
+	echo "Do you want to encrypt your drive? (y/n)"
+	read encrypt
 
-  echo "Do you want to encrypt your drive? (y/n)"
-  read encrypt
-
-  if [ "encrypt" == "y"] || [ "encrypt" == "Y"]; then
-    zfs create -o canmount=off -o mountpoint=none -o encryption=on -o keylocation=prompt -o keyformat=passphrase zroot/arch 
-  else
-    zfs create -o canmount=off -o mountpoint=none zroot/arch 
-  fi
+	if [ "encrypt" == "y"] || [ "encrypt" == "Y"]; then
+		zfs create -o canmount=off -o mountpoint=none -o encryption=on -o keylocation=prompt -o keyformat=passphrase zroot/arch
+	else
+		zfs create -o canmount=off -o mountpoint=none zroot/arch
+	fi
 
 	zfs create -o canmount=off -o mountpoint=none zroot/arch/ROOT
 	zfs create -o canmount=noauto -o mountpoint=/ zroot/arch/ROOT/default
@@ -94,13 +93,13 @@ ZFS_Setup_Filesystem() {
 
 ZFS_Setup_Basesystem() {
 
-  echo -n 'Do you use AMD or INTEL(ex: intel/amd): '
-  read cpu
+	echo -n 'Do you use AMD or INTEL(ex: intel/amd): '
+	read cpu
 
-  while [[ "$cpu" != "intel" && "$cpu" != "amd" ]]; do
-    echo -n "Please enter again, options are intel or amd: "
-    read cpu
-  done
+	while [[ "$cpu" != "intel" && "$cpu" != "amd" ]]; do
+		echo -n "Please enter again, options are intel or amd: "
+		read cpu
+	done
 
 	genfstab -U /mnt >>/mnt/etc/fstab
 
@@ -116,27 +115,27 @@ ZFS_Setup_Basesystem() {
 
 	zpool export zroot
 
-  echo "Installation Complete, Please Reboot"
+	echo "Installation Complete, Please Reboot"
 
-  return
+	return
 }
 
 Chroot_Run() {
-	
+
 	Chroot_Setup_ZFS
 
 	Chroot_Install_Packages
 
 	Chroot_User
 
-  Chroot_Drivers
+	Chroot_Drivers
 
-  Chroot_Setup_UKI 
+	Chroot_Setup_UKI
 
 	Chroot_Final
 
-  echo "Chroot Complete, you can exit with exit command"
-  exit 0
+	echo "Chroot Complete, you can exit with exit command"
+	exit 0
 }
 
 Chroot_Setup_ZFS() {
@@ -152,28 +151,26 @@ Chroot_Install_Packages() {
 
 Chroot_User() {
 
-  echo -n 'Enter Username You Wanna Use: '
-  read username
+	echo -n 'Enter Username You Wanna Use: '
+	read username
 
-  while [[ "$username" == "" ]]; do
-    echo -n "Username cannot be empty, please enter again: "
-    read username
-  done
-  
-  echo -n 'Enter Password You Wanna Use: '
-  read password
-  
-  while [[ "$password" == "" ]]; do
-    echo -n "Password cannot be empty, please enter again: "
-    read password
-  done
+	while [[ "$username" == "" ]]; do
+		echo -n "Username cannot be empty, please enter again: "
+		read username
+	done
 
+	echo -n 'Enter Password You Wanna Use: '
+	read password
 
-  while [[ "$shell" != "bash" && "$shell" != "fish" ]]; do
-    echo -n "Which shell do you wanna use? (bash or fish): "
-    read shell
-  done
-  
+	while [[ "$password" == "" ]]; do
+		echo -n "Password cannot be empty, please enter again: "
+		read password
+	done
+
+	while [[ "$shell" != "bash" && "$shell" != "fish" ]]; do
+		echo -n "Which shell do you wanna use? (bash or fish): "
+		read shell
+	done
 
 	useradd -m -G wheel -s /usr/bin/$shell $username
 	(
@@ -182,46 +179,46 @@ Chroot_User() {
 	) | passwd stetsed
 }
 
-Chroot_Setup_UKI(){
-  echo "zfs=zroot/arch/ROOT/default rw" > /etc/kernel/cmdline
+Chroot_Setup_UKI() {
+	echo "zfs=zroot/arch/ROOT/default rw" >/etc/kernel/cmdline
 
-  mkdir -p /boot/EFI/BOOT
+	mkdir -p /boot/EFI/BOOT
 
-  sed -i 's/keyboard keymap/keyboard zfs keymap/g' /etc/mkinitcpio.conf
-  sed -i 's/default_image="\/boot\/initramfs-linux.img"/#&\ndefault_uki="\/boot\/EFI\/BOOT\/BOOTX64.EFI"/; s/fallback_image="/#&/' /etc/mkinitcpio.d/linux.preset
+	sed -i 's/keyboard keymap/keyboard zfs keymap/g' /etc/mkinitcpio.conf
+	sed -i 's/default_image="\/boot\/initramfs-linux.img"/#&\ndefault_uki="\/boot\/EFI\/BOOT\/BOOTX64.EFI"/; s/fallback_image="/#&/' /etc/mkinitcpio.d/linux.preset
 }
 
-Chroot_Drivers(){
-  while [[ "$gpu" != "i" && "$gpu" != "a" && "$gpu" != "n" ]]; do
-   echo -n "Do you use Intel/AMD/Nvidia GPU? (i/a/n)"
-    read gpu
-  done
-  
-  if [ "$gpu" == "i" ]; then
-    pacman -S intel-media-driver
-  elif [ "$gpu" == "a" ]; then
-    pacman -S libva-mesa-driver mesa-vdpau
-  elif [ "$gpu" == "n" ]; then
-    pacman -S nvidia nvidia-utils
-  fi
+Chroot_Drivers() {
+	while [[ "$gpu" != "i" && "$gpu" != "a" && "$gpu" != "n" ]]; do
+		echo -n "Do you use Intel/AMD/Nvidia GPU? (i/a/n)"
+		read gpu
+	done
+
+	if [ "$gpu" == "i" ]; then
+		pacman -S intel-media-driver
+	elif [ "$gpu" == "a" ]; then
+		pacman -S libva-mesa-driver mesa-vdpau
+	elif [ "$gpu" == "n" ]; then
+		pacman -S nvidia nvidia-utils
+	fi
 }
 
 Chroot_Final() {
 
-  echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-  locale-gen
+	echo "en_US.UTF-8 UTF-8" >/etc/locale.gen
+	locale-gen
 
-  echo "LANG=en_US.UTF-8" >/etc/locale.conf
+	echo "LANG=en_US.UTF-8" >/etc/locale.conf
 
-  echo -n 'What hostname do you wanna use(ex: archlinux): '
-  read hostname
+	echo -n 'What hostname do you wanna use(ex: archlinux): '
+	read hostname
 
-  while [[ "$hostname" == "" ]]; do
-    echo -n "Hostname cannot be empty, please enter again: "
-    read hostname
-  done
+	while [[ "$hostname" == "" ]]; do
+		echo -n "Hostname cannot be empty, please enter again: "
+		read hostname
+	done
 
-  echo $hostname > /etc/hostname
+	echo $hostname >/etc/hostname
 
 	zpool set cachefile=/etc/zfs/zpool.cache zroot
 
@@ -239,9 +236,9 @@ Chroot_Final() {
 }
 
 User_Run() {
-	
+
 	User_Home
-	
+
 	User_Yay
 
 	User_Dotfiles
@@ -250,19 +247,19 @@ User_Run() {
 
 	User_Extra
 
-  echo -n 'Are you Stetsed and do you wanna use Stetsed Specific Configuration for Storage(ex: y/n): '
-  read stetsed
+	echo -n 'Are you Stetsed and do you wanna use Stetsed Specific Configuration for Storage(ex: y/n): '
+	read stetsed
 
-  if [[ $stetsed == "y" || $stetsed == "Y" ]]; then
-    User_Stetsed
-  fi
+	if [[ $stetsed == "y" || $stetsed == "Y" ]]; then
+		User_Stetsed
+	fi
 
-  echo -n 'Program is Finished Executing, have a wonderful day :D'
-  exit 0
+	echo -n 'Program is Finished Executing, have a wonderful day :D'
+	exit 0
 }
 
 User_Home() {
-  username=$(whoami)
+	username=$(whoami)
 
 	sudo mkdir /home/$username
 
@@ -289,11 +286,10 @@ User_Yay() {
 	rm -rf paru-bin
 }
 
-
 User_Dotfiles() {
-  echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
-  echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles): '
-  read repository
+	echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
+	echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles): '
+	read repository
 
 	git clone --bare https://github.com/$repository.git $HOME/.dotfiles
 	function config {
@@ -305,57 +301,56 @@ User_Dotfiles() {
 }
 
 User_Packages() {
-  if [[ -f .packages.list ]]; then
-    cat .packages.list | paru -Syu --needed --noconfirm
-  else
-    echo "No .packages.list file found. Skipping package installation."
-  fi
+	if [[ -f .packages.list ]]; then
+		cat .packages.list | paru -Syu --needed --noconfirm
+	else
+		echo "No .packages.list file found. Skipping package installation."
+	fi
 }
 
 User_Extra() {
-  echo -n 'To enable the bluetooth package you require the bluez package installed, and for pipewire you need pipewire and pipewire-pulse installed``'
-  
-  while [[ bluetooth != "y" && bluetooth != "n" ]]; do
-    echo -n "Do you wanna enable bluetooth? (y/n): "
-    read bluetooth
-  done
+	echo -n 'To enable the bluetooth package you require the bluez package installed, and for pipewire you need pipewire and pipewire-pulse installed``'
 
-  while [[ pipewire != "y" && pipewire != "n" ]]; do
-    echo -n "Do you wanna install enable pipewire? (y/n): "
-    read pipewire
-  done
+	while [[ bluetooth != "y" && bluetooth != "n" ]]; do
+		echo -n "Do you wanna enable bluetooth? (y/n): "
+		read bluetooth
+	done
 
-  if [[ $bluetooth == "y" ]]; then
-    systemctl enable --now bluetooth
-  fi
+	while [[ pipewire != "y" && pipewire != "n" ]]; do
+		echo -n "Do you wanna install enable pipewire? (y/n): "
+		read pipewire
+	done
 
-  if [[ $pipewire == "y" ]]; then
-    systemctl --user enable --now pipewire
-    systemctl --user enable --now pipewire-pulse
-  fi
+	if [[ $bluetooth == "y" ]]; then
+		systemctl enable --now bluetooth
+	fi
 
-  username=$(whoami)
+	if [[ $pipewire == "y" ]]; then
+		systemctl --user enable --now pipewire
+		systemctl --user enable --now pipewire-pulse
+	fi
 
-  sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
-  echo -e "[Service]\nExecStart=\nExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM" | sudo tee -a /etc/systemd/system/getty@tty1.service.d/skip-prompt.conf
-  sudo systemctl enable getty@tty1.service
+	username=$(whoami)
 
-  while [[ $time != "y" && $time != "n" ]]; do
-    echo -n 'Do you want to set the time to the correct timezone and enable timesyncd? (y/n): '
-    read time
-  done
+	sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
+	echo -e "[Service]\nExecStart=\nExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM" | sudo tee -a /etc/systemd/system/getty@tty1.service.d/skip-prompt.conf
+	sudo systemctl enable getty@tty1.service
 
-  if [[ $time == "y" ]]; then
-    echo -n 'When entering timezone please use the following format: Continent/City (Ex: Europe/Amsterdam)'
+	while [[ $time != "y" && $time != "n" ]]; do
+		echo -n 'Do you want to set the time to the correct timezone and enable timesyncd? (y/n): '
+		read time
+	done
 
-    echo -n 'Enter the timezone you wanna use: '
-    read timezone
+	if [[ $time == "y" ]]; then
+		echo -n 'When entering timezone please use the following format: Continent/City (Ex: Europe/Amsterdam)'
 
-    sudo systemctl enable --now systemd-timesyncd.service
-	  timedatectl set-ntp true
-	  timedatectl set-timezone $timezone
-  fi
+		echo -n 'Enter the timezone you wanna use: '
+		read timezone
 
+		sudo systemctl enable --now systemd-timesyncd.service
+		timedatectl set-ntp true
+		timedatectl set-timezone $timezone
+	fi
 
 }
 
@@ -370,7 +365,7 @@ User_Stetsed() {
 }
 
 File_Run() {
-	
+
 	echo "Would you like to transfer files from the server, or too the server."
 	TOO="To the Server"
 	FROM="From the Server"
@@ -391,7 +386,7 @@ File_Too() {
 
 	cp -r ~/.ssh ~/Storage/Transfer/
 
-  cp -r ~/.env ~/Storage/Transfer/
+	cp -r ~/.env ~/Storage/Transfer/
 
 	exit
 }
@@ -402,60 +397,59 @@ File_From() {
 
 	rm -rf ~/.librewolf
 	cp -r ~/Storage/Transfer/.librewolf ~/
-  rm -rf ~/Storage/Transfer/.librewolf/
+	rm -rf ~/Storage/Transfer/.librewolf/
 
 	rm -rf ~/.config/WebCord
 	cp -r ~/Storage/Transfer/WebCord ~/.config/
-  rm -rf ~/Storage/Transfer/WebCord
+	rm -rf ~/Storage/Transfer/WebCord
 
 	rm -rf ~/.ssh
 	cp -r ~/Storage/Transfer/.ssh ~/
-  rm -rf ~/Storage/Transfer/.ssh
+	rm -rf ~/Storage/Transfer/.ssh
 
-  cp -r ~/Storage/Transfer/.env ~/
-  rm -rf ~/Storage/Transfer/.env
+	cp -r ~/Storage/Transfer/.env ~/
+	rm -rf ~/Storage/Transfer/.env
 }
 
-Server_Setup(){
-  source /etc/os-release
+Server_Setup() {
+	source /etc/os-release
 
-  if [[ $ID == "debian" ]]; then
-    Server_Setup_Debian
-  elif [[ $ID == "arch" ]]; then
-    Server_Setup_Arch
-  else
-    echo "Unsupported operating system: $ID"
-  fi
+	if [[ $ID == "debian" ]]; then
+		Server_Setup_Debian
+	elif [[ $ID == "arch" ]]; then
+		Server_Setup_Arch
+	else
+		echo "Unsupported operating system: $ID"
+	fi
 }
 
-Server_Setup_Arch(){
-  sudo pacman -Syu kitty fish starship
-  sudo chsh -s /usr/bin/fish
-  echo "Please exit this terminal with the exit command, this is to generate the fish start config"
-  fish
-  echo "starship init fish | source" >> ~/.config/fish/config.fish
+Server_Setup_Arch() {
+	sudo pacman -Syu kitty fish starship
+	sudo chsh -s /usr/bin/fish
+	echo "Please exit this terminal with the exit command, this is to generate the fish start config"
+	fish
+	echo "starship init fish | source" >>~/.config/fish/config.fish
 
-  mkdir -p ~/.config/fish/functions
-  curl -sL https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.config/fish/functions/nano.fish > ~/.config/fish/functions/nano.fish
+	mkdir -p ~/.config/fish/functions
+	curl -sL https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.config/fish/functions/nano.fish >~/.config/fish/functions/nano.fish
 }
 
-Server_Setup_Debian(){
-  curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-  ln -s ~/.local/kitty.app/bin/kitty /bin/kitty
-  ln -s ~/.local/kitty.app/bin/kitten /bin/kitten
+Server_Setup_Debian() {
+	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+	ln -s ~/.local/kitty.app/bin/kitty /bin/kitty
+	ln -s ~/.local/kitty.app/bin/kitten /bin/kitten
 
-  sudo chsh -s /usr/bin/fish
+	sudo chsh -s /usr/bin/fish
 
-  curl -sS https://starship.rs/install.sh | sh
+	curl -sS https://starship.rs/install.sh | sh
 
-  echo "Please exit this terminal with the exit command, this is to generate the fish start config"
-  fish
-  echo "starship init fish | source" >> ~/.config/fish/config.fish
+	echo "Please exit this terminal with the exit command, this is to generate the fish start config"
+	fish
+	echo "starship init fish | source" >>~/.config/fish/config.fish
 
-  mkdir -p ~/.config/fish/functions
-  curl -sL https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.config/fish/functions/nano.fish > ~/.config/fish/functions/nano.fish
+	mkdir -p ~/.config/fish/functions
+	curl -sL https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.config/fish/functions/nano.fish >~/.config/fish/functions/nano.fish
 }
-)
 
 Main_Run() {
 	sudo pacman -Sy gum
@@ -465,13 +459,13 @@ Main_Run() {
 	CHROOT="Chroot"
 	USER="User"
 	FILE_TRANSFER="File Transfer"
-  SERVER_SHELL="Server Shell"
+	SERVER_SHELL="Server Shell"
 	SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "$USER" "$FILE_TRANSFER" "$SERVER_SHELL")
 	grep -q "$ZFS" <<<"$SELECTION" && ZFS_Run
 	grep -q "$CHROOT" <<<"$SELECTION" && Chroot_Run
 	grep -q "$USER" <<<"$SELECTION" && User_Run
 	grep -q "$FILE_TRANSFER" <<<"$SELECTION" && File_Run
-  grep -q "$SERVER_SHELL" <<<"$SELECTION" && Server_Setup
+	grep -q "$SERVER_SHELL" <<<"$SELECTION" && Server_Setup
 
 }
 
