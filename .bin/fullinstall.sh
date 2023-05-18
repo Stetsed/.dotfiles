@@ -1,22 +1,23 @@
 #!/usr/bin/env bash
 
-set -e
-
 ZFS_Run() {
-	clear
+	
 	ZFS_Select_Drive
 
-	clear
+  if [ "$SELECTED_DRIVE" == "" ]; then
+    echo "No drive selected, exiting"
+    exit 0
+  fi
+
 	ZFS_Get_ZFS
 
-	clear
 	ZFS_Partition_Drive
-
-	clear
+	
 	ZFS_Setup_Filesystem
 
-	clear
 	ZFS_Setup_Basesystem
+
+  exit 0
 }
 
 ZFS_Select_Drive() {
@@ -96,6 +97,11 @@ ZFS_Setup_Basesystem() {
   echo -n 'Do you use AMD or INTEL(ex: intel/amd): '
   read cpu
 
+  while [[ "$cpu" != "intel" && "$cpu" != "amd" ]]; do
+    echo -n "Please enter again, options are intel or amd: "
+    read cpu
+  done
+
 	genfstab -U /mnt >>/mnt/etc/fstab
 
 	pacstrap /mnt base base-devel linux linux-firmware neovim networkmanager $cpu-ucode
@@ -111,23 +117,26 @@ ZFS_Setup_Basesystem() {
 	zpool export zroot
 
   echo "Installation Complete, Please Reboot"
+
+  return
 }
 
 Chroot_Run() {
-	clear
+	
 	Chroot_Setup_ZFS
 
-	clear
 	Chroot_Install_Packages
 
-	clear
 	Chroot_User
 
-  clear
+  Chroot_Drivers
+
   Chroot_Setup_UKI 
 
-	clear
 	Chroot_Final
+
+  echo "Chroot Complete, you can exit with exit command"
+  exit 0
 }
 
 Chroot_Setup_ZFS() {
@@ -138,7 +147,7 @@ Chroot_Setup_ZFS() {
 }
 
 Chroot_Install_Packages() {
-	pacman -S linux-headers zfs-dkms-git openssh networkmanager fish
+	pacman -S linux-headers zfs-dkms-git openssh networkmanager
 }
 
 Chroot_User() {
@@ -146,10 +155,27 @@ Chroot_User() {
   echo -n 'Enter Username You Wanna Use: '
   read username
 
+  while [[ "$username" == "" ]]; do
+    echo -n "Username cannot be empty, please enter again: "
+    read username
+  done
+  
   echo -n 'Enter Password You Wanna Use: '
   read password
+  
+  while [[ "$password" == "" ]]; do
+    echo -n "Password cannot be empty, please enter again: "
+    read password
+  done
 
-	useradd -m -G wheel -s /usr/bin/fish $username
+
+  while [[ "$shell" != "bash" && "$shell" != "fish" ]]; do
+    echo -n "Which shell do you wanna use? (bash or fish): "
+    read shell
+  done
+  
+
+	useradd -m -G wheel -s /usr/bin/$shell $username
 	(
 		echo $password
 		echo $password
@@ -165,13 +191,38 @@ Chroot_Setup_UKI(){
   sed -i 's/default_image="\/boot\/initramfs-linux.img"/#&\ndefault_uki="\/boot\/EFI\/BOOT\/BOOTX64.EFI"/; s/fallback_image="/#&/' /etc/mkinitcpio.d/linux.preset
 }
 
+Chroot_Drivers(){
+  while [[ "$gpu" != "i" && "$gpu" != "a" && "$gpu" != "n" ]]; do
+   echo -n "Do you use Intel/AMD/Nvidia GPU? (i/a/n)"
+    read gpu
+  done
+  
+  if [ "$gpu" == "i" ]; then
+    pacman -S intel-media-driver
+  elif [ "$gpu" == "a" ]; then
+    pacman -S libva-mesa-driver mesa-vdpau
+  elif [ "$gpu" == "n" ]; then
+    pacman -S nvidia nvidia-utils
+  fi
+}
+
 Chroot_Final() {
+
+  echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+  locale-gen
+
   echo "LANG=en_US.UTF-8" >/etc/locale.conf
 
   echo -n 'What hostname do you wanna use(ex: archlinux): '
   read hostname
 
+  while [[ "$hostname" == "" ]]; do
+    echo -n "Hostname cannot be empty, please enter again: "
+    read hostname
+  done
+
   echo $hostname > /etc/hostname
+
 	zpool set cachefile=/etc/zfs/zpool.cache zroot
 
 	systemctl enable NetworkManager
@@ -188,32 +239,26 @@ Chroot_Final() {
 }
 
 User_Run() {
-	clear
+	
 	User_Home
-
-	clear
+	
 	User_Yay
 
-  echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
-  echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles): '
-  read repository
-
-	clear
 	User_Dotfiles
 
-	clear
 	User_Packages
 
-	clear
 	User_Extra
 
   echo -n 'Are you Stetsed and do you wanna use Stetsed Specific Configuration for Storage(ex: y/n): '
   read stetsed
-  if [[ $stetsed == "y" ]]; then
+
+  if [[ $stetsed == "y" || $stetsed == "Y" ]]; then
     User_Stetsed
   fi
 
   echo -n 'Program is Finished Executing, have a wonderful day :D'
+  exit 0
 }
 
 User_Home() {
@@ -246,6 +291,10 @@ User_Yay() {
 
 
 User_Dotfiles() {
+  echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
+  echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles): '
+  read repository
+
 	git clone --bare https://github.com/$repository.git $HOME/.dotfiles
 	function config {
 		/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
@@ -264,10 +313,26 @@ User_Packages() {
 }
 
 User_Extra() {
-	# Enable services
-	sudo systemctl enable --now bluetooth
-	systemctl --user enable --now pipewire
-	systemctl --user enable --now pipewire-pulse
+  echo -n 'To enable the bluetooth package you require the bluez package installed, and for pipewire you need pipewire and pipewire-pulse installed``'
+  
+  while [[ bluetooth != "y" && bluetooth != "n" ]]; do
+    echo -n "Do you wanna enable bluetooth? (y/n): "
+    read bluetooth
+  done
+
+  while [[ pipewire != "y" && pipewire != "n" ]]; do
+    echo -n "Do you wanna install enable pipewire? (y/n): "
+    read pipewire
+  done
+
+  if [[ $bluetooth == "y" ]]; then
+    systemctl enable --now bluetooth
+  fi
+
+  if [[ $pipewire == "y" ]]; then
+    systemctl --user enable --now pipewire
+    systemctl --user enable --now pipewire-pulse
+  fi
 
   username=$(whoami)
 
@@ -275,8 +340,22 @@ User_Extra() {
   echo -e "[Service]\nExecStart=\nExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM" | sudo tee -a /etc/systemd/system/getty@tty1.service.d/skip-prompt.conf
   sudo systemctl enable getty@tty1.service
 
-	timedatectl set-ntp true
-	timedatectl set-timezone Europe/Amsterdam
+  while [[ $time != "y" && $time != "n" ]]; do
+    echo -n 'Do you want to set the time to the correct timezone and enable timesyncd? (y/n): '
+    read time
+  done
+
+  if [[ $time == "y" ]]; then
+    echo -n 'When entering timezone please use the following format: Continent/City (Ex: Europe/Amsterdam)'
+
+    echo -n 'Enter the timezone you wanna use: '
+    read timezone
+
+    sudo systemctl enable --now systemd-timesyncd.service
+	  timedatectl set-ntp true
+	  timedatectl set-timezone $timezone
+  fi
+
 
 }
 
@@ -288,11 +367,10 @@ User_Stetsed() {
 	ln -s /mnt/data/Stetsed/Documents ~/Documents
 	mkdir Downloads
 
-
 }
 
 File_Run() {
-	clear
+	
 	echo "Would you like to transfer files from the server, or too the server."
 	TOO="To the Server"
 	FROM="From the Server"
@@ -381,8 +459,6 @@ Server_Setup_Debian(){
 
 Main_Run() {
 	sudo pacman -Sy gum
-
-	clear
 
 	echo "What part of the installation are you on"
 	ZFS="ZFS"
