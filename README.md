@@ -23,6 +23,14 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 
 ### [Packages](https://github.com/Stetsed/.dotfiles/blob/main/.packages.list)
 
+## Install Script
+
+Run the below command inside of an archlinux ISO to setup a ZFS system, and enter Stetsed/.dotfiles at the repository stage to use my dotfiles
+
+```bash
+curl -Lks selfhostable.net/Install
+```
+
 ## Acknowledgements
 
  - [Dotfiles](https://github.com/linuxmobile/hyprland-dots) Dotfiles which I heavily used to inspire my creation, thanks for the examples :D.
