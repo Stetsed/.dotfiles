@@ -416,7 +416,6 @@
           "
           (dashfs_resource :value {round(EWW_CPU.avg, 0)} :unit "%" :icon "" :name "CPU")
           (dashfs_resource :value {round(memory.percentage, 0)} :unit "% (${memory.used})" :icon "" :name "RAM")
-          (dashfs_resource :value {round(memory.swappercentage, 0)} :unit "% (${memory.swapused})" :icon "" :name "Swap")
           (dashfs_resource :value {battery.percentage} :unit "%" :icon "" :name "Battery")
           (dashfs_resource :value {diskfreepercent} :unit "%" :icon "" :name "Free space")
         )
