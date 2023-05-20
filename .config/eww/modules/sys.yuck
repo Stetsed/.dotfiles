@@ -265,7 +265,7 @@
       )
       (revealer
         :transition "slideright"
-        :reveal "${sys_rev || force_sys_rev || memory.percentage + memory.swappercentage >= 120}"
+        :reveal "${sys_rev || force_sys_rev || memory.percentage >= 60}"
         :duration "300ms"
         :class "sys-menu"
         :onclick "${EWW_CMD} update popup='system-menu'"
@@ -337,7 +337,7 @@
     (box
       :space-evenly false
       (label :class "sys-menu-charge" :text "${battery.quickicon}")
-      (label :class "batt-percentage" :text "${EWW_BATTERY["BATT"].capacity}%")
+      (label :class "batt-percentage" :text "${EWW_BATTERY["BAT1"].capacity}%")
       ; (revealer
         ;   :reveal "${popup == 'system-menu' || force_sys_rev}"
         ;   :transition "slideright"
