@@ -1,13 +1,10 @@
   ;##################### Modules #########################
-(include "./modules/activewindow.yuck")
 (include "./modules/audiolevels.yuck")
 (include "./modules/bluetooth.yuck")
 (include "./modules/bright.yuck")
 (include "./modules/clock.yuck")
-(include "./modules/editmode.yuck")
 (include "./modules/sys.yuck")
 (include "./modules/variables.yuck")
-(include "./modules/workspaces.yuck")
 
 ;##################### Windows #########################
 (include "./windows/dashboard.yuck")
@@ -15,7 +12,6 @@
 (include "./windows/calendar.yuck")
 (include "./windows/osettings.yuck")
 (include "./windows/onotify.yuck")
-; (include "./windows/system-menu.yuck")
 (include "./windows/supercontext.yuck")
 
 (defwidget separator []
@@ -45,7 +41,7 @@
         :reveal false
         :transition "slideright"
         (label
-          :text "${volume.audio} ${brightness.level} ${wsjsona[0][0].at} ${wsjsonb[0][0].at}" ; Dummy to keep listeners active
+          :text "${volume.audio} ${brightness.level}" ; Dummy to keep listeners active
         )
       )
     )

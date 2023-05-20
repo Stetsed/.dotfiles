@@ -16,15 +16,15 @@ getwins() {
     | grep -v '"fakeFullscreen": ' \
     | grep -v '"grouped": ')
 
-  # echo $hyprctlclients | gojq -c '.[]'
+  # echo $hyprctlclients | jq -c '.[]'
 
   IFS=$'\n'
-  clientsarr=( $(echo $hyprctlclients | gojq -c -M '.[]') )
+  clientsarr=( $(echo $hyprctlclients | jq -c -M '.[]') )
 
   #For every window
   for client in "${clientsarr[@]}"; do
     iconpath=''
-    clientclass=$(echo "$client" | gojq -r '.class')
+    clientclass=$(echo "$client" | jq -r '.class')
     if [[ "$clientclass" == "" ]]; then 
       continue
     fi

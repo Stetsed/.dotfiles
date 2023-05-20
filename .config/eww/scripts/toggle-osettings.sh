@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-reserves=$(hyprctl monitors -j | gojq -r -c '.[0]["reserved"]')
+reserves=$(hyprctl monitors -j | jq -r -c '.[0]["reserved"]')
 if [[ "$1" == "--keypress" && "$reserves" == "[0,0,0,50]" ]]; then
     cd ~/.config/eww
     scripts/toggle-winnews.sh
