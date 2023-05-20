@@ -21,7 +21,7 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 - For Paru I use a custom pacman.conf which is hardcoded to my user directory, change this in ~/.config/paru/paru.conf
 - Modify the specified battery in ~/.config/eww/modules/sys.yuck and ~/.config/eww/scripts/battery.
 - Modify ~/.config/eww/windows/dashfs.yuck when I got it it had all hardcoded and I can't figure out how to unhardcode it so you gotta fix it for your resolution :|
-- If you want to use the eww bar instead of the waybar bar you can check the hyprland exec to switch waybar with eww bar, but do note that this uses more power which is why I have disabled it.
+- By default I use the eww bar but I also have a waybar in this config which you can use by commenting out "eww open bar" and commenting in "waybar -c blahblah".
 - Other changes which I might not have noted here, please don't just copy some random persons dotfiles and expect them to work.
 
 ### [Packages](https://github.com/Stetsed/.dotfiles/blob/main/.packages.list)
