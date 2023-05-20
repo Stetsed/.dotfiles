@@ -130,7 +130,7 @@
               (button
                 :class "wifi-arrow-btn"
                 :style "font-family: Material Symbols Rounded;"
-                :onclick "scripts/toggle-onotify.sh & kitty --class "nmtui" -e nmtui &"
+                :onclick "scripts/toggle-onotify.sh & kitty --class 'nmtui' -e nmtui &"
                 ""
               )
             )
