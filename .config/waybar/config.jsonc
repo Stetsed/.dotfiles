@@ -1,112 +1,133 @@
 {
-    "height": 30, // Waybar height (to be removed for auto height)
-    "margin-top": 6,
-    "layer": "top",
-    "margin-left": 10,
-    "margin-bottom": 0,
-    "margin-right": 10,
-    "spacing": 5, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "cpu", "memory", "wlr/workspaces"],
-    "modules-center": ["custom/wallpaper"],
-    "modules-right": ["tray", "bluetooth", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
-    "wlr/workspaces": {
-      "format": "{icon}",
-      "on-click": "activate",
-      "format-icons": {
-        "1": "󰈹",
-        "2": "󰙯",
-        "3": "",
-        "4": "",
-        "5": "",
-        "urgent": "",
-        "active": "",
-        "default": ""
-      }
+  "height": 30, // Waybar height (to be removed for auto height)
+  "margin-top": 6,
+  "layer": "top",
+  "margin-left": 10,
+  "margin-bottom": 0,
+  "margin-right": 10,
+  "spacing": 5, // Gaps between modules (4px)
+  "modules-left": [
+    "custom/launcher",
+    "cpu",
+    "memory",
+    "wlr/workspaces"
+  ],
+  "modules-center": [
+    "custom/wallpaper"
+  ],
+  "modules-right": [
+    "tray",
+    "bluetooth",
+    "pulseaudio",
+    "network",
+    "battery",
+    "clock",
+    "custom/power-menu"
+  ],
+  "wlr/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "format-icons": {
+      "1": "󰈹",
+      "2": "󰙯",
+      "3": "",
+      "4": "",
+      "5": "",
+      "urgent": "",
+      "active": "",
+      "default": ""
+    }
+  },
+  "hyprland/window": {
+    "format": "{}"
+  },
+  "tray": {
+    "spacing": 10
+  },
+  "clock": {
+    "format": "<span color='#bf616a'> </span>{:%I:%M %p}",
+    "format-alt": "<span color='#bf616a'> </span>{:%a %b %d}",
+    "on-click": "~/.config/eww/scripts/toggle-onotify.sh"
+  },
+  "cpu": {
+    "interval": 10,
+    "format": " {}%",
+    "max-length": 10,
+    "on-click": "",
+  },
+  "memory": {
+    "interval": 30,
+    "format": " {}%",
+    "format-alt": " {used:0.1f}G",
+    "max-length": 10,
+  },
+  "network": {
+    "format-wifi": "󰖩 {essid}",
+    "format-ethernet": " wired",
+    "format-disconnected": "睊",
+    "on-click": "alacritty -e nmtui",
+    "format-disconnected": "Disconnected  ",
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "  {volume}%",
+    "format-bluetooth-muted": " ",
+    "format-muted": "婢",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
     },
-    "hyprland/window": {
-        "format": "{}"
+    "on-click": "pavucontrol"
+  },
+  "battery": {
+    "bat": "BAT1",
+    "adapter": "ADP0",
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15
     },
-    "tray": {
-        "spacing": 10
-    },
-    "clock": {
-        "format": "<span color='#bf616a'> </span>{:%I:%M %p}",
-        "format-alt": "<span color='#bf616a'> </span>{:%a %b %d}",
-        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-    },
-
-    "cpu": {
-      "interval": 10,
-      "format": " {}%",
-      "max-length": 10,
-      "on-click": "",
-    },
-    "memory": {
-        "interval": 30,
-        "format": " {}%",
-        "format-alt":" {used:0.1f}G",
-        "max-length": 10,
-    },
-    "network": {
-        "format-wifi": "󰖩 {essid}",
-        "format-ethernet": " wired",
-        "format-disconnected": "睊",
-        "on-click": "alacritty -e nmtui",
-        "format-disconnected": "Disconnected  ",
-    },
-
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "  {volume}%",
-        "format-bluetooth-muted": " ",
-        "format-muted": "婢",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol" 
-    },
-
-    "battery": {
-      "bat": "BAT1",
-      "adapter": "ADP0",
-      "interval": 60,
-      "states": {
-          "warning": 30,
-          "critical": 15
-      },
-      "max-length": 20,
-      "format": "{icon} {capacity}%",
-      "format-warning": "{icon} {capacity}%",
-      "format-critical": "{icon} {capacity}%",
-      "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
-      "format-plugged": "  {capacity}%",
-      "format-alt": "{icon} {time}",
-      "format-full": "  {capacity}%",
-      "format-icons": [" ", " ", " ", " ", " "],
-    },
-    "bluetooth": {
-	    "format": "",
-  	  "format-disabled": "",
-  	  "format-connected": "",
-      "on-click": "blueman-manager"
-    },
-    "custom/power-menu": {
-        "format": " <span color='#6a92d7'>⏻ </span>",
-        "on-click": "wlogout --protocol layer-shell -b 5 -T 400 -B 400",
-    }, 
-    "custom/launcher": {
-        "format": " <span color='#6a92d7'> </span>",
-        "on-click": "rofi -show drun -theme ~/.config/rofi/global/rofi.rasi",
-    },
-    "custom/wallpaper": {
-        "format": " <span color='#6a92d7'> </span>",
-        "on-click": "~/.bin/scripts/wallpaper.sh change",
-    },
+    "max-length": 20,
+    "format": "{icon} {capacity}%",
+    "format-warning": "{icon} {capacity}%",
+    "format-critical": "{icon} {capacity}%",
+    "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
+    "format-plugged": "  {capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-full": "  {capacity}%",
+    "format-icons": [
+      " ",
+      " ",
+      " ",
+      " ",
+      " "
+    ],
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "",
+    "format-connected": "",
+    "on-click": "blueman-manager"
+  },
+  "custom/power-menu": {
+    "format": " <span color='#6a92d7'>⏻ </span>",
+    "on-click": "wlogout --protocol layer-shell -b 5 -T 400 -B 400",
+  },
+  "custom/launcher": {
+    "format": " <span color='#6a92d7'> </span>",
+    "on-click": "~/.config/eww/scripts/toggle-osettings.sh",
+  },
+  "custom/wallpaper": {
+    "format": " <span color='#6a92d7'> </span>",
+    "on-click": "~/.bin/scripts/wallpaper.sh change",
+  },
 }
-

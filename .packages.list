@@ -11,7 +11,6 @@ pipewire-pulse
 dunst
 bluedevil
 bluez-utils
-brightnessctl
 grimblast-git
 neovim
 network-manager-applet
@@ -50,3 +49,6 @@ swayidle
 ranger
 cliphist
 swww
+eww-wayland
+socat
+light

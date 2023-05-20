@@ -19,6 +19,9 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 ## Modifications that need to be made to use Dotfiles
 
 - For Paru I use a custom pacman.conf which is hardcoded to my user directory, change this in ~/.config/paru/paru.conf
+- Modify the specified battery in ~/.config/eww/modules/sys.yuck and ~/.config/eww/scripts/battery.
+- Modify ~/.config/eww/windows/dashfs.yuck when I got it it had all hardcoded and I can't figure out how to unhardcode it so you gotta fix it for your resolution :|
+- If you want to use the eww bar instead of the waybar bar you can check the hyprland exec to switch waybar with eww bar, but do note that this uses more power which is why I have disabled it.
 - Other changes which I might not have noted here, please don't just copy some random persons dotfiles and expect them to work.
 
 ### [Packages](https://github.com/Stetsed/.dotfiles/blob/main/.packages.list)
@@ -34,6 +37,8 @@ curl -Lks selfhostable.net/Install
 ## Acknowledgements
 
  - [Dotfiles](https://github.com/linuxmobile/hyprland-dots) Dotfiles which I heavily used to inspire my creation, thanks for the examples :D.
+
+ - [Ewww](https://github.com/end-4/dots-hyprland) base repository I used for basically all my eww stuff and just modified it and removed stuff I didn't need, big credits.
 
 ## Video
 

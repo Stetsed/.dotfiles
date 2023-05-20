@@ -1,0 +1,1 @@
+../../../.bin/scripts/wallpaper.sh

@@ -1,0 +1,53 @@
+{
+	"type" : "aa{sv}",
+	"data" : [
+		[
+			{
+				"body" : {
+					"type" : "s",
+					"data" : ""
+				},
+				"message" : {
+					"type" : "s",
+					"data" : "<b>Battery very low</b>"
+				},
+				"summary" : {
+					"type" : "s",
+					"data" : "Battery very low"
+				},
+				"appname" : {
+					"type" : "s",
+					"data" : "notify-send"
+				},
+				"category" : {
+					"type" : "s",
+					"data" : ""
+				},
+				"default_action_name" : {
+					"type" : "s",
+					"data" : "default"
+				},
+				"icon_path" : {
+					"type" : "s",
+					"data" : ""
+				},
+				"id" : {
+					"type" : "i",
+					"data" : 2
+				},
+				"timestamp" : {
+					"type" : "x",
+					"data" : 28051689
+				},
+				"timeout" : {
+					"type" : "x",
+					"data" : 20000000
+				},
+				"progress" : {
+					"type" : "i",
+					"data" : -1
+				}
+			}
+		]
+	]
+}

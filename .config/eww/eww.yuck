@@ -1,0 +1,116 @@
+  ;##################### Modules #########################
+(include "./modules/activewindow.yuck")
+(include "./modules/audiolevels.yuck")
+(include "./modules/bluetooth.yuck")
+(include "./modules/bright.yuck")
+(include "./modules/clock.yuck")
+(include "./modules/editmode.yuck")
+(include "./modules/sys.yuck")
+(include "./modules/variables.yuck")
+(include "./modules/workspaces.yuck")
+
+;##################### Windows #########################
+(include "./windows/dashboard.yuck")
+(include "./windows/dashfs.yuck")
+(include "./windows/calendar.yuck")
+(include "./windows/osettings.yuck")
+(include "./windows/onotify.yuck")
+; (include "./windows/system-menu.yuck")
+(include "./windows/supercontext.yuck")
+
+(defwidget separator []
+  (box
+    :valign "start"
+    (label
+      :class "my-separator"
+      :text "|"
+    )
+  )
+)
+
+(defwidget left []
+  (eventbox
+    :onhover "${EWW_CMD} update music_reveal=true"
+    :onhoverlost "${EWW_CMD} update music_reveal=false"
+    (box
+      :space-evenly false :spacing 5
+      :valign "start" :halign "start"
+      (box :space-evenly false :class "module-group"
+        (osettings-button)
+      )
+      ; (box :space-evenly false :class "module-group"
+        ;   (taskbar)
+      ; )
+      (revealer
+        :reveal false
+        :transition "slideright"
+        (label
+          :text "${volume.audio} ${brightness.level} ${wsjsona[0][0].at} ${wsjsonb[0][0].at}" ; Dummy to keep listeners active
+        )
+      )
+    )
+  )
+)
+
+(defwidget right []
+  (eventbox
+    :onhover "${EWW_CMD} update right_hover=true"
+    :onhoverlost "${EWW_CMD} update right_hover=false"
+    (box
+      :space-evenly false :spacing 5
+      :halign "end" :valign "start"
+      (box :space-evenly false :class "module-group"
+      )
+      (box :space-evenly false :class "module-group"
+        (onotify-button)
+      )
+    )
+  )
+)
+
+(defwidget center []
+  (eventbox
+    :space-evenly false
+    :halign "center"
+    :tooltip "Change Background"
+    :onclick "scripts/wallpaper.sh change &"
+    " "
+  )
+)
+
+(defwidget bar [] ; Class .bar applies automatically
+  (box
+    :space-evenly false
+    :orientation "h"
+    (box
+      :class "bar-bg-only${compact ? '-compact' : ''}"
+      :style "
+      margin-right: -${RES_WIDTH - 9}px;
+      "
+    )
+    (centerbox
+      :class "bar-${compact ? 'compact' : 'normal'}"
+      :width {RES_WIDTH}
+      (left)
+      (center)
+      (right)
+    )
+  )
+)
+
+(defwindow bar
+  :stacking "fg"
+  :wm-ignore true
+  :monitor 0
+  :namespace "bar"
+  :geometry (geometry
+    :x "0%"
+    :y "0%"
+    :width "100%"
+    :height "20px"
+    :anchor "top center"
+  )
+  :exclusive true
+  (bar)
+)
+
