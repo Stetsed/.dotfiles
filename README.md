@@ -48,3 +48,4 @@ sh -c "$(curl -Ls selfhostable.net/install)"
 ![/.bin/show/screenshot1.png](/.bin/show/screenshot1.png)
 ![/.bin/show/screenshot2.png](/.bin/show/screenshot2.png)
 ![/.bin/show/screenshot3.png](/.bin/show/screenshot3.png)
+![/.bin/show/screenshot4.png](/.bin/show/screenshot4.png)
