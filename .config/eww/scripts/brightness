@@ -29,20 +29,6 @@ osd() {
 	# showhide
 }
 
-osd_handler() {
-	lock=0
-	rundate=0
-	if [ ! -f "$date" ]; then
-		mkdir -p "$XDG_CACHE_HOME/eww"
-		echo 0 >"$date"
-	fi
-
-	while true; do
-		showhide
-		sleep 0.1
-	done
-}
-
 if [ "$1" = "osd" ]; then
 	osd
 else
@@ -50,7 +36,6 @@ else
 	icon=${icons[$(awk -v n="$(light)" 'BEGIN{print int(n/34)}')]}
 	echo '{ "level": '"$(light)"', "icon": "'"$icon"'" }'
 
-	osd_handler &
 	udevadm monitor | rg --line-buffered "backlight" | while read -r _; do
 		icon="${icons[$(awk -v n="$(light)" 'BEGIN{print int(n/34)}')]}"
 

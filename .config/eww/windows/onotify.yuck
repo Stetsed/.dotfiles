@@ -301,7 +301,6 @@
       (eventbox
         :onmiddleclick "scripts/toggle-dashfs.sh &"
         :onrightclick "scripts/toggle-dashfs.sh &"
-        :onscroll "echo $(echo {} | sed -e 's/down/-U 3/g' -e 's/up/-A 3/g' | xargs light) && scripts/brightness osd"
         :onclick "scripts/toggle-onotify.sh &"
         :onhover "${EWW_CMD} update calendar_hover=true"
         :onhoverlost "${EWW_CMD} update calendar_hover=false"
@@ -332,7 +331,6 @@
         )
       )
       (eventbox
-        :onscroll "echo $(echo {} | sed -e 's/down/-/g' -e 's/up/+/g' | xargs -I% wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.03%) && scripts/volume osd &"
         :onclick "scripts/toggle-onotify.sh &"
         :onmiddleclick "scripts/toggle-dashfs.sh &"
         :onrightclick "scripts/toggle-dashfs.sh &"
