@@ -111,6 +111,7 @@
         :class "onotify-window"
         (box
           :class "system-row"
+          :style "min-height: 100px"
           :space-evenly false
           :halign "center"
           (box
