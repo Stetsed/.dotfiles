@@ -362,6 +362,8 @@ User_Stetsed() {
 	ln -s /mnt/data/Stetsed/Documents ~/Documents
 	mkdir Downloads
 
+	systemctl mask NetworkManager-wait-online.service
+
 }
 
 File_Run() {
