@@ -454,8 +454,13 @@ Server_Setup_Debian() {
 }
 
 Main_Run() {
-	sudo pacman -Sy gum
+	# check if gum is installed
+	if ! command -v gum &>/dev/null; then
+		echo "Gum is not installed, installing gum"
+		sudo pacman -Sy gum
+	fi
 
+	clear
 	echo "What part of the installation are you on"
 	ZFS="ZFS"
 	CHROOT="Chroot"
