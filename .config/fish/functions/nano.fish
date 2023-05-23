@@ -1,6 +1,10 @@
 function nano --description 'Edit File with sudo if needed'
     # To anybody reading this function, I know it's fucking scuffed. Deal with it
-    set file ""
+    if test -z $argv[1]
+        echo "File Not Passed"
+        return
+    end
+
     set file $argv[1]
     set random_string (tr -dc A-Za-z0-9 </dev/urandom | head -c 13)
 
