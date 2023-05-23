@@ -293,7 +293,7 @@
             ${anim_open_dash ? dash_curve_in : dash_curve_out}
             ${rev_dash ? '' : 'margin-right: -100px; margin-left: 100px;'}
             "
-            (button :onclick "scripts/dashactivate 'swaylock' &" :class "dash clr4 dash-icon dash-button"          (label :class "icon" :text "") )
+            (button :onclick "scripts/dashactivate '~/.bin/scripts/lock.sh' &" :class "dash clr4 dash-icon dash-button"          (label :class "icon" :text "") )
             (button :onclick "scripts/dashactivate 'systemctl suspend' &" :class "dash clr3 dash-icon dash-button"             (label :class "icon" :text "") )
             (button :onclick "scripts/dashactivate 'loginctl terminate-user $USER' &" :class "dash clr2 dash-icon dash-button" (label :class "icon" :text "") )
             (button :onclick "scripts/dashactivate 'systemctl reboot' &" :class "dash clr1 dash-icon dash-button"              (label :class "icon" :text "") )

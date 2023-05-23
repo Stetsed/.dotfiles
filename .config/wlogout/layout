@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "swaylock",
+    "action" : "~/.bin/scripts/lock.sh",
     "text" : "Lock",
     "keybind" : "l"
 }

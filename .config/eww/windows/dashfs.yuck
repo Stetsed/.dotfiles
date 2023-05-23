@@ -258,7 +258,7 @@
           (box :space-evenly false :orientation "v"
             :class "dashfs-section"
             (button :class "dashfs-section-button"
-              :onclick "scripts/dashactivate 'swaylock' &"
+              :onclick "scripts/dashactivate '~/.bin/scripts/lock.sh' &"
               (box
                 :orientation "h" :space-evenly false
                 (label :class "dashfs-fetch-icon" :text "")
