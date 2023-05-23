@@ -146,7 +146,7 @@ Chroot_Setup_ZFS() {
 }
 
 Chroot_Install_Packages() {
-	pacman -S linux-headers zfs-dkms-git openssh networkmanager
+	pacman -S linux-headers zfs-dkms-git openssh networkmanager reflector
 }
 
 Chroot_User() {
@@ -230,6 +230,7 @@ Chroot_Final() {
 	systemctl enable zfs.target
 	systemctl enable zfs-import-cache
 	systemctl enable zfs-mount
+	systemctl enable reflector.timer
 	zgenhostid $(hostid)
 
 	mkinitcpio -P
