@@ -13,6 +13,7 @@
 (include "./windows/osettings.yuck")
 (include "./windows/onotify.yuck")
 (include "./windows/supercontext.yuck")
+(include "./windows/recording.yuck")
 
 (defwidget separator []
   (box
