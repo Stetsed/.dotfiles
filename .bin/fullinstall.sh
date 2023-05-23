@@ -56,10 +56,10 @@ ZFS_Setup_Filesystem() {
 
 	zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
 
-	echo "Do you want to encrypt your drive? (y/n)"
-	read encrypt
+	echo "Do you want to encrypt your drive?"
+	encrypt=$(gum choose "Yes" "No")
 
-	if [ "encrypt" == "y"] || [ "encrypt" == "Y"]; then
+	if [[ "encrypt" == "Yes" ]]; then
 		zfs create -o canmount=off -o mountpoint=none -o encryption=on -o keylocation=prompt -o keyformat=passphrase zroot/arch
 	else
 		zfs create -o canmount=off -o mountpoint=none zroot/arch
@@ -94,11 +94,11 @@ ZFS_Setup_Filesystem() {
 ZFS_Setup_Basesystem() {
 
 	echo -n 'Do you use AMD or INTEL(ex: intel/amd): '
-	read cpu
+	cpu=$(gum choose "intel" "amd")
 
 	while [[ "$cpu" != "intel" && "$cpu" != "amd" ]]; do
-		echo -n "Please enter again, options are intel or amd: "
-		read cpu
+		echo -n 'Please select a CPU'
+		cpu=$(gum choose "intel" "amd")
 	done
 
 	genfstab -U /mnt >>/mnt/etc/fstab
@@ -152,31 +152,29 @@ Chroot_Install_Packages() {
 Chroot_User() {
 
 	echo -n 'Enter Username You Wanna Use: '
-	read username
+	username=$(gum input --placeholder="stetsed")
 
 	while [[ "$username" == "" ]]; do
 		echo -n "Username cannot be empty, please enter again: "
-		read username
+		username=$(gum input --placeholder="stetsed")
 	done
 
-	echo -n 'Enter Password You Wanna Use: '
-	read password
-
-	while [[ "$password" == "" ]]; do
-		echo -n "Password cannot be empty, please enter again: "
-		read password
+	while [[ "$password1" != "$password2" ]]; do
+		echo -n "Enter password and make sure it matches!"
+		password1=$(gum input --placeholder="password" --password)
+		password2=$(gum input --placeholder="password" --password)
 	done
 
 	while [[ "$shell" != "bash" && "$shell" != "fish" ]]; do
 		echo -n "Which shell do you wanna use? (bash or fish): "
-		read shell
+		shell=$(gum choose "bash" "fish")
 	done
 
 	useradd -m -G wheel -s /usr/bin/$shell $username
 	(
-		echo $password
-		echo $password
-	) | passwd stetsed
+		echo $password1
+		echo $password1
+	) | passwd $username
 }
 
 Chroot_Setup_UKI() {
@@ -189,16 +187,14 @@ Chroot_Setup_UKI() {
 }
 
 Chroot_Drivers() {
-	while [[ "$gpu" != "i" && "$gpu" != "a" && "$gpu" != "n" ]]; do
-		echo -n "Do you use Intel/AMD/Nvidia GPU? (i/a/n)"
-		read gpu
-	done
+	echo -n 'Which GPU drivers do you want to use?'
+	gpu=$(gum choose "Intel" "AMD" "NVIDIA")
 
-	if [ "$gpu" == "i" ]; then
+	if [ "$gpu" == "Intel" ]; then
 		pacman -S intel-media-driver
-	elif [ "$gpu" == "a" ]; then
+	elif [ "$gpu" == "AMD" ]; then
 		pacman -S libva-mesa-driver mesa-vdpau
-	elif [ "$gpu" == "n" ]; then
+	elif [ "$gpu" == "NVIDIA" ]; then
 		pacman -S nvidia nvidia-utils
 	fi
 }
@@ -211,12 +207,7 @@ Chroot_Final() {
 	echo "LANG=en_US.UTF-8" >/etc/locale.conf
 
 	echo -n 'What hostname do you wanna use(ex: archlinux): '
-	read hostname
-
-	while [[ "$hostname" == "" ]]; do
-		echo -n "Hostname cannot be empty, please enter again: "
-		read hostname
-	done
+	hostname=$(gum input --placeholder="archlinux" --value="archlinux")
 
 	echo $hostname >/etc/hostname
 
@@ -248,10 +239,10 @@ User_Run() {
 
 	User_Extra
 
-	echo -n 'Are you Stetsed and do you wanna use Stetsed Specific Configuration for Storage(ex: y/n): '
-	read stetsed
+	echo -n 'Are you Stetsed and do you wanna use Stetsed Specific Configuration for Storage: '
+	isstetsed=$(gum choose "Yes" "No")
 
-	if [[ $stetsed == "y" || $stetsed == "Y" ]]; then
+	if [[ $isstetsed == "Yes" ]]; then
 		User_Stetsed
 	fi
 
@@ -289,8 +280,8 @@ User_Yay() {
 
 User_Dotfiles() {
 	echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
-	echo -n 'Enter the Github Repository you wanna use(Ex: Stetsed/.dotfiles): '
-	read repository
+	echo -n 'Enter the Github Repository you wanna use: '
+	repository=$(gum input --placeholder "stetsed/dotfiles")
 
 	git clone --bare https://github.com/$repository.git $HOME/.dotfiles
 	function config {
@@ -312,21 +303,17 @@ User_Packages() {
 User_Extra() {
 	echo -n 'To enable the bluetooth package you require the bluez package installed, and for pipewire you need pipewire and pipewire-pulse installed``'
 
-	while [[ bluetooth != "y" && bluetooth != "n" ]]; do
-		echo -n "Do you wanna enable bluetooth? (y/n): "
-		read bluetooth
-	done
+	echo -n 'Do you wanna install enable bluetooth?'
+	bluetooth=$(gum choose --prompt "Yes" "No")
 
-	while [[ pipewire != "y" && pipewire != "n" ]]; do
-		echo -n "Do you wanna install enable pipewire? (y/n): "
-		read pipewire
-	done
+	echo -n 'Do you want to enable pipewire?'
+	pipewire=$(gum choose --prompt "Yes" "No")
 
-	if [[ $bluetooth == "y" ]]; then
+	if [[ $bluetooth == "Yes" ]]; then
 		systemctl enable --now bluetooth
 	fi
 
-	if [[ $pipewire == "y" ]]; then
+	if [[ $pipewire == "Yes" ]]; then
 		systemctl --user enable --now pipewire
 		systemctl --user enable --now pipewire-pulse
 	fi
@@ -343,10 +330,8 @@ User_Extra() {
 	done
 
 	if [[ $time == "y" ]]; then
-		echo -n 'When entering timezone please use the following format: Continent/City (Ex: Europe/Amsterdam)'
-
-		echo -n 'Enter the timezone you wanna use: '
-		read timezone
+		echo -n 'When entering timezone please use the following format: Region/City with correct capitalization.'
+		timezone=$(gum input --placeholder "Europe/Amsterdam")
 
 		sudo systemctl enable --now systemd-timesyncd.service
 		timedatectl set-ntp true
