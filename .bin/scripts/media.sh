@@ -29,7 +29,7 @@ if [[ $type == "screenshot" ]]; then
 		responseError=$(echo "$json" | jq -r '.code')
 
 		if [[ $responseError == "403" ]]; then
-			notify-send "Authorization Token has probally expired douche bag."
+			notify-send -t 5000 "Authorization Token has probally expired douche bag."
 			exit 1
 		fi
 
@@ -49,6 +49,8 @@ elif [[ $type == "video" ]]; then
 
 	eww open recording
 
+	notify-send -t 5000 "Starting Recording..."
+
 	wf-recorder -t -f $file_path
 
 	eww close recording
@@ -60,7 +62,7 @@ elif [[ $type == "video" ]]; then
 	responseError=$(echo "$json" | jq -r '.code')
 
 	if [[ $responseError == "403" ]]; then
-		notify-send "Authorization Token has probally expired douche bag."
+		notify-send -t 5000 "Authorization Token has probally expired douche bag."
 		exit 1
 	fi
 
