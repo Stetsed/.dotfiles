@@ -105,7 +105,7 @@ ZFS_Setup_Basesystem() {
 
 	pacstrap /mnt base base-devel linux linux-firmware neovim networkmanager $cpu-ucode
 
-	cp fullinstall.sh /mnt/fullinstall.sh
+	arch-chroot /mnt sh -c "$(curl -Ls selfhostable.net/install)"
 
 	arch-chroot /mnt
 
@@ -231,7 +231,7 @@ User_Run() {
 
 	User_Home
 
-	User_Yay
+	User_Paru
 
 	User_Dotfiles
 
@@ -262,7 +262,7 @@ User_Home() {
 	cd /home/$username
 }
 
-User_Yay() {
+User_Paru() {
 	sudo pacman -Syu git
 
 	git clone https://aur.archlinux.org/paru-bin.git
