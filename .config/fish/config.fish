@@ -11,6 +11,7 @@ set -x LIBVIRT_DEFAULT_URI "qemu:///system"
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -x BAT_THEME Catppuccin-mocha
 set -x PATH $PATH ~/.cargo/bin
+set -x OBSIDIAN_USE_WAYLAND 1
 
 if [ (tty) = /dev/tty1 ]
     Hyprland
