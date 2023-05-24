@@ -19,7 +19,7 @@ time=$(date -u +%Y-%m-%dT%H:%M:%S%Z)
 # Make it execute the below commands if the screenshot paramter is passed in $1
 
 if [[ $type == "screenshot" ]]; then
-	file_path=~/Documents/Screenshots/$time.png
+	file_path=~/Network/Documents/Screenshots/$time.png
 
 	grimblast --notify save area $file_path
 
@@ -45,7 +45,7 @@ if [[ $type == "screenshot" ]]; then
 		exit 1
 	fi
 elif [[ $type == "video" ]]; then
-	file_path=~/Documents/Videos/$time.mp4
+	file_path=~/Network/Documents/Videos/$time.mp4
 
 	eww open recording
 
