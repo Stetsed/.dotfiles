@@ -1,5 +1,6 @@
 man-db
 git-delta
+gum
 fd
 fzf
 rust-analyzer
