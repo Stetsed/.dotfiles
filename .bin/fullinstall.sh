@@ -294,7 +294,8 @@ User_Dotfiles() {
 
 User_Packages() {
 	if [[ -f .packages.list ]]; then
-		cat .packages.list | paru -Syu --needed --noconfirm
+		mapfile -t names <.packages.list
+		paru -Syu ${names[@]} --needed --noconfirm
 	else
 		echo "No .packages.list file found. Skipping package installation."
 	fi
