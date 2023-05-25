@@ -368,15 +368,15 @@ File_Too() {
 	pkill librewolf
 	pkill webcord
 
-	cp -r ~/.librewolf ~/Storage/Transfer/
+	cp -r ~/.librewolf ~/Network/Storage/Transfer/
 
 	rm -rf ~/.config/WebCord/Cache/
 
-	cp -r ~/.config/WebCord ~/Storage/Transfer/
+	cp -r ~/.config/WebCord ~/Network/Storage/Transfer/
 
-	cp -r ~/.ssh ~/Storage/Transfer/
+	cp -r ~/.ssh ~/Network/Storage/Transfer/
 
-	cp -r ~/.env ~/Storage/Transfer/
+	cp -r ~/.env ~/Network/Storage/Transfer/
 
 	exit
 }
@@ -386,19 +386,19 @@ File_From() {
 	pkill webcord
 
 	rm -rf ~/.librewolf
-	cp -r ~/Storage/Transfer/.librewolf ~/
-	rm -rf ~/Storage/Transfer/.librewolf/
+	cp -r ~/Network/Storage/Transfer/.librewolf ~/
+	rm -rf ~/Network/Storage/Transfer/.librewolf/
 
 	rm -rf ~/.config/WebCord
-	cp -r ~/Storage/Transfer/WebCord ~/.config/
-	rm -rf ~/Storage/Transfer/WebCord
+	cp -r ~/Network/Storage/Transfer/WebCord ~/.config/
+	rm -rf ~/Network/Storage/Transfer/WebCord
 
 	rm -rf ~/.ssh
-	cp -r ~/Storage/Transfer/.ssh ~/
-	rm -rf ~/Storage/Transfer/.ssh
+	cp -r ~/Network/Storage/Transfer/.ssh ~/
+	rm -rf ~/Network/Storage/Transfer/.ssh
 
-	cp -r ~/Storage/Transfer/.env ~/
-	rm -rf ~/Storage/Transfer/.env
+	cp -r ~/Network/Storage/Transfer/.env ~/
+	rm -rf ~/Network/Storage/Transfer/.env
 }
 
 Server_Setup() {
