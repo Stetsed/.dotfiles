@@ -53,7 +53,7 @@ sh -c "$(curl -Ls selfhostable.net/install)"
 
   ![.bin/show/eww-bar/screenshot.png](.bin/show/eww-bar/screenshot.png)
 
-<details>
+</details>
 
 <details open>
   <summary>Rest of my Configuration</summary>
