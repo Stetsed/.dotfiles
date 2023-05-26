@@ -347,6 +347,7 @@
             :space-evenly false
             :spacing 5
             :halign "end"
+            (sysvolume)
             (syscpu)
             (sysmem)
             (sysbatt)

@@ -245,6 +245,9 @@
   )
 )
 
+(defwidget sysvolume[]
+ (volumemenu)
+)
 (defwidget sysmem []
   (eventbox
     :class "membar"
@@ -316,6 +319,16 @@
       :space-evenly false
       (label :class "cpu-menu icon" :text "")
       (label :class "cpu-menu" :text "${round(EWW_CPU.avg,0)}%")
+    )
+  )
+)
+
+(defwidget volumemenu[]
+  (eventbox
+    (box
+    :space-evenly false
+    (label :text "${volume.icon}")
+    (label :text "${volume.percent}%")
     )
   )
 )
