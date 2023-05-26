@@ -1,7 +1,7 @@
 
 # Stetsed's Dotfiles
 
-Welcome to my Dotfiles repository which I use for my linux desktop. I hope this helps you to find what your looking for and be able to improve your own Linux Desktop.
+Welcome to my Dotfiles repository which I use for my linux desktop. I hope this helps you to find what your looking for and be able to improve your own Linux Desktop. My setup basically always uses the Catppuccin Mocha Color scheme so you will find alot of that.
 
 ## Programs
 
@@ -21,7 +21,7 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 - For Paru I use a custom pacman.conf which is hardcoded to my user directory, change this in ~/.config/paru/paru.conf
 - Modify the specified battery in ~/.config/eww/modules/sys.yuck and ~/.config/eww/scripts/battery.
 - Modify ~/.config/eww/windows/dashfs.yuck when I got it it had all hardcoded and I can't figure out how to unhardcode it so you gotta fix it for your resolution :|
-- By default I use the waybar because it gives me better results in terms of power usage,giving about 1-2w less usage. But I can still use eww widgets because apparently running the eww daemon itself with this config doesn't add power usage? Ye have fun explaining that.
+- Currently by default I use my Eww bar because I like it more but I also have a waybar bar which you can enable by removing the "eww open bar" from the hypr execs and uncommenting the waybar command. 
 - Other changes which I might not have noted here, please don't just copy some random persons dotfiles and expect them to work.
 
 ### [Packages](https://github.com/Stetsed/.dotfiles/blob/main/.packages.list)
@@ -40,12 +40,27 @@ sh -c "$(curl -Ls selfhostable.net/install)"
 
  - [Ewww](https://github.com/end-4/dots-hyprland) base repository I used for basically all my eww stuff and just modified it and removed stuff I didn't need, big credits.
 
-## Video
-
-![/.bin/show/video1.gif](/.bin/show/video1.gif)
-
 ## Screenshots
-![/.bin/show/screenshot1.png](/.bin/show/screenshot1.png)
-![/.bin/show/screenshot2.png](/.bin/show/screenshot2.png)
-![/.bin/show/screenshot3.png](/.bin/show/screenshot3.png)
-![/.bin/show/screenshot4.png](/.bin/show/screenshot4.png)
+
+<details>
+  <summary>Configuration with Waybar System bar</summary>
+
+  ![.bin/show/waybar/screenshot.png](.bin/show/waybar/screenshot.png)
+</details>
+
+<details>
+  <summary>Configuration with Eww System bar</summary>
+
+  ![.bin/show/eww-bar/screenshot.png](.bin/show/eww-bar/screenshot.png)
+
+<details>
+
+<details open>
+  <summary>Rest of my Configuration</summary>
+
+  ![.bin/show/extra/firefox.png](.bin/show/extra/firefox.png)
+
+  ![.bin/show/extra/discord.png](.bin/show/extra/discord.png)
+
+  ![.bin/show/extra/obsidian.png](.bin/show/extra/obsidian.png)
+</details>
