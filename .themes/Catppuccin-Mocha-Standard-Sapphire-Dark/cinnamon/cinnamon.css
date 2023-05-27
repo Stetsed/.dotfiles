@@ -282,10 +282,10 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 .popup-combo-menu {
   padding: 0;
   color: #FFFFFF;
-  background-color: #1e1e2e;
   border-radius: 12px;
   margin: 6px;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.75);
 }
 
 .menu-arrow,
@@ -329,10 +329,10 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 .popup-combo-menu .popup-menu-content {
   padding: 6px;
   border-radius: 12px;
-  background-clip: padding-box;
   background-color: #1e1e2e;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.75);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-clip: border-box;
 }
 
 .menu .popup-menu-item,
@@ -753,11 +753,10 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 }
 
 .calendar-main-box {
-  margin: 0 6px;
+  margin: 0 .8em;
 }
 
 .calendar {
-  padding: 6px 12px;
   spacing-rows: 0px;
   spacing-columns: 0px;
 }
@@ -786,15 +785,15 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 .calendar-month-label {
   color: #FFFFFF;
   font-weight: bold;
-  margin: 0 2px;
-  padding: 2px;
+  padding-bottom: 8px;
+  padding-top: 8px;
 }
 
 .calendar-change-month-back,
 .calendar-change-month-forward {
-  width: 24px;
-  height: 24px;
-  margin: 0;
+  width: 2.4em;
+  height: 2.4em;
+  margin: 2px 0;
   padding: 0;
   border-radius: 9999px;
 }
@@ -837,8 +836,8 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 
 .calendar-day-base {
   text-align: center;
-  width: 28px;
-  height: 28px;
+  width: 2.4em;
+  height: 2.4em;
   padding: 0;
   margin: 2px;
   border-radius: 9999px;
@@ -892,12 +891,12 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 }
 
 .calendar-week-number {
-  width: 20px;
-  height: 20px;
-  margin: 6px 0;
+  width: 2.4em;
+  height: 2.4em;
+  margin: 0;
   color: rgba(255, 255, 255, 0.3);
   font-weight: bold;
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: transparent;
   border-radius: 9999px;
 }
 
@@ -1817,6 +1816,12 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 
 .grouped-window-list-thumbnail-menu {
   padding: 6px;
+  margin: 6px;
+  background-color: #1e1e2e;
+  border-radius: 12px;
+  background-clip: border-box;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.75);
 }
 
 .grouped-window-list-thumbnail-menu .item-box {
