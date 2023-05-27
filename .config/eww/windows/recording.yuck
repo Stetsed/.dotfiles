@@ -7,7 +7,7 @@
     (button
       :onclick "killall -SIGINT wf-recorder &"
       :class "recording"
-      (label :class "recording" :style "font-size: 2em; color: red;" :text "󰑋")
+      (label :class "recording" :style "font-size: 4em; color: red;" :text "󰑋")
     )
   )
 )
@@ -16,7 +16,7 @@
   :class "recording"
   :focusable false
   :windowtype "fg"
-  :wm-ignore true
+  :wm-ignore false
   :geometry (geometry
     :x "0"
     :y 0

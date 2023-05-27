@@ -98,7 +98,7 @@ entry selection, label selection, textview text selection:focus, textview text s
  * Base States *
  ***************/
 .background {
-  background-color: #1e1e2e;
+  background-color: rgba(0, 0, 0, 0);
   color: #FFFFFF;
 }
 
