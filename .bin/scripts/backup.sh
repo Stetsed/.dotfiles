@@ -50,7 +50,7 @@ if [[ $1 == "backup" ]]; then
 		echo "Running in Backup Interrupted Mode so trying to fetch resume token"
 		trap "touch ~/.backup_interrupted.lock && exit" INT
 		resume_token=$(ssh truenas "zfs get all Vault/backups/${hostname}-${path_name}" | grep receive | awk '{print $3}')
-		sudo zfs send -v -t "${resume_token}" | ssh truenas "zfs receive -F -s Vault/backups/${hostname}"
+		sudo zfs send -v -t "${resume_token}" | ssh truenas "zfs receive -F -s Vault/backups/${hostname}-${path_name}"
 		rm ~/.backup_interrupted.lock
 		exit 0
 	else
