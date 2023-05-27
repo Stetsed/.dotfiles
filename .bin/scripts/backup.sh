@@ -35,6 +35,9 @@ elif [[ $2 == "--root" ]]; then
 		exit 1
 	fi
 	path_name="root"
+elif [[ $2 == "--reset" ]]; then
+	echo "Forgot to pass a path argument"
+	exit 1
 elif [[ $2 == "" ]]; then
 	echo "No Path Selected"
 	exit 1
