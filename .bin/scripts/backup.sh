@@ -64,13 +64,13 @@ if [[ $1 == "backup" ]]; then
 			ssh truenas "zfs list -H -o name -t snapshot | grep "${hostname}" | xargs -n1 zfs destroy -r"
 			ssh truenas "zfs destroy -r Vault/backups/${hostname}"
 			trap "touch ~/.backup_interrupted.lock && exit " INT
-			sudo zfs send -vw $path@${time}-${hostname} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
+			sudo zfs send -vw $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
 			notify-send "Backup Complete"
 			exit 0
 		else
 			trap "touch ~/.backup_interrupted.lock && exit " INT
 			old_snapshot=$(zfs list -t snapshot -o name | grep ${path} | awk '{y=z; z=$0} END{print y}')
-			sudo zfs send -vw -I ${old_snapshot} $path@${time}-${hostname} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
+			sudo zfs send -vw -I ${old_snapshot} $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
 			notify-send "Backup Complete"
 			exit 0
 		fi
