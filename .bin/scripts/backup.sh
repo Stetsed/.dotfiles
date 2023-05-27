@@ -60,7 +60,7 @@ if [[ $1 == "backup" ]]; then
 
 		path_exists=$(ssh truenas "zfs list -H -o name Vault/backups/${hostname}" | wc -l)
 
-		if [[ $3 == "--reset" || path_exists = 0 ]]; then
+		if [[ $3 == "--reset" || $path_exists == 0 ]]; then
 			ssh truenas "zfs list -H -o name -t snapshot | grep "${hostname}" | xargs -n1 zfs destroy -r"
 			ssh truenas "zfs destroy -r Vault/backups/${hostname}"
 			trap "touch ~/.backup_interrupted.lock && exit " INT
