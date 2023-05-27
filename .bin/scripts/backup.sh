@@ -9,7 +9,7 @@ if [[ hostname == "" ]]; then
 	exit 1
 fi
 
-if [ -f ~/.backup_interrupted.lock ]; then
+if [ -f ~/.backup_interrupted.lock && $argv[1] != "--reset" ]; then
 	# Get the last snapshot that was interrupted
 	echo "Running in Backup Interrupted Mode so trying to fetch resume token"
 	trap "touch ~/.backup_interrupted.lock && exit" INT
