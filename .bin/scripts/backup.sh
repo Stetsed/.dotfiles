@@ -12,7 +12,7 @@ fi
 if [[ $1 == "--help" || $1 == "" ]]; then
 	echo "Usage: backup.sh backup [path] [--home|--root] [--reset]"
 	echo "Note: Please give your user permission for send and snapshot for the dataset you want to backup."
-	echo "Example: sudo zfs allow -u stetsed send,snapshot zroot/data/home"
+	echo "Example: sudo zfs allow -u stetsed send,snapshot,mount,hold zroot/data/home"
 	echo "Options:"
 	echo "Path: Pass the path to the volume you want to backup. Ex: zroot/data/home"
 	echo "--reset: Reset the backup and start from scratch"
@@ -74,12 +74,14 @@ if [[ $1 == "backup" ]]; then
 			ssh truenas "zfs list -H -o name -t snapshot | grep "${hostname}" | xargs -n1 zfs destroy -r"
 			ssh truenas "zfs destroy -r Vault/backups/${hostname}"
 			trap "touch ~/.backup_interrupted.lock && exit " INT
+			trap "zfs destroy $path@$time-$hostname-$path_name && exit" ERR
 			zfs send -vw $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
 			notify-send "Backup Complete"
 			exit 0
 		else
 			trap "touch ~/.backup_interrupted.lock && exit " INT
 			old_snapshot=$(zfs list -t snapshot -o name | grep ${path} | awk '{y=z; z=$0} END{print y}')
+			trap "zfs destroy $path@$time-$hostname-$path_name && exit" ERR
 			zfs send -vw -I ${old_snapshot} $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
 			notify-send "Backup Complete"
 			exit 0
