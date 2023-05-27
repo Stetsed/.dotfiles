@@ -1,4 +1,4 @@
-function backup --wraps='~/.bin/backup.sh' --description 'alias backup=~/.bin/backup.sh'
-  ~/.bin/backup.sh $argv
+function backup --wraps='~/.bin/scripts/backup.sh' --description 'alias backup=~/.bin/scripts/backup.sh'
+  ~/.bin/scripts/backup.sh $argv
         
 end
