@@ -58,7 +58,7 @@ if [[ $1 == "backup" ]]; then
 
 		sudo zfs snapshot -r $path@${time}-${hostname}-${path_name}
 
-		path_exists=$(ssh truenas "zfs list -H -o name Vault/backups/${hostname}" | wc -l)
+		path_exists=$(ssh truenas "zfs list -H -o name Vault/backups/${hostname}-${path_name}" | wc -l)
 
 		if [[ $3 == "--reset" || $path_exists == 0 ]]; then
 			ssh truenas "zfs list -H -o name -t snapshot | grep "${hostname}" | xargs -n1 zfs destroy -r"
