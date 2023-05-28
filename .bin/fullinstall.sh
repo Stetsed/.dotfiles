@@ -378,6 +378,8 @@ File_Too() {
 
 	cp -r ~/.env ~/Network/Storage/Transfer/
 
+	cp -r ~/.cache/rbw ~/Network/Storage/Transfer/
+
 	exit
 }
 
@@ -386,19 +388,17 @@ File_From() {
 	pkill webcord
 
 	rm -rf ~/.librewolf
-	cp -r ~/Network/Storage/Transfer/.librewolf ~/
-	rm -rf ~/Network/Storage/Transfer/.librewolf/
+	mv ~/Network/Storage/Transfer/.librewolf ~/
 
 	rm -rf ~/.config/WebCord
-	cp -r ~/Network/Storage/Transfer/WebCord ~/.config/
-	rm -rf ~/Network/Storage/Transfer/WebCord
+	mv ~/Network/Storage/Transfer/WebCord ~/.config/
 
 	rm -rf ~/.ssh
-	cp -r ~/Network/Storage/Transfer/.ssh ~/
-	rm -rf ~/Network/Storage/Transfer/.ssh
+	mv ~/Network/Storage/Transfer/.ssh ~/
 
-	cp -r ~/Network/Storage/Transfer/.env ~/
-	rm -rf ~/Network/Storage/Transfer/.env
+	mv ~/Network/Storage/Transfer/.env ~/
+
+	mv ~/Network/Storage/Transfer/rbw ~/.cache/
 }
 
 Server_Setup() {
