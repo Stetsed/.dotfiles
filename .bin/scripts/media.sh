@@ -24,7 +24,7 @@ if [[ $type == "screenshot" ]]; then
 	grimblast --notify save area $file_path
 
 	if [[ -e $file_path ]]; then
-		json=$(curl -X POST -H "Authorization: $AUTHORIZATION" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
+		json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
 
 		responseError=$(echo "$json" | jq -r '.code')
 
@@ -57,7 +57,7 @@ elif [[ $type == "video" ]]; then
 
 	notify-send "Video Taken $file_path"
 
-	json=$(curl -X POST -H "Authorization: $AUTHORIZATION" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
+	json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
 
 	responseError=$(echo "$json" | jq -r '.code')
 
