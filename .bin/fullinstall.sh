@@ -376,8 +376,7 @@ File_Too() {
 
 	cp -r ~/.ssh ~/Network/Storage/Transfer/
 
-	cp -r ~/.cache/rbw ~/Network/Storage/Transfer/
-
+	cp -r ~/.env ~/Network/Storage/Transfer/
 	exit
 }
 
@@ -394,7 +393,8 @@ File_From() {
 	rm -rf ~/.ssh
 	mv ~/Network/Storage/Transfer/.ssh ~/
 
-	mv ~/Network/Storage/Transfer/rbw ~/.cache/
+	rm -rf ~/.env
+	mv ~/Network/Storage/Transfer/.env ~/
 }
 
 Server_Setup() {
