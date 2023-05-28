@@ -112,6 +112,8 @@
 (deflisten audiodevice `pactl --format=json list sinks | jq -c -r '.[0]["description"]'`)
 (deflisten cavajson `scripts/cavajson`)
 (deflisten mousepos `scripts/mousetrack`)
+(deflisten activews `scripts/activews.sh`)
+
 
 (defvar username_default "username")
 (defvar quote_content `["haha pointers hee hee i love pointe-\\\nProcess Vaxry exited with signal SIGSEGV"]`)

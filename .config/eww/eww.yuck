@@ -35,15 +35,8 @@
       (box :space-evenly false :class "module-group"
         (osettings-button)
       )
-      ; (box :space-evenly false :class "module-group"
-        ;   (taskbar)
-      ; )
-      (revealer
-        :reveal false
-        :transition "slideright"
-        (label
-          :text "${volume.audio} ${brightness.level}" ; Dummy to keep listeners active
-        )
+      (box :space-evenly false :class "activews-group"
+       (label :class "activews" :text "${activews}")
       )
     )
   )
