@@ -1,7 +1,7 @@
 function nano --description 'Edit File with sudo if needed'
     # To anybody reading this function, I know it's fucking scuffed. Deal with it
     if test -z $argv[1]
-        echo "File Not Passed"
+        nvim
         return
     end
 
