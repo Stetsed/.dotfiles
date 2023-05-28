@@ -14,6 +14,7 @@ set -x PATH $PATH ~/.cargo/bin
 set -x OBSIDIAN_USE_WAYLAND 1
 
 if [ (tty) = /dev/tty1 ]
+    rbw sync
     Hyprland
     vlock -a
 end
