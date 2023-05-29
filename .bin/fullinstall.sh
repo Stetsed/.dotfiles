@@ -62,11 +62,9 @@ ZFS_Setup_Filesystem() {
 	done
 
 	if [[ $encrypt == "Yes" ]]; then
-		echo "Yes Encrypted"
-		#zpool create -f -O atime=off -O acltype=posixacl -O xattr=sa -O compression=lz4 -O canmount=off -o ashift=12 -O encryption=aes-256-gcm -O keyformat=passphrase -O keylocation=prompt zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
+		zpool create -f -O atime=off -O acltype=posixacl -O xattr=sa -O compression=lz4 -O canmount=off -o ashift=12 -O encryption=aes-256-gcm -O keyformat=passphrase -O keylocation=prompt zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
 	else
-		echo "No Encrypted"
-		#zpool create -f -O atime=off -O acltype=posixacl -O xattr=sa -O compression=lz4 -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
+		zpool create -f -O atime=off -O acltype=posixacl -O xattr=sa -O compression=lz4 -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
 	fi
 
 	zfs create -o canmount=off -o mountpoint=none zroot/ROOT
