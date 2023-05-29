@@ -80,7 +80,7 @@ if [[ $1 == "backup" ]]; then
 			exit 0
 		else
 			trap "touch ~/.backup_interrupted.lock && exit " INT
-			old_snapshot=$(zfs list -t snapshot -o name | grep ${path} | awk '{y=z; z=$0} END{print y}')
+			old_snapshot=$(zfs list -t snapshot -o name | grep ${path}@ | awk '{y=z; z=$0} END{print y}')
 			trap "zfs destroy $path@$time-$hostname-$path_name && exit" ERR
 			zfs send -vw -I ${old_snapshot} -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
 			notify-send "Backup Complete"
