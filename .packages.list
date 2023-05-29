@@ -34,7 +34,7 @@ obsidian
 fish
 hyprland
 npm
-xdg-desktop-portal-hyprland-git
+xdg-desktop-portal-hyprland
 exa
 noto-fonts-emoji
 qt5-wayland
@@ -58,3 +58,4 @@ wf-recorder
 udisks2
 udiskie
 inetutils
+kitty

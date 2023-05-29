@@ -286,7 +286,7 @@ User_Paru() {
 User_Dotfiles() {
 	echo -n 'Note: This installation expects your dotfiles to be in a bare repository, and expects there to be a .packages.list file in the root of the repository, which has 1 package per line.'
 	echo -n 'Enter the Github Repository you wanna use: '
-	repository=$(gum input --placeholder "stetsed/dotfiles")
+	repository=$(gum input --placeholder "stetsed/.dotfiles")
 
 	git clone --bare https://github.com/$repository.git $HOME/.dotfiles
 	function config {
@@ -310,10 +310,10 @@ User_Extra() {
 	echo -n 'To enable the bluetooth package you require the bluez package installed, and for pipewire you need pipewire and pipewire-pulse installed``'
 
 	echo -n 'Do you wanna install enable bluetooth?'
-	bluetooth=$(gum choose --prompt "Yes" "No")
+	bluetooth=$(gum choose "Yes" "No")
 
 	echo -n 'Do you want to enable pipewire?'
-	pipewire=$(gum choose --prompt "Yes" "No")
+	pipewire=$(gum choose "Yes" "No")
 
 	if [[ $bluetooth == "Yes" ]]; then
 		systemctl enable --now bluetooth

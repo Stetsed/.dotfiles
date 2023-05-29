@@ -109,6 +109,11 @@ while true; do
 	CAPACITY=$(cat /sys/class/power_supply/BAT1/capacity)
 	STATE=$(cat /sys/class/power_supply/BAT1/status)
 
+	if [[$RATE == "" || $STATE == "" || $CAPACITY == "" ]]; then
+		echo '{"quickicon": "", "icon": "", "percentage": 100, "wattage": "0 W", "status": "Charging", "circolor": "#EF738A", "cirbgcolor": "transparent", "color": "white", "bgcolor": "transparent" }'
+		exit 0
+	fi
+
 	if [[ "$CAPACITY" -le 5 && "$STATE" = "Discharging" ]]; then
 		if [ $warnedlow == 0 ]; then
 			warnedlow=1
