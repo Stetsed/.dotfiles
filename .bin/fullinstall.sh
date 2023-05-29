@@ -53,36 +53,30 @@ ZFS_Partition_Drive() {
 }
 
 ZFS_Setup_Filesystem() {
-
-	zpool create -f -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
-
 	echo "Do you want to encrypt your drive?"
 	encrypt=$(gum choose "Yes" "No")
 
 	if [[ "encrypt" == "Yes" ]]; then
-		zfs create -o canmount=off -o mountpoint=none -o encryption=on -o keylocation=prompt -o keyformat=passphrase zroot/arch
+		zpool create -f -O atime=off -O acltype=posixacl -O xattr=sa -O compression=lz4 -O canmount=off -o ashift=12 -O encryption=aes-256-gcm -O keyformat=passphrase -O keylocation=prompt zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
 	else
-		zfs create -o canmount=off -o mountpoint=none zroot/arch
+		zpool create -f -O atime=off -O acltype=posixacl -O xattr=sa -O compression=lz4 -O canmount=off -o ashift=12 zroot /dev/disk/by-id/$SELECTED_DRIVE-part2
 	fi
 
-	zfs create -o canmount=off -o mountpoint=none zroot/arch/ROOT
-	zfs create -o canmount=noauto -o mountpoint=/ zroot/arch/ROOT/default
-	zfs set compression=on zroot
-	zfs set atime=off zroot
-	zfs set xattr=sa zroot
-	zfs set acltype=posixacl zroot
+	zfs create -o canmount=off -o mountpoint=none zroot/ROOT
 
-	zfs create -o mountpoint=none zroot/arch/data
-	zfs create -o mountpoint=/home zroot/arch/data/home
+	zfs create -o canmount=noauto -o mountpoint=/ zroot/ROOT/arch
+
+	zfs create -o mountpoint=none zroot/data
+	zfs create -o mountpoint=/home zroot/data/home
 
 	zfs umount -a
 	zpool export zroot
 
 	zpool import -l -d /dev/disk/by-id -R /mnt zroot
 
-	zfs mount zroot/arch/ROOT/default
-	zfs mount zroot/arch/data/home
-	zpool set bootfs=zroot/arch/ROOT/default zroot
+	zfs mount zroot/ROOT/arch
+	zfs mount zroot/data/home
+	zpool set bootfs=zroot/ROOT/arch zroot
 
 	mkdir /mnt/boot
 	mount /dev/disk/by-id/$SELECTED_DRIVE-part1 /mnt/boot
