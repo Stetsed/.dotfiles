@@ -442,6 +442,7 @@ Main_Run() {
 	if ! command -v gum &>/dev/null; then
 		echo "Gum is not installed, installing gum"
 		sudo pacman -Sy gum
+		sleep 5
 	fi
 
 	clear
