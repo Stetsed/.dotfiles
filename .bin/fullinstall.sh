@@ -400,6 +400,8 @@ File_From() {
 
 	rm -rf ~/.env
 	mv ~/Network/Storage/Transfer/.env ~/
+
+	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
 }
 
 Server_Setup() {

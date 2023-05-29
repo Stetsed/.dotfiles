@@ -13,6 +13,7 @@ set -x BAT_THEME Catppuccin-mocha
 set -x PATH $PATH ~/.cargo/bin
 set -x OBSIDIAN_USE_WAYLAND 1
 set -x WLR_NO_HARDWARE_CURSORS 1
+set -x GPG_TTY $(tty)
 
 if [ (tty) = /dev/tty1 ]
     Hyprland
