@@ -3,7 +3,7 @@
 	name = Stetsed
 	email = stetsed@protonmail.com
 [commit]
-  gpgsign = false 
+  gpgsign = true
 
 [core]
     pager = delta

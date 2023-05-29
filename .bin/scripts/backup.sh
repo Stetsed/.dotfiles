@@ -12,7 +12,7 @@ fi
 if [[ $1 == "--help" || $1 == "" ]]; then
 	echo "Usage: backup.sh backup [path] [--home|--root] [--reset]"
 	echo "Note: Please give your user permission for send and snapshot for the dataset you want to backup."
-	echo "Example: sudo zfs allow -u stetsed send,snapshot,mount,hold zroot/data/home"
+	echo "Example: sudo zfs allow -u stetsed send,snapshot,mount,hold,destroy zroot/data/home"
 	echo "Options:"
 	echo "Path: Pass the path to the volume you want to backup. Ex: zroot/data/home"
 	echo "--reset: Reset the backup and start from scratch"
