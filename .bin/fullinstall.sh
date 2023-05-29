@@ -150,26 +150,28 @@ Chroot_Install_Packages() {
 
 Chroot_User() {
 
-	echo -n 'Enter Username You Wanna Use: '
+	echo 'Enter Username You Wanna Use: '
 	username=$(gum input --placeholder="stetsed")
 
 	while [[ "$username" == "" ]]; do
-		echo -n "Username cannot be empty, please enter again: "
+		echo "Username cannot be empty, please enter again: "
 		username=$(gum input --placeholder="stetsed")
 	done
 
+	password1="bruh"
+
 	while [[ "$password1" != "$password2" ]]; do
-		echo -n "Enter password and make sure it matches!"
+		echo "Enter password and make sure it matches!"
 		password1=$(gum input --placeholder="password" --password)
 		password2=$(gum input --placeholder="password" --password)
 	done
 
 	while [[ "$shell" != "bash" && "$shell" != "fish" ]]; do
-		echo -n "Which shell do you wanna use? (bash or fish): "
+		echo "Which shell do you wanna use? (bash or fish): "
 		shell=$(gum choose "bash" "fish")
 	done
 
-	if [[ shell == "fish" ]]; then
+	if [[ $shell == "fish" ]]; then
 		pacman -S fish
 	fi
 
@@ -181,7 +183,7 @@ Chroot_User() {
 }
 
 Chroot_Setup_UKI() {
-	echo "zfs=zroot/arch/ROOT/default rw" >/etc/kernel/cmdline
+	echo "zfs=zroot/ROOT/arch rw" >/etc/kernel/cmdline
 
 	mkdir -p /boot/EFI/BOOT
 
