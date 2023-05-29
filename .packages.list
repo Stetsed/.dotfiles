@@ -55,6 +55,6 @@ socat
 light
 jq
 wf-recorder
-udisk2
+udisks2
 udiskie
 inetutils
