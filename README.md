@@ -31,7 +31,7 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 Run the below command inside of an archlinux ISO to setup a ZFS system, and enter Stetsed/.dotfiles at the repository stage to use my dotfiles
 
 ```bash
-sh -c "$(curl -Ls selfhostable.net/install)"
+bash -c "$(curl -Ls selfhostable.net/install)"
 ```
 
 ## Acknowledgements
