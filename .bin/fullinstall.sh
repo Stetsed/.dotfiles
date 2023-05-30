@@ -519,14 +519,12 @@ Main_Run() {
 	CHROOT="Chroot"
 	USER="User"
 	FILE_TRANSFER="File Transfer"
-	SERVER_SHELL="Server Shell"
 	EXTRA="Extra"
-	SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "$USER" "$FILE_TRANSFER" "$SERVER_SHELL" "$EXTRA")
+	SELECTION=$(gum choose --cursor-prefix "[ ] " --selected-prefix "[✓] " "$ZFS" "$CHROOT" "$USER" "$FILE_TRANSFER" "$EXTRA")
 	grep -q "$ZFS" <<<"$SELECTION" && ZFS_Run
 	grep -q "$CHROOT" <<<"$SELECTION" && Chroot_Run
 	grep -q "$USER" <<<"$SELECTION" && User_Run
 	grep -q "$FILE_TRANSFER" <<<"$SELECTION" && File_Run
-	grep -q "$SERVER_SHELL" <<<"$SELECTION" && Server_Setup
 	grep -q "$EXTRA" <<<"$SELECTION" && Extra_Run
 
 }
