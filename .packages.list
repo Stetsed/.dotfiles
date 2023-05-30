@@ -12,7 +12,6 @@ pipewire-pulse
 dunst
 bluedevil
 bluez-utils
-grimblast-git
 neovim
 network-manager-applet
 rofi-lbonn-wayland-git
@@ -62,3 +61,5 @@ kitty
 bc
 gnome-keyring
 seahorse
+grim
+slurp

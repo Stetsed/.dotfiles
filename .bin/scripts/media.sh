@@ -21,7 +21,7 @@ time=$(date -u +%Y-%m-%dT%H:%M:%S%Z)
 if [[ $type == "screenshot" ]]; then
 	file_path=~/Network/Documents/Screenshots/$time.png
 
-	grimblast --notify save area $file_path
+	~/.bin/scripts/grimblast.sh --notify save area $file_path
 
 	if [[ -e $file_path ]]; then
 		json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
