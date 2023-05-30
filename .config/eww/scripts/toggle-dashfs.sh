@@ -13,7 +13,6 @@ if [[ "$state" == "true" || "$1" == "--close" ]]; then
 	eww update rev_dashfs=false
 	sleep 0.15
 	eww close dashfs
-	eww update cavajson=''
 	eww open bar
 else
 	eww update anim_open_dashfs=true

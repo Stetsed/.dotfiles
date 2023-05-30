@@ -51,8 +51,6 @@
 (defvar winsearch_actions "")
 (defvar winsearch_actions_type "")
 (defvar winsearch_prefix "")
-(defvar allapps '')
-(defvar allapps_get '')
 (defvar compact false)
 (defvar resource_metric "cpu")
 (defvar record_sound false)
@@ -110,7 +108,6 @@
 (deflisten audiojson "scripts/audiolevels")
 (deflisten mplay "playerctl -F metadata -f '{{status}}'")
 (deflisten audiodevice `pactl --format=json list sinks | jq -c -r '.[0]["description"]'`)
-(deflisten cavajson `scripts/cavajson`)
 (deflisten mousepos `scripts/mousetrack`)
 (deflisten activews `scripts/activews.sh`)
 

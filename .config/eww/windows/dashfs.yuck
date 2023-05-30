@@ -39,7 +39,7 @@
     :class "dashfs-cava-column"
     :style "
     transition: 0ms;
-    min-${dir == 'up' || dir == 'down' ? 'height' : 'width'}: ${cavajson[nth] / 3}px;
+    min-${dir == 'up' || dir == 'down' ? 'height' : 'width'};
     "
   )
 )
