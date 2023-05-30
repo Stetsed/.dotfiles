@@ -51,7 +51,7 @@ elif [[ $type == "video" ]]; then
 
 	notify-send -t 5000 "Starting Recording..."
 
-	wf-recorder -t -f $file_path
+	wf-recorder -c h264_vaapi -d /dev/dri/card0 -t -f $file_path
 
 	eww close recording
 
