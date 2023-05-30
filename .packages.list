@@ -60,3 +60,5 @@ udiskie
 inetutils
 kitty
 bc
+gnome-keyring
+seahorse
