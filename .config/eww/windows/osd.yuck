@@ -1,0 +1,46 @@
+(defwidget osdwidget []
+  (box
+    :class "osd-window"
+    :orientation "h"
+    :space-evenly false
+    (revealer
+      :reveal { osd_vol_timer > 0 }
+      :transition "slideright"
+      :duration "80ms"
+      (centerbox
+        :class "osd-var"
+        :orientation "h"
+        :space-evenly false
+        (label :xalign 0.5 :class "osd-text" :text "${volume.icon}")
+        (box)
+        (label :xalign 0.5 :halign "end" :class "osd-text" :text "${volume.percent}")
+      )
+    )
+    (revealer
+      :reveal { osd_bright_timer > 0}
+      :transition "slideright"
+      :duration "80ms"
+      (centerbox
+        :class "osd-var"
+        :orientation "h"
+        :space-evenly false
+        (label :xalign 0.5 :class "osd-text" :text "${brightness.icon}")
+        (box)
+        (label :xalign 0.5 :class "osd-text" :text {round(brightness.level, 0)})
+      )
+    )
+  )
+)
+
+(defwindow osd
+  :monitor 0
+  :stacking "overlay"
+  :focusable "false"
+  :geometry (geometry
+    :y "20px"
+    :width "100px"
+    :height "53px"
+    :anchor "bottom center"
+  )
+  (osdwidget)
+)

@@ -14,6 +14,7 @@
 (include "./windows/onotify.yuck")
 (include "./windows/supercontext.yuck")
 (include "./windows/recording.yuck")
+(include "./windows/osd.yuck")
 
 (defwidget separator []
   (box
