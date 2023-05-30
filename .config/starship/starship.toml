@@ -1,3 +1,17 @@
+# Sets user-defined palette
+palette = "catppuccin_mocha"
+
+[character]
+# Note the use of Catppuccin color 'maroon'
+success_symbol = "[[♥](green) ❯](maroon)"
+error_symbol = "[❯](red)"
+vicmd_symbol = "[❮](green)"
+
+[directory]
+truncation_length = 4
+# Catppuccin 'lavender'
+style = "bold lavender"
+
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
@@ -25,3 +39,4 @@ surface0 = "#313244"
 base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
+
