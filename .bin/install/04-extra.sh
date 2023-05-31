@@ -146,7 +146,7 @@ Transfer_Files_From() {
 }
 
 Distrobox_Setup(){
-  paru -Syu distrobox podman
+  paru -Syu distrobox-git podman
 
   mkdir -p ~/.local/share/distrobox
 
