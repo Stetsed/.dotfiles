@@ -86,7 +86,7 @@ User_Extra() {
 	pipewire=$(gum choose "Yes" "No")
 
 	if [[ $bluetooth == "Yes" ]]; then
-		systemctl enable --now bluetooth
+		sudo systemctl enable --now bluetooth
 	fi
 
 	if [[ $pipewire == "Yes" ]]; then
@@ -110,8 +110,8 @@ User_Extra() {
 		timezone=$(gum input --placeholder "Europe/Amsterdam")
 
 		sudo systemctl enable --now systemd-timesyncd.service
-		timedatectl set-ntp true
-		timedatectl set-timezone $timezone
+		sudo timedatectl set-ntp true
+		sudo timedatectl set-timezone $timezone
 	fi
 
 }
@@ -125,7 +125,7 @@ User_Stetsed() {
 	ln -s /mnt/data/Stetsed/Documents ~/Network/Documents
 	mkdir Downloads
 
-	systemctl mask NetworkManager-wait-online.service
+	sudo systemctl mask NetworkManager-wait-online.service
 
 }
 
