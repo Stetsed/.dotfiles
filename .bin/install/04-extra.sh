@@ -57,7 +57,7 @@ Server_Setup_Debian() {
 }
 
 ZFS_Remote_Unlock_Setup() {
-	yay -Syu mkinitcpio-netconf mkinitcpio-dropbear
+	paru -Syu mkinitcpio-netconf mkinitcpio-dropbear
 
 	echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIezEg3z8pf+9ZoQlscHCrKd72d2sZMtEFyEIZjqSX3uJa0RfHK7miIBXqOEv8A8dlAwUlOP3n+A77TbY6FM5DAM/EFZ4v2Qxz8AJeCJN5YWm+WxE7+NNMIAt88WBtPuNNAmLgnLP10izAjnSJpHU1xc2nW49FoscI5VeoBUCr6UFbgsTqxBWwBBXjCF0dbAh6G1B6zRPkcfhes2aGpnvjrRYDsk3nfzsfMQgsrBrTmehNJDIDiEOQeBwnwsopkMBFKRnvfJ7a8MFnl5Mi19NneScktqpee7tGs7uZruAYmmJh/xm/Hp1Y0YOt/MYN4WAasCVh+n4+Exb0C+5tD7ck+W387440Tmpi1CkuMctB7uHjuUpbOLWh5UYOvQ76//6tWPGZu4/KkY7TXUzshzVvWqOXAk/5NZ45ysZcBn/Qy8Bd4kqrF3vXoHRIEXkZkGky8mcjraRBBUVQUuCgZVIEjgTemsy4ip1OjPN9RCANl8nhyJAMDLArF89dHuzWY50= stetsed@ArchHome" | sudo tee -a /etc/dropbear/root_key
 
@@ -69,11 +69,11 @@ ZFS_Remote_Unlock_Setup() {
 }
 
 Framework_TLP_Setup() {
-	yay -Syu tlp
+	paru -Syu tlp
 
 	echo -e "CPU_SCALING_GOVERNOR_ON_AC=performance\nCPU_SCALING_GOVERNOR_ON_BAT=powersave\nCPU_ENERGY_PERF_POLICY_ON_AC=performance\nCPU_ENERGY_PERF_POLICY_ON_BAT=balance_power\nCPU_HWP_DYN_BOOST_ON_AC=1\nCPU_HWP_DYN_BOOST_ON_BAT=1" | sudo tee /etc/tlp.d/01-basic.conf
 
-	sduo systemctl enable tlp.service
+	sudo systemctl enable tlp.service
 
 	echo "Framework TLP Power Tuning Setup Complete"
 }
@@ -89,7 +89,7 @@ Framework_80_100_Setup() {
 }
 
 Framework_Fingerprint_Setup() {
-	yay -S fprintd
+	paru -S fprintd
 
 	echo -e "#%PAM-1.0\nauth        sufficient      pam_fprintd.so\n\nauth\tinclude\t\tsystem-auth\naccount\tinclude\t\tsystem-auth\nsession\tinclude\t\tsystem-auth" | sudo tee /etc/pam.d/sudo
 
