@@ -36,6 +36,8 @@ User_Home() {
 }
 
 User_Paru() {
+  sudo systemctl start reflector
+
 	sudo pacman -Syu git
 
 	git clone https://aur.archlinux.org/paru-bin.git
