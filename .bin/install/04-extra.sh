@@ -7,13 +7,15 @@ Extra_Run() {
 	FRAMEWORK_80_100="Framework 80/100 Power Setup"
 	FRAMEWORK_FINGERPRINT="Framework Fingerprint Setup"
 	TRANSFER_FILES="Transfer Files"
-	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES")
+  SETUP_DISTROBOX="Setup Distrobox"
+	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SETUP_DISTROBOX")
 	grep -q "$SERVER_SETUP" <<<"$SELECTION" && Server_Setup
 	grep -q "$ZFS_REMOTE_UNLOCK" <<<"$SELECTION" && ZFS_Remote_Unlock_Setup
 	grep -q "$FRAMEWORK_TLP" <<<"$SELECTION" && Framework_TLP_Setup
 	grep -q "$FRAMEWORK_80_100" <<<"$SELECTION" && Framework_80_100_Setup
 	grep -q "$FRAMEWORK_FINGERPRINT" <<<"$SELECTION" && Framework_Fingerprint_Setup
 	grep -q "$TRANSFER_FILES" <<<"$SELECTION" && Transfer_Files
+  grep -q "$SETUP_DISTROBOX" <<<"$SELECTION" && Distrobox_Setup
 }
 
 Server_Setup() {
@@ -141,6 +143,14 @@ Transfer_Files_From() {
 	gum spin -s dot --title "Moving .env file..." -- mv ~/Network/Storage/Transfer/.env ~/
 
 	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
+}
+
+Distrobox_Setup(){
+  paru -Syu distrobox podman
+
+  mkdir -p ~/.local/share/distrobox
+
+  ln -sfr ~/.local/share/distrobox/ ~/Distrobox
 }
 
 Extra_Run
