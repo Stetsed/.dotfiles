@@ -132,13 +132,13 @@ Transfer_Files_From() {
 
 	pkill webcord
 	rm -rf ~/.config/WebCord
-	um spin -s dot --title "Moving WebCord Files..." -- mv ~/Network/Storage/Transfer/WebCord ~/.config/
+	gum spin -s dot --title "Moving WebCord Files..." -- mv ~/Network/Storage/Transfer/WebCord ~/.config/
 
 	rm -rf ~/.ssh
-	um spin -s dot --title "Moving SSH Files..." -- mv ~/Network/Storage/Transfer/.ssh ~/
+	gum spin -s dot --title "Moving SSH Files..." -- mv ~/Network/Storage/Transfer/.ssh ~/
 
 	rm -rf ~/.env
-	um spin -s dot --title "Moving .env file..." -- mv ~/Network/Storage/Transfer/.env ~/
+	gum spin -s dot --title "Moving .env file..." -- mv ~/Network/Storage/Transfer/.env ~/
 
 	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
 }
