@@ -6,12 +6,14 @@ Extra_Run() {
 	FRAMEWORK_TLP="Framework TLP Setup"
 	FRAMEWORK_80_100="Framework 80/100 Power Setup"
 	FRAMEWORK_FINGERPRINT="Framework Fingerprint Setup"
-	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT")
+	TRANSFER_FILES="Transfer Files"
+	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES")
 	grep -q "$SERVER_SETUP" <<<"$SELECTION" && Server_Setup
 	grep -q "$ZFS_REMOTE_UNLOCK" <<<"$SELECTION" && ZFS_Remote_Unlock_Setup
 	grep -q "$FRAMEWORK_TLP" <<<"$SELECTION" && Framework_TLP_Setup
 	grep -q "$FRAMEWORK_80_100" <<<"$SELECTION" && Framework_80_100_Setup
 	grep -q "$FRAMEWORK_FINGERPRINT" <<<"$SELECTION" && Framework_Fingerprint_Setup
+	grep -q "$TRANSFER_FILES" <<<"$SELECTION" && Transfer_Files
 }
 
 Server_Setup() {
@@ -98,6 +100,47 @@ Framework_Fingerprint_Setup() {
 	echo -e "#%PAM-1.0\n\nauth\t\tsufficient\t\tpam_unix.so try_first_pass likeauth nullok\n\nauth\t\tinclude\t\t\t\t\t\t\t\tsystem-login\naccount\t\tinclude\t\t\t\t\t\t\tsystem-login\npassword\tinclude\t\t\t\t\t\t\tsystem-login\nsession\t\tinclude\t\t\t\t\t\t\tsystem-login" | sudo tee /etc/pam.d/system-local-login
 
 	echo "Framework Fingerprint Setup Complete"
+}
+
+Transfer_Files() {
+	echo "Would you like to transfer files from the server, or too the server."
+	TOO="To the Server"
+	FROM="From the Server"
+	TRANSFER_SELECTION=$(gum choose "$TOO" "$FROM")
+	grep -q "$TOO" <<<"$TRANSFER_SELECTION" && Transfer_Files_Too
+	grep -q "$FROM" <<<"$TRANSFER_SELECTION" && Transfer_Files_From
+}
+
+Transfer_Files_Too() {
+	pkill librewolf
+	gum spin -s dot --title "Copying Librewolf Files..." -- cp -r ~/.librewolf ~/Network/Storage/Transfer/
+
+	rm -rf ~/.config/WebCord/Cache/
+	pkill webcord
+	gum spin -s dot --title "Copying WebCord Files..." -- cp -r ~/.config/WebCord ~/Network/Storage/Transfer/
+
+	gum spin -s dot --title "Copying SSH Files..." -- cp -r ~/.ssh ~/Network/Storage/Transfer/
+
+	gum spin -s dot --title "Copying .env file..." -- cp -r ~/.env ~/Network/Storage/Transfer/
+	exit
+}
+
+Transfer_Files_From() {
+	pkill librewolf
+	rm -rf ~/.librewolf
+	gum spin -s dot --title "Moving Librewolf Files..." -- mv ~/Network/Storage/Transfer/.librewolf ~/
+
+	pkill webcord
+	rm -rf ~/.config/WebCord
+	um spin -s dot --title "Moving WebCord Files..." -- mv ~/Network/Storage/Transfer/WebCord ~/.config/
+
+	rm -rf ~/.ssh
+	um spin -s dot --title "Moving SSH Files..." -- mv ~/Network/Storage/Transfer/.ssh ~/
+
+	rm -rf ~/.env
+	um spin -s dot --title "Moving .env file..." -- mv ~/Network/Storage/Transfer/.env ~/
+
+	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
 }
 
 Extra_Run
