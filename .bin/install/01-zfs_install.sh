@@ -104,7 +104,7 @@ ZFS_Setup_Basesystem() {
 
 	pacstrap /mnt base base-devel linux linux-firmware neovim networkmanager $cpu-ucode
 
-	arch-chroot /mnt sh -c "$(curl -Ls selfhostable.net/install)"
+	arch-chroot /mnt bash -c "$(curl -Ls selfhostable.net/install)"
 
 	arch-chroot /mnt
 
