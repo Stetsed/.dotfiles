@@ -145,12 +145,4 @@ Transfer_Files_From() {
 	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
 }
 
-Distrobox_Setup(){
-  paru -Syu distrobox-git podman
-
-  mkdir -p ~/.local/share/distrobox
-
-  ln -sfr ~/.local/share/distrobox/ ~/Distrobox
-}
-
 Extra_Run
