@@ -87,6 +87,8 @@ Framework_80_100_Setup() {
 
 	sudo systemctl enable framework-battery.timer
 
+  paru -S fw-ectool-git
+
 	echo "Framework 80-100 Battery Script Setup Complete"
 }
 
