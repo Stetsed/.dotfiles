@@ -127,6 +127,8 @@ User_Stetsed() {
 
 	sudo systemctl mask NetworkManager-wait-online.service
 
+  ln -s /run/media/$(whoami)/ ~/USB
+
 }
 
 User_Run
