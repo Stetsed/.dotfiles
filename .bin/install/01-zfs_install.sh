@@ -9,12 +9,13 @@ ZFS_Run() {
 		exit 0
 	fi
 
-  echo "Are you running an ISO with ZFS installed?"
-  zfs_iso=$(gum choose "Yes" "No")
-
-  if [[ $zfs_iso == "No" ]]; then
+  echo "Checking if ZFS is enabled in this ISO"
+  if ! pacman -Qi zfs-utils > /dev/null; then
+    echo "ZFS is not installed, installing"
     ZFS_Get_ZFS
   fi
+
+  modprobe zfs 
 
 	ZFS_Partition_Drive
 
