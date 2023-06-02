@@ -3,7 +3,7 @@
 Main_Run() {
   sudo pacman-key --init
 
-  sudo pacman -Syu archlinux-keyring
+  sudo pacman -Sy archlinux-keyring
 
 	# check if gum is installed
 	if ! command -v gum &>/dev/null; then
