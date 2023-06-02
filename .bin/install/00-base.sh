@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
 Main_Run() {
+  sudo pacman-key --init
+
+  sudo pacman -Syu archlinux-keyring
+
 	# check if gum is installed
 	if ! command -v gum &>/dev/null; then
 		echo "Gum is not installed, installing gum"
-		pacman-key --init
 		sudo pacman -Sy gum
 		sleep 5
 	fi
