@@ -9,7 +9,12 @@ ZFS_Run() {
 		exit 0
 	fi
 
-	ZFS_Get_ZFS
+  echo "Are you running an ISO with ZFS installed?"
+  zfs_iso=$(gum choose "Yes" "No")
+
+  if [[ $zfs_iso == "No" ]]; then
+    ZFS_Get_ZFS
+  fi
 
 	ZFS_Partition_Drive
 
