@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Desktop Remote Desktop
+Comment=Remote Desktop using Moonlight into home Machine
+Exec=moonlight stream ArchDesktop Desktop
+Terminal=false
+Type=Application
+Categories=Utility;
+Icon=distributor-logo-archlinux
+

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Windows Remote Desktop
+Comment=Remote Desktop into Windows Virtual Machine
+Exec=moonlight stream DESKTOP-JPS1OEQ Desktop
+Terminal=false
+Type=Application
+Categories=Utility;
+
