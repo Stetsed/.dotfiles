@@ -1,25 +1,24 @@
 {
-    "env": {
-        "PATH": "$(PATH):$(HOME)\/.local\/bin"
-    },
-    "apps": [
+  "env": {
+    "PATH": "$(PATH):$(HOME)\/.local\/bin"
+  },
+  "apps": [
+    {
+      "name": "Desktop",
+      "image-path": "desktop.png",
+      "prep-cmd": [
         {
-            "name": "Desktop",
-            "image-path": "desktop.png",
-            "prep-cmd": [
-                {
-                    "do": "hyprctl keyword monitor HDMI-A-1,disable",
-                    "undo": "hyprctl keyword monitor HDMI-A-1,2560x1440,1706x0,1.5"
-                }
-            ],
-            "exclude-global-prep-cmd": "false"
-        },
-        {
-            "name": "Steam Big Picture",
-            "detached": [
-                "setsid steam steam:\/\/open\/bigpicture"
-            ],
-            "image-path": "steam.png"
+          "do": "hyprctl keyword monitor HDMI-A-1,disable",
+          "undo": "hyprctl keyword monitor HDMI-A-1,2560x1440,1706x0,1.5"
         }
-    ]
+      ]
+    },
+    {
+      "name": "Steam Big Picture",
+      "detached": [
+        "setsid steam steam:\/\/open\/bigpicture"
+      ],
+      "image-path": "steam.png"
+    }
+  ]
 }
