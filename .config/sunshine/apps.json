@@ -8,7 +8,7 @@
       "image-path": "desktop.png",
       "prep-cmd": [
         {
-          "do": "hyprctl keyword monitor HDMI-A-1,disable",
+          "do": "echo 'hello'",
           "undo": "hyprctl keyword monitor HDMI-A-1,2560x1440,1706x0,1.5"
         }
       ]
