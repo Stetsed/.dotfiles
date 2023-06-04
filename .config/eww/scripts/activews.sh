@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-focusedws=$(hyprctl activewindow -j | gojq -c -M '.workspace.id')
+focusedws=$(hyprctl activewindow -j | jq -c -M '.workspace.id')
 echo $focusedws
 
 if [[ "$focusedws" == 'null' ]]; then
