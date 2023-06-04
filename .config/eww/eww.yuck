@@ -90,7 +90,7 @@
 )
 
 (defwindow bar
-  :stacking "fg"
+  :stacking "bg"
   :wm-ignore true
   :monitor 0
   :namespace "bar"
