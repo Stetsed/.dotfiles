@@ -51,6 +51,10 @@ User_Paru() {
 	cd ..
 
 	rm -rf paru-bin
+
+  echo -e "[options]\nCacheDir = /var/lib/repo/aur\n\n[aur]\nSigLevel = PackageOptional DatabaseOptional\nServer = file:///var/lib/repo/aur" | sudo tee -a /etc/pacman.conf
+
+
 }
 
 User_Dotfiles() {
