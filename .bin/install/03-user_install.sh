@@ -36,6 +36,8 @@ User_Home() {
 }
 
 User_Paru() {
+  sudo pacman -S reflector
+
   sudo systemctl start reflector
 
 	sudo pacman -Syu git
