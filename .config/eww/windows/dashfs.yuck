@@ -448,7 +448,7 @@
 
 (defwindow dashfs
   :focusable true
-  :windowtype "fg"
+  :stacking "fg"
   :wm-ignore true
   :geometry (geometry
     :width "100%"

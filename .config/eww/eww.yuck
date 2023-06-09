@@ -90,7 +90,7 @@
 )
 
 (defwindow bar
-  :stacking "bg"
+  :stacking "overlay"
   :wm-ignore true
   :monitor 0
   :namespace "bar"

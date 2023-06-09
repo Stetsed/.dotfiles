@@ -15,7 +15,7 @@
 (defwindow recording
   :class "recording"
   :focusable false
-  :windowtype "fg"
+  :stacking "fg"
   :wm-ignore false
   :geometry (geometry
     :x "0"
