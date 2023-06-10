@@ -1,14 +1,10 @@
 (defwidget bright []
   (box
-    :class "module"
-    (eventbox
-      :class "bright-icon"
-      (label
-        :valign "start"
-        :text {brightness.icon}
-        :class "bright-icon icon"
-        :tooltip "brightness ${round(brightness.level, 0)}%"
-      )
-    )
-  )
-)
+   :class "module"
+   (eventbox
+    :class "bright-icon"
+    (label
+     :valign "start"
+     :text {brightness.icon}
+     :class "bright-icon icon"
+     :tooltip "brightness ${round(brightness.level, 0)}%"))))

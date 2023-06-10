@@ -3,53 +3,41 @@
 
 (defwidget supercontext_widget []
   (box :width RES_WIDTH :height RES_HEIGHT
-    (overlay
-      (box :width RES_WIDTH :height RES_HEIGHT
-        (eventbox
-          :onclick "scripts/toggle-supercontext.sh --close &"
-          :onmiddleclick "scripts/toggle-supercontext.sh --close &"
-          :onrightclick "scripts/toggle-supercontext.sh --close &"
-        )
-      )
-      (box
-        :orientation "v"
-        :class "supercontext-window"
-        :style "
+       (overlay
+        (box :width RES_WIDTH :height RES_HEIGHT
+             (eventbox
+              :onclick "scripts/toggle-supercontext.sh --close &"
+              :onmiddleclick "scripts/toggle-supercontext.sh --close &"
+              :onrightclick "scripts/toggle-supercontext.sh --close &"))
+
+        (box
+         :orientation "v"
+         :class "supercontext-window"
+         :style "
         margin-left: ${supercontext_pos_x - (SUPERCONTEXT_WIDTH / 2)}px;
         margin-right: ${RES_WIDTH - supercontext_pos_x - (SUPERCONTEXT_WIDTH / 2)}px;
         margin-top: ${supercontext_pos_y - (SUPERCONTEXT_HEIGHT / 2)}px;
         margin-bottom: ${RES_HEIGHT - supercontext_pos_y - (SUPERCONTEXT_HEIGHT / 2)}px;
         "
-        (box :orientation "h"
-          (box :space-evenly false :orientation "v"
-            :class "supercontext-menu-topleft-${rev_supercontext}"
-          )
-          (box :space-evenly false :orientation "v"
-            :class "supercontext-menu-topright-${rev_supercontext}"
-          )
-        )
-        (box :orientation "h"
-          (box :space-evenly false :orientation "v"
-            :class "supercontext-menu-bottomleft-${rev_supercontext}"
-          )
-          (box :space-evenly false :orientation "v"
-            :class "supercontext-menu-bottomright-${rev_supercontext}"
-          )
-        )
-      )
-    )
-  )
-)
+         (box :orientation "h"
+              (box :space-evenly false :orientation "v"
+                   :class "supercontext-menu-topleft-${rev_supercontext}")
+              (box :space-evenly false :orientation "v"
+                   :class "supercontext-menu-topright-${rev_supercontext}"))
+
+         (box :orientation "h"
+              (box :space-evenly false :orientation "v"
+                   :class "supercontext-menu-bottomleft-${rev_supercontext}")
+              (box :space-evenly false :orientation "v"
+                   :class "supercontext-menu-bottomright-${rev_supercontext}"))))))
 
 (defwindow supercontext
   :focusable true
   :geometry (geometry
-    :x 0
-    :y 0
-    :width "100%"
-    :height "100%"
-    :anchor "center center"
-  )
+             :x 0
+             :y 0
+             :width "100%"
+             :height "100%"
+             :anchor "center center")
   :monitor 0
-  (supercontext_widget)
-)
+  (supercontext_widget))

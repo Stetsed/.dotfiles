@@ -3,63 +3,55 @@
 
 (defwidget dashfs_resource [value unit icon name]
   (box
+   :space-evenly false :orientation "v"
+   (label :class "dashfs-resource-title" :text {name})
+   (box
     :space-evenly false :orientation "v"
-    (label :class "dashfs-resource-title" :text {name})
-    (box
-      :space-evenly false :orientation "v"
-      :class "dashfs-resource-box"
-      :spacing 10
-      (circular-progress
-        :width 80 :height 80
-        :start-at 75
-        :class "dashfs-resource-circle"
-        :value {value}
-        :thickness 4
-        (label :class "dashfs-resource-icon" :text {icon})
-      )
-      (label
-        :halign "center"
-        :class "dashfs-resource-label"
-        :text "${value}${unit}"
-      )
-    )
-  )
-)
+    :class "dashfs-resource-box"
+    :spacing 10
+    (circular-progress
+     :width 80 :height 80
+     :start-at 75
+     :class "dashfs-resource-circle"
+     :value {value}
+     :thickness 4
+     (label :class "dashfs-resource-icon" :text {icon}))
+    (label
+     :halign "center"
+     :class "dashfs-resource-label"
+     :text "${value}${unit}"))))
 
 (defwidget cavacol_dashfs [nth dir]
   (box
-    :valign "${dir == 'up' ? 'end' : (
+   :valign "${dir == 'up' ? 'end' : (
       dir == 'down' ? 'start' : 'fill'
     )}"
-    :halign "${dir == 'right' ? 'start' : (
+   :halign "${dir == 'right' ? 'start' : (
       dir == 'left' ? 'end' : 'fill'
     )}"
     ; :width 20
-    :height 24
-    :class "dashfs-cava-column"
-    :style "
+   :height 24
+   :class "dashfs-cava-column"
+   :style "
     transition: 0ms;
     min-${dir == 'up' || dir == 'down' ? 'height' : 'width'};
-    "
-  )
-)
+    "))
 
 (defwidget dashfs_widget []
   (eventbox
-    :onclick "scripts/toggle-dashfs.sh --close &"
-    (box :width RES_WIDTH :height RES_HEIGHT
-      :class "dashfs-bg"
-      (overlay
-        (box :space-evenly false :orientation "v"
-          :width "100%" :height "100%"
-          :class "dashfs-graph"
-          :style "
+   :onclick "scripts/toggle-dashfs.sh --close &"
+   (box :width RES_WIDTH :height RES_HEIGHT
+        :class "dashfs-bg"
+        (overlay
+         (box :space-evenly false :orientation "v"
+              :width "100%" :height "100%"
+              :class "dashfs-graph"
+              :style "
           transition: ${anim_open_dashfs ? MD3_DECEL : MD3_ACCEL};
           ${rev_dashfs ? '' : 'margin-left: -1300px; margin-right: 1300px;'}
-          "
-        )
+          ")
         ; Cava (left)
-        (box
+         (box
           :orientation "v"
           :halign "start" :valign "center"
           :height {RES_HEIGHT}
@@ -111,10 +103,9 @@
           (cavacol_dashfs :dir "right" :nth 41)
           (cavacol_dashfs :dir "right" :nth 42)
           (cavacol_dashfs :dir "right" :nth 43)
-          (cavacol_dashfs :dir "right" :nth 44)
-        )
+          (cavacol_dashfs :dir "right" :nth 44))
         ; Cava (right)
-        (box
+         (box
           :orientation "v" :space-evenly false
           :halign "end" :valign "center"
           :height {RES_HEIGHT}
@@ -171,43 +162,39 @@
           (cavacol_dashfs :dir "left" :nth 3)
           (cavacol_dashfs :dir "left" :nth 2)
           (cavacol_dashfs :dir "left" :nth 1)
-          (cavacol_dashfs :dir "left" :nth 0)
-        )
+          (cavacol_dashfs :dir "left" :nth 0))
         ; Greet
-        (box :space-evenly false :orientation "v"
-          :halign "start" :valign "start"
-          :class "dashfs-greet"
-          :style "
+         (box :space-evenly false :orientation "v"
+              :halign "start" :valign "start"
+              :class "dashfs-greet"
+              :style "
           transition: ${anim_open_dashfs ? MD3_DECEL : MD3_ACCEL};
           ${rev_dashfs ? '' : 'margin-left: -533px;'}
           "
-          (label :xalign 0 :class "dashfs-greet-text"
-            :text "${time.hour >= 21 ? 'Good night' : (
+              (label :xalign 0 :class "dashfs-greet-text"
+                     :text "${time.hour >= 21 ? 'Good night' : (
               time.hour >= 18 ? 'Good evening' : (
                 time.hour >= 12 ? 'Good afternoon' : (
                   time.hour >= 5 ? 'Good morning' : 'Go to sleep'
                 )
               )
             )
-            } ${username}!"
-          )
-          (label :xalign 0 :class "dashfs-greet-subtext"
-            :text "It's not awesome, it's Hyprland!"
-          )
-        )
-        ; Time
-        (box :space-evenly false :orientation "v"
-          :halign "end" :valign "start"
-          :class "dashfs-clock"
-          :style "
+            } ${username}!")
+              (label :xalign 0 :class "dashfs-greet-subtext"
+                     :text "It's not awesome, it's Hyprland!"))
+
+; Time
+         (box :space-evenly false :orientation "v"
+              :halign "end" :valign "start"
+              :class "dashfs-clock"
+              :style "
           transition: ${anim_open_dashfs ? MD3_DECEL : MD3_ACCEL};
           ${rev_dashfs ? '' : 'margin-right: -400px;'}
           "
-          (label :xalign 1 :class "dashfs-clock-time" :text "${time.hour}:${time.minute}")
-          (label :xalign 1 :class "dashfs-clock-date" :text "${time.day}, ${time.date}")
-        )
+              (label :xalign 1 :class "dashfs-clock-time" :text "${time.hour}:${time.minute}")
+              (label :xalign 1 :class "dashfs-clock-date" :text "${time.day}, ${time.date}"))
         ; Fetch
-        (box
+         (box
           :orientation "v" :space-evenly false
           :halign "start" :valign "start"
           :style "
@@ -217,36 +204,30 @@
           "
           (label :class "dashfs-section-title" :text "# System")
           (box :space-evenly false :orientation "v"
-            :class "dashfs-section"
-            (box
-              :orientation "h" :space-evenly false
-              (label :class "dashfs-fetch-icon" :text "")
-              (label :class "dashfs-fetch" :text "${username + '@' + hostname}")
-            )
-            (box
-              :orientation "h" :space-evenly false
-              (label :class "dashfs-fetch-icon" :text "")
-              (label :class "dashfs-fetch" :text "${kernel}")
-            )
-            (box
-              :orientation "h" :space-evenly false
-              (label :class "dashfs-fetch-icon" :text "")
-              (label :class "dashfs-fetch" :text "${uptime}")
-            )
-            (box
-              :orientation "h" :space-evenly false
-              (label :class "dashfs-fetch-icon" :text "")
-              (label :class "dashfs-fetch" :text "${wm}")
-            )
-            (box
-              :orientation "h" :space-evenly false
-              (label :class "dashfs-fetch-icon" :text "")
-              (label :class "dashfs-fetch" :text "${packages}")
-            )
-          )
-        )
-        ; Session
-        (box
+               :class "dashfs-section"
+               (box
+                :orientation "h" :space-evenly false
+                (label :class "dashfs-fetch-icon" :text "")
+                (label :class "dashfs-fetch" :text "${username + '@' + hostname}"))
+               (box
+                :orientation "h" :space-evenly false
+                (label :class "dashfs-fetch-icon" :text "")
+                (label :class "dashfs-fetch" :text "${kernel}"))
+               (box
+                :orientation "h" :space-evenly false
+                (label :class "dashfs-fetch-icon" :text "")
+                (label :class "dashfs-fetch" :text "${uptime}"))
+               (box
+                :orientation "h" :space-evenly false
+                (label :class "dashfs-fetch-icon" :text "")
+                (label :class "dashfs-fetch" :text "${wm}"))
+               (box
+                :orientation "h" :space-evenly false
+                (label :class "dashfs-fetch-icon" :text "")
+                (label :class "dashfs-fetch" :text "${packages}"))))
+
+; Session
+         (box
           :orientation "v" :space-evenly false
           :halign "start" :valign "start"
           :style "
@@ -256,51 +237,44 @@
           "
           (label :class "dashfs-section-title" :text "# Session")
           (box :space-evenly false :orientation "v"
-            :class "dashfs-section"
-            (button :class "dashfs-section-button"
-              :onclick "scripts/dashactivate '~/.bin/scripts/lock.sh' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Lock")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/dashactivate 'systemctl suspend' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Sleep")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/dashactivate 'loginctl terminate-user $USER' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Logout")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/dashactivate 'systemctl reboot' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Reboot")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/dashactivate 'systemctl poweroff' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Shutdown")
-              )
-            )
-          )
-        )
-        ; Quick dirs
-        (box
+               :class "dashfs-section"
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/dashactivate '~/.bin/scripts/lock.sh' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Lock")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/dashactivate 'systemctl suspend' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Sleep")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/dashactivate 'loginctl terminate-user $USER' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Logout")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/dashactivate 'systemctl reboot' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Reboot")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/dashactivate 'systemctl poweroff' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Shutdown")))))
+
+; Quick dirs
+         (box
           :orientation "v" :space-evenly false
           :halign "start" :valign "start"
           :style "
@@ -310,51 +284,44 @@
           "
           (label :class "dashfs-section-title" :text "# Quick dirs")
           (box :space-evenly false :orientation "v"
-            :class "dashfs-section"
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Documents &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Documents")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Downloads &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Downloads")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Music &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Music")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Pictures &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Pictures")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Videos &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-fetch-icon" :text "")
-                (label :class "dashfs-fetch" :text "Videos")
-              )
-            )
-          )
-        )
-        ; Quick links
-        (box
+               :class "dashfs-section"
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Documents &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Documents")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Downloads &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Downloads")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Music &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Music")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Pictures &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Pictures")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open ~/Videos &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-fetch-icon" :text "")
+                        (label :class "dashfs-fetch" :text "Videos")))))
+
+; Quick links
+         (box
           :orientation "v" :space-evenly false
           :halign "start" :valign "start"
           :style "
@@ -364,74 +331,65 @@
           "
           (label :class "dashfs-section-title" :text "# Quick links")
           (box :space-evenly false :orientation "v"
-            :class "dashfs-section"
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://discord.com/app' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-nerd-icon" :text "󰙯 ")
-                (label :class "dashfs-fetch" :text "Discord")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://reddit.com' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-nerd-icon" :text " ")
-                (label :class "dashfs-fetch" :text "Reddit")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://github.com' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-nerd-icon" :text " ")
-                (label :class "dashfs-fetch" :text "GitHub")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://youtube.com' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-nerd-icon" :text " ")
-                (label :class "dashfs-fetch" :text "Youtube")
-              )
-            )
-            (button :class "dashfs-section-button"
-              :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://soundcloud.com' &"
-              (box
-                :orientation "h" :space-evenly false
-                (label :class "dashfs-nerd-icon" :text " ")
-                (label :class "dashfs-fetch" :text "SoundCloud")
-              )
-            )
-          )
-        )
-        ; Resources
-        (box :orientation "h" :space-evenly false :spacing 30
-          :halign "center" :valign "end"
-          :style "
+               :class "dashfs-section"
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://discord.com/app' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-nerd-icon" :text "󰙯 ")
+                        (label :class "dashfs-fetch" :text "Discord")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://reddit.com' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-nerd-icon" :text " ")
+                        (label :class "dashfs-fetch" :text "Reddit")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://github.com' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-nerd-icon" :text " ")
+                        (label :class "dashfs-fetch" :text "GitHub")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://youtube.com' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-nerd-icon" :text " ")
+                        (label :class "dashfs-fetch" :text "Youtube")))
+
+               (button :class "dashfs-section-button"
+                       :onclick "scripts/toggle-dashfs.sh --close && xdg-open 'https://soundcloud.com' &"
+                       (box
+                        :orientation "h" :space-evenly false
+                        (label :class "dashfs-nerd-icon" :text " ")
+                        (label :class "dashfs-fetch" :text "SoundCloud")))))
+
+; Resources
+         (box :orientation "h" :space-evenly false :spacing 30
+              :halign "center" :valign "end"
+              :style "
           transition: ${anim_open_dashfs ? MD3_DECEL : MD3_ACCEL};
           ${rev_dashfs ? 'margin-bottom: 100px;' : 'margin-bottom: -500px;'}
           "
-          (dashfs_resource :value {round(EWW_CPU.avg, 0)} :unit "%" :icon "" :name "CPU")
-          (dashfs_resource :value {round(memory.percentage, 0)} :unit "% (${memory.used})" :icon "" :name "RAM")
-          (dashfs_resource :value {battery.percentage} :unit "%" :icon "" :name "Battery")
-          (dashfs_resource :value {diskfreepercent} :unit "%" :icon "" :name "Free space")
-        )
+              (dashfs_resource :value {round (EWW_CPU.avg, 0)} :unit "%" :icon "" :name "CPU")
+              (dashfs_resource :value {round (memory.percentage, 0)} :unit "% (${memory.used})" :icon "" :name "RAM")
+              (dashfs_resource :value {battery.percentage} :unit "%" :icon "" :name "Battery")
+              (dashfs_resource :value {diskfreepercent} :unit "%" :icon "" :name "Free space"))
         ; Icosahedron
-        (image :orientation "h" :space-evenly false :spacing 30
-          :halign "end" :valign "end"
-          :style "
+         (image :orientation "h" :space-evenly false :spacing 30
+                :halign "end" :valign "end"
+                :style "
           transition: ${anim_open_dashfs ? MD3_DECEL : MD3_ACCEL};
           ${rev_dashfs ? 'margin-bottom: -250px; margin-right: -150px;' : 'margin-bottom: -900px; margin-top: 900px; margin-right: -900px; margin-left: 900px;'}
           "
-          :path "images/svg/icosahedron.svg"
-          :image-height 600
-          :image-width 600
-        )
+                :path "images/svg/icosahedron.svg"
+                :image-height 600
+                :image-width 600)
         ; Music
-        (box
+         (box
           :space-evenly false :orientation "v"
           :halign "start" :valign "end"
           :style "
@@ -439,22 +397,15 @@
           ${rev_dashfs ? 'margin-left: 40px; margin-bottom: 40px;' : 'margin-bottom: -200px; margin-top: 200px;'}
           "
           (label :xalign 0 :class "dashfs-quote-content" :text "${quote_content[0]}")
-          (label :xalign 1 :class "dashfs-quote-author" :text "${quote_author[0]}")
-        )
-      )
-    )
-  )
-)
+          (label :xalign 1 :class "dashfs-quote-author" :text "${quote_author[0]}"))))))
 
 (defwindow dashfs
   :focusable true
   :stacking "fg"
   :wm-ignore true
   :geometry (geometry
-    :width "100%"
-    :height "100%"
-    :anchor "center center"
-  )
+             :width "100%"
+             :height "100%"
+             :anchor "center center")
   :monitor 0
-  (dashfs_widget)
-)
+  (dashfs_widget))

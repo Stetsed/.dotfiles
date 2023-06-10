@@ -15,79 +15,61 @@
 (include "./windows/supercontext.yuck")
 (include "./windows/recording.yuck")
 (include "./windows/osd.yuck")
+(include "./windows/bluetooth.yuck")
 
 (defwidget separator []
   (box
-    :valign "start"
-    (label
-      :class "my-separator"
-      :text "|"
-    )
-  )
-)
+   :valign "start"
+   (label
+    :class "my-separator"
+    :text "|")))
 
 (defwidget left []
   (eventbox
-    :onhover "${EWW_CMD} update music_reveal=true"
-    :onhoverlost "${EWW_CMD} update music_reveal=false"
-    (box
-      :space-evenly false :spacing 5
-      :valign "start" :halign "start"
-      (box :space-evenly false :class "module-group"
-        (osettings-button)
-      )
-      (box :space-evenly false :class "activews-group"
-       (label :class "activews" :text "${activews}")
-      )
-    )
-  )
-)
+   :onhover "${EWW_CMD} update music_reveal=true"
+   :onhoverlost "${EWW_CMD} update music_reveal=false"
+   (box
+    :space-evenly false :spacing 5
+    :valign "start" :halign "start"
+    (box :space-evenly false :class "module-group"
+         (osettings-button))
+    (box :space-evenly false :class "activews-group"
+         (label :class "activews" :text "${activews}")))))
 
 (defwidget right []
   (eventbox
-    :onhover "${EWW_CMD} update right_hover=true"
-    :onhoverlost "${EWW_CMD} update right_hover=false"
-    (box
-      :space-evenly false :spacing 5
-      :halign "end" :valign "start"
-      (box :space-evenly false :class "module-group"
-      )
-      (box :space-evenly false :class "module-group"
-        (onotify-button)
-      )
-    )
-  )
-)
+   :onhover "${EWW_CMD} update right_hover=true"
+   :onhoverlost "${EWW_CMD} update right_hover=false"
+   (box
+    :space-evenly false :spacing 5
+    :halign "end" :valign "start"
+    (box :space-evenly false :class "module-group")
+    (box :space-evenly false :class "module-group"
+         (onotify-button)))))
 
 (defwidget center []
   (eventbox
-    :space-evenly false
-    :halign "center"
-    :tooltip "Change Background"
-    :onclick "scripts/wallpaper.sh change &"
-    " "
-  )
-)
+   :space-evenly false
+   :halign "center"
+   :tooltip "Change Background"
+   :onclick "scripts/wallpaper.sh change &"
+   " "))
 
 (defwidget bar [] ; Class .bar applies automatically
   (box
-    :space-evenly false
-    :orientation "h"
-    (box
-      :class "bar-bg-only${compact ? '-compact' : ''}"
-      :style "
+   :space-evenly false
+   :orientation "h"
+   (box
+    :class "bar-bg-only${compact ? '-compact' : ''}"
+    :style "
       margin-right: -${RES_WIDTH - 9}px;
-      "
-    )
-    (centerbox
-      :class "bar-${compact ? 'compact' : 'normal'}"
-      :width {RES_WIDTH}
-      (left)
-      (center)
-      (right)
-    )
-  )
-)
+      ")
+   (centerbox
+    :class "bar-${compact ? 'compact' : 'normal'}"
+    :width {RES_WIDTH}
+    (left)
+    (center)
+    (right))))
 
 (defwindow bar
   :stacking "overlay"
@@ -95,13 +77,11 @@
   :monitor 0
   :namespace "bar"
   :geometry (geometry
-    :x "0%"
-    :y "0%"
-    :width "100%"
-    :height "20px"
-    :anchor "top center"
-  )
+             :x "0%"
+             :y "0%"
+             :width "100%"
+             :height "20px"
+             :anchor "top center")
   :exclusive true
-  (bar)
-)
+  (bar))
 

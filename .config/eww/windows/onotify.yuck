@@ -154,7 +154,7 @@
               (label :class "separator" :text "|")
               (button
                 :class "bluetooth-arrow-btn"
-                :onclick "scripts/toggle-onotify.sh & blueman-manager &"
+                :onclick "scripts/toggle-onotify.sh & scripts/toggle-bluetooth.sh"
                 ""
               )
             )
@@ -204,6 +204,13 @@
           )
         )
         ; Calendar
+      (scroll
+        :hscroll false
+        :vscroll true
+        :style "min-height: 800px;"
+        (box
+          :orientation "v"
+
         (box
           :space-evenly false :orientation "v"
           :class "osettings-scroll-bg-colored"
@@ -273,6 +280,8 @@
             )
           )
         )
+        )
+      )
       )
     )
   )

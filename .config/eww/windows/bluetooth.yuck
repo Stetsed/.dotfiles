@@ -1,0 +1,86 @@
+(defwidget bluetooth-menu[] 
+  (eventbox
+    :onhoverlost "scripts/toggle-bluetooth.sh --close &"
+    (box  
+          :space-evenly false :orientation "v"
+          :class "osettings-scroll-bg-colored"
+          :style "border-radius: 30px;"
+        (box
+        :orientation "v"
+          (box
+            :orientation "h" :space-evenly false :spacing 10
+            (label
+              :halign "start"
+              :class "osettings-section-icon"
+              :style "max-height: 50px"
+              :text ""
+            )
+            (label
+              :halign "start"
+              :wrap true
+              :class "osettings-section"
+              :text "Bluetooth Devices"
+            )
+            (box
+            :halign "end" :spacing 10 :space-evenly true
+            (button
+              :space-evenly true
+              :halign "end"
+              :valign "center"
+              :class "osettings-tag-material"
+              :tooltip "Scan for devices"
+              :onclick "scripts/bluetooth2.sh scan &"
+              ""
+            )
+            (button
+              :space-evenly true
+              :halign "end"
+              :valign "center"
+              :class "osettings-tag-material"
+              :tooltip "Toggle Power"
+              :onclick "scripts/bluetooth2.sh toggle &"
+              ""
+            )
+            )
+          )
+          (for bluetooth2 in bluetooth2
+            (box
+              :orientation "h" :space-evenly false :spacing 10
+              :hexpand true
+              (label
+                :halign "start"
+                :wrap true
+                :class "osettings-section"
+                :text "${bluetooth2.name != '(random)' ? bluetooth2.name : bluetooth2.address}"
+              ) 
+              (button
+                :halign "end"
+                :valign "center"
+                :onclick "scripts/bluetooth2.sh ${bluetooth2.connected ? "disconnect" : "connect"} ${bluetooth2.address} &"
+                {bluetooth2.connected ? "Disconnect" : "Connect"}
+              )
+              (button
+                :visible {bluetooth2.paired == "false"}
+                :halign "end"
+                :valign "center"
+                :onclick "scripts/bluetooth2.sh remove ${bluetooth2.address} &"
+                "Pair"
+              )
+            )
+          )
+        )
+      )
+  )
+)
+
+(defwindow bluetooth-menu
+  :stacking "overlay"
+  :wm-ignore true
+  :monitor 0
+  :geometry (geometry
+    :width 600
+    :height 300
+    :anchor "center center"
+  )
+  (bluetooth-menu)
+)
