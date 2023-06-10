@@ -112,6 +112,7 @@
 (deflisten mousepos `scripts/mousetrack`)
 (deflisten activews `scripts/activews.sh`)
 (deflisten bluetooth2 "scripts/bluetooth2.sh")
+(deflisten bluetooth_powered :initial "true" "scripts/bluetooth2.sh powered")
 
 (defvar username_default "username")
 (defvar quote_content `["haha pointers hee hee i love pointe-\\\nProcess Vaxry exited with signal SIGSEGV"]`)

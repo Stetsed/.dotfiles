@@ -45,26 +45,39 @@
           )
           (for bluetooth2 in bluetooth2
             (box
-              :orientation "h" :space-evenly false :spacing 10
-              :hexpand true
-              (label
-                :halign "start"
-                :wrap true
-                :class "osettings-section"
-                :text "${bluetooth2.name != '(random)' ? bluetooth2.name : bluetooth2.address}"
-              ) 
-              (button
-                :halign "end"
-                :valign "center"
-                :onclick "scripts/bluetooth2.sh ${bluetooth2.connected ? "disconnect" : "connect"} ${bluetooth2.address} &"
-                {bluetooth2.connected ? "Disconnect" : "Connect"}
+              (box
+                :visible {bluetooth_powered}
+                :orientation "h" :space-evenly false :spacing 10
+                :hexpand true
+                (label
+                  :halign "start"
+                  :wrap true
+                  :class "osettings-section"
+                  :text "${bluetooth2.name != '(random)' ? bluetooth2.name : bluetooth2.address}"
+                ) 
+                (button
+                  :halign "end"
+                  :valign "center"
+                  :onclick "scripts/bluetooth2.sh ${bluetooth2.connected ? "disconnect" : "connect"} ${bluetooth2.address} &"
+                  {bluetooth2.connected ? "Disconnect" : "Connect"}
+                )
+                (button
+                  :visible {bluetooth2.paired == "false"}
+                  :halign "end"
+                  :valign "center"
+                  :onclick "scripts/bluetooth2.sh pair ${bluetooth2.address} &"
+                  "Pair"
+                )
               )
-              (button
-                :visible {bluetooth2.paired == "false"}
-                :halign "end"
-                :valign "center"
-                :onclick "scripts/bluetooth2.sh pair ${bluetooth2.address} &"
-                "Pair"
+              (box
+                :visible {bluetooth_powered == false}
+                :orientation "h" :space-evenly false :spacing 10
+                (label
+                  :halign "start"
+                  :wrap true
+                  :class "osettings-section"
+                  :text "Bluetooth is disabled"
+                )
               )
             )
           )

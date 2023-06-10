@@ -50,6 +50,16 @@ elif [[ $1 == "toggle" ]]; then
 		bluetoothctl power on
 	fi
 	exit 0
+elif [[ $1 == "powered" ]]; then
+	while true; do
+		powered=$(bluetoothctl show | rg Powered | cut -f 2- -d ' ')
+		if [[ $powered == "yes" ]]; then
+			eww update bluetooth_powered=true
+		else
+			eww update bluetooth_powered=false
+		fi
+		sleep 4
+	done
 else
 	while true; do
 		get_bluetoothinfo
