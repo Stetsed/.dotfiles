@@ -63,7 +63,7 @@
                 :visible {bluetooth2.paired == "false"}
                 :halign "end"
                 :valign "center"
-                :onclick "scripts/bluetooth2.sh remove ${bluetooth2.address} &"
+                :onclick "scripts/bluetooth2.sh pair ${bluetooth2.address} &"
                 "Pair"
               )
             )
