@@ -72,7 +72,7 @@
     (right))))
 
 (defwindow bar
-  :stacking "overlay"
+  :stacking "fg"
   :wm-ignore true
   :monitor 0
   :namespace "bar"
