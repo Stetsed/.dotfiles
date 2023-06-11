@@ -43,11 +43,11 @@ elif [[ $1 == "disconnect" ]]; then
 	bluetoothctl disconnect $2
 	exit 0
 elif [[ $1 == "toggle" ]]; then
-	powered=$(bluetoothctl show | rg Powered | cut -f 2- -d ' ')
-	if [[ $powered == "yes" ]]; then
-		bluetoothctl power off
+	blocked=$(rfkill -J | jq -r '.rfkilldevices[] | select(.type == "bluetooth") | .soft' | head -1)
+	if [[ $blocked == "unblocked" ]]; then
+		rfkill block bluetooth
 	else
-		bluetoothctl power on
+		rfkill unblock bluetooth
 	fi
 	exit 0
 elif [[ $1 == "powered" ]]; then

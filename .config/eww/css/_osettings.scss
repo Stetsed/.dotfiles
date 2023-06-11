@@ -435,12 +435,13 @@
     background-color: $tertiary;
     font-size: 13pt;
     font-family: 'Material Symbols Rounded';
-    font-weight: 500;
+    font-weight: 100;
     padding: 3px 8px;
     border-radius: 9999px;
     // min-width: 25px;
     margin-top: 25px;
 }
+
 
 .osettings-tag-material:hover {
     background-color: tint($tertiary, 20%);
