@@ -1,21 +1,18 @@
 
 (defwidget recording []
   (box
-   :class "recording"
    :orientation "h"
    :space-evenly false
    (button
     :onclick "killall -SIGINT wf-recorder &"
-    :class "recording"
-    (label :class "recording" :style "font-size: 4em; color: red;" :text "󰑋"))))
+    (label :style "font-size: 4em; color: red;" :text "󰑋"))))
 
 (defwindow recording
-  :class "recording"
   :focusable false
-  :stacking "fg"
-  :wm-ignore false
+  :stacking "overlay"
+  :wm-ignore true
   :geometry (geometry
-             :x "0"
+             :x "50"
              :y 0
              :anchor "top right")
   :monitor 0
