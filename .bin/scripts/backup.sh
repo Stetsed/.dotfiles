@@ -72,7 +72,7 @@ if [[ $1 == "backup" ]]; then
 
 		if [[ $3 == "--reset" || $path_exists == 0 ]]; then
 			ssh truenas "zfs list -H -o name -t snapshot | grep "${hostname}-${path_name}" | xargs -n1 zfs destroy -r"
-			ssh truenas "zfs destroy -r Vault/backups/${hostname}-${path_name}"
+			ssh truenas "zfs destroy -Rr Vault/backups/${hostname}-${path_name}"
 			trap "touch ~/.backup_interrupted.lock && exit " INT
 			trap "zfs destroy $path@$time-$hostname-$path_name && exit" ERR
 			zfs send -vw -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
