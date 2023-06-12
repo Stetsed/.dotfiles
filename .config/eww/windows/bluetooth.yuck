@@ -63,12 +63,11 @@
                 {bluetooth2.connected ? "Disconnect" : "Connect"}
               )
               (button
-                :visible {bluetooth2.paired == "false"}
                 :halign "end"
                 :valign "center"
                 :class "bluetooth-tag-material "
-                :onclick "scripts/bluetooth2.sh pair ${bluetooth2.address} &"
-                "Pair"
+                :onclick "scripts/bluetooth2.sh ${bluetooth2.paired == "false" ? "pair" : "unpair"} ${bluetooth2.address} &"
+                {bluetooth2.paired == "false" ? "Pair" : "Unpair"}
               )
             )
             (box

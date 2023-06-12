@@ -36,6 +36,9 @@ elif [[ $1 == "scan" ]]; then
 elif [[ $1 == "pair" ]]; then
 	bluetoothctl pair $2
 	exit 0
+elif [[ $1 == "unpair" ]]; then
+	bluetoothctl remove $2
+	exit 0
 elif [[ $1 == "connect" ]]; then
 	bluetoothctl connect $2
 	exit 0
