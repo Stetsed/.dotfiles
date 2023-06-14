@@ -35,8 +35,7 @@
          (osettings-button))
     (box :space-evenly false :class "activews-group"
          (label :class "activews" :text "${activews}"))
-    (box :style "min-width: 10px;")
-    (systray :style "background-color: rgba(37, 41, 56, 1); min-height: 20px;max-height: 30px; border-radius: 1000px;" :pack-direction "rtl"))))
+    (box :style "min-width: 10px;"))))
 
 (defwidget right []
   (eventbox

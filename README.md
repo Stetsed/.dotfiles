@@ -24,7 +24,6 @@ Welcome to my Dotfiles repository which I use for my linux desktop. I hope this 
 - Modify the specified battery in ~/.config/eww/modules/sys.yuck and ~/.config/eww/scripts/battery.
 - Modify ~/.config/eww/windows/dashfs.yuck when I got it it had all hardcoded and I can't figure out how to unhardcode it so you gotta fix it for your resolution :|
 - Currently by default I use my Eww bar because I like it more but I also have a waybar bar which you can enable by removing the "eww open bar" from the hypr execs and uncommenting the waybar command. 
-- I currently use a fork of eww that has tray support which isn't merged into upstream so I ship a custom eww binary. Once this is merged into upstream I will move back. The fork I am using it tracked in [This PR](https://github.com/elkowar/eww/pull/743).
 - Other changes which I might not have noted here, please don't just copy some random persons dotfiles and expect them to work.
 
 ### [Packages](https://github.com/Stetsed/.dotfiles/blob/main/.packages.list)
