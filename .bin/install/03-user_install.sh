@@ -36,9 +36,9 @@ User_Home() {
 }
 
 User_Paru() {
-  sudo pacman -S reflector
+	sudo pacman -S reflector
 
-  sudo systemctl start reflector
+	sudo systemctl start reflector
 
 	sudo pacman -Syu git
 
@@ -54,8 +54,7 @@ User_Paru() {
 
 	rm -rf paru-bin
 
-  echo -e "[options]\nCacheDir = /var/lib/repo/aur\n\n[aur]\nSigLevel = PackageOptional DatabaseOptional\nServer = file:///var/lib/repo/aur" | sudo tee -a /etc/pacman.conf
-
+	echo -e "[options]\nCacheDir = /var/lib/repo/aur\n\n[aur]\nSigLevel = PackageOptional DatabaseOptional\nServer = file:///var/lib/repo/aur" | sudo tee -a /etc/pacman.conf
 
 }
 
@@ -108,7 +107,7 @@ User_Extra() {
 
 	while [[ $time != "Yes" && $time != "No" ]]; do
 		echo 'Do you want to set the time to the correct timezone and enable timesyncd? (y/n): '
-    time=$(gum choose "Yes" "No")
+		time=$(gum choose "Yes" "No")
 	done
 
 	if [[ $time == "Yes" ]]; then
@@ -133,7 +132,7 @@ User_Stetsed() {
 
 	sudo systemctl mask NetworkManager-wait-online.service
 
-  ln -s /run/media/$(whoami)/ ~/USB
+	ln -s /run/media/$(whoami)/ ~/USB
 
 }
 
