@@ -7,15 +7,17 @@ Extra_Run() {
 	FRAMEWORK_80_100="Framework 80/100 Power Setup"
 	FRAMEWORK_FINGERPRINT="Framework Fingerprint Setup"
 	TRANSFER_FILES="Transfer Files"
-  SUNSHINE_SETUP="Setup Sunshine"
-	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP")
+	SUNSHINE_SETUP="Setup Sunshine"
+	SETUP_CACHE="Setup Cache"
+	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$SETUP_CACHE")
 	grep -q "$SERVER_SETUP" <<<"$SELECTION" && Server_Setup
 	grep -q "$ZFS_REMOTE_UNLOCK" <<<"$SELECTION" && ZFS_Remote_Unlock_Setup
 	grep -q "$FRAMEWORK_TLP" <<<"$SELECTION" && Framework_TLP_Setup
 	grep -q "$FRAMEWORK_80_100" <<<"$SELECTION" && Framework_80_100_Setup
 	grep -q "$FRAMEWORK_FINGERPRINT" <<<"$SELECTION" && Framework_Fingerprint_Setup
 	grep -q "$TRANSFER_FILES" <<<"$SELECTION" && Transfer_Files
-  grep -q "$SUNSHINE_SETUP" <<<"$SELECTION" && Sunshine_Setup
+	grep -q "$SUNSHINE_SETUP" <<<"$SELECTION" && Sunshine_Setup
+	grep -q "$SETUP_CACHE" <<<"$SELECTION" && Setup_Local_Cache
 }
 
 Server_Setup() {
@@ -87,7 +89,7 @@ Framework_80_100_Setup() {
 
 	sudo systemctl enable framework-battery.timer
 
-  paru -S fw-ectool-git
+	paru -S fw-ectool-git
 
 	echo "Framework 80-100 Battery Script Setup Complete"
 }
@@ -147,16 +149,27 @@ Transfer_Files_From() {
 	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
 }
 
-Sunshine_Setup(){
-  paru -Syu sunshine
+Sunshine_Setup() {
+	paru -Syu sunshine
 
-  echo 'KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/85-sunshine.rules
+	echo 'KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/85-sunshine.rules
 
-  systemctl --user enable sunshine
+	systemctl --user enable sunshine
 
-  sudo setcap cap_sys_admin+p $(readlink -f $(which sunshine))
+	sudo setcap cap_sys_admin+p $(readlink -f $(which sunshine))
 
-  echo "Sunshine Setup Complete, please reboot"
+	echo "Sunshine Setup Complete, please reboot"
+}
+
+Setup_Local_Cache() {
+	echo 'Server = https://cache.selfhostable.net/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist
+
+	sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/g' /etc/pacman.conf
+
+	sudo systemctl disable --now reflector.service
+	sudo systemctl disable --now reflector.timer
+
+	echo "Local Cache Setup Complete"
 }
 
 Extra_Run
