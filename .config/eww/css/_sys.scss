@@ -1,0 +1,13 @@
+.sysleft-tag-material {
+    color: $onTertiary;
+    background-color: rgba(0,0,0,0);
+    color: $sapphire;
+    font-family: 'JetBrainsMono Nerd Font';
+    font-weight: 100;
+    border-radius: 9999px;
+    // min-width: 25px;
+}
+
+.sysleft-tag-material:hover {
+    background-color: tint($rosewater, 20%);
+}

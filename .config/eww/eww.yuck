@@ -35,7 +35,8 @@
          (osettings-button))
     (box :space-evenly false :class "activews-group"
          (label :class "activews" :text "${activews}"))
-    (box :style "min-width: 10px;"))))
+    (sysmenuleft)
+    )))
 
 (defwidget right []
   (eventbox

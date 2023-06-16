@@ -362,6 +362,22 @@
   )
 )
 
+(defwidget sysmenuleft[] 
+  (box
+    :space-evenly false :spacing 10
+    (button
+      :class "sysleft-tag-material"
+      :onclick "scripts/toggle-bluetooth.sh &" "${bluetooth.icon}"
+    )
+    (button
+      :class "sysleft-tag-material"
+      :onclick "kitty --class 'nmtui' -e nmtui &" "${net.icon} ${net.essid}"
+    )
+  )
+)
+
+
+
 (defwidget settingscog[]
   (eventbox
     :onscroll "echo {} | sed -e 's/down/-/g' -e 's/up/+/g' | xargs -I% wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.03%"
