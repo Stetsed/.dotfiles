@@ -166,6 +166,8 @@ Setup_Local_Cache() {
 
 	sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/g' /etc/pacman.conf
 
+	sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
+
 	sudo systemctl disable --now reflector.service
 	sudo systemctl disable --now reflector.timer
 
