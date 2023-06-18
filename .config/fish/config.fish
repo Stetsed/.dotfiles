@@ -17,6 +17,6 @@ set -x GPG_TTY $(tty)
 export (cat ~/.env |xargs -L 1)
 
 if [ (tty) = /dev/tty1 ]
-    Hyprland
+    Hyprland &
     vlock -a
 end
