@@ -125,9 +125,6 @@ Transfer_Files_Too() {
 	pkill webcord
 	gum spin -s dot --title "Copying WebCord Files..." -- cp -r ~/.config/WebCord ~/Network/Storage/Transfer/
 
-	gum spin -s dot --title "Copying SSH Files..." -- cp -r ~/.ssh ~/Network/Storage/Transfer/
-
-	gum spin -s dot --title "Copying .env file..." -- cp -r ~/.env ~/Network/Storage/Transfer/
 	exit
 }
 
@@ -139,12 +136,6 @@ Transfer_Files_From() {
 	pkill webcord
 	rm -rf ~/.config/WebCord
 	gum spin -s dot --title "Moving WebCord Files..." -- mv ~/Network/Storage/Transfer/WebCord ~/.config/
-
-	rm -rf ~/.ssh
-	gum spin -s dot --title "Moving SSH Files..." -- mv ~/Network/Storage/Transfer/.ssh ~/
-
-	rm -rf ~/.env
-	gum spin -s dot --title "Moving .env file..." -- mv ~/Network/Storage/Transfer/.env ~/
 
 	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
 }
