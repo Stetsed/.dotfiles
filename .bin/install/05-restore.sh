@@ -64,7 +64,10 @@ Backup_Setup_ZPool() {
 
 Backup_Restore_System() {
 	echo "Restoring $SELECTED_BACKUP to $SELECTED_DRIVE"
-	ssh truenas "zfs send -R $SELECTED_BACKUP" | zfs recv -Fdu zroot
+	time=$(date +"%Y-%m-%d_%H-%M-%S")
+	ssh truenas "zfs snapshot -r $SELECTED_BACKUP@send-$time"
+
+	ssh truenas "zfs send -vwR $SELECTED_BACKUP@send-$time" | zfs recv -Fdu zroot
 	echo "Restore Complete"
 }
 
