@@ -23,10 +23,7 @@ sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
 echo -e "[Service]\nExecStart=\nExecStart=-/usr/bin/agetty --autologin $username --noclear %I $TERM" | sudo tee -a /etc/systemd/system/getty@tty1.service.d/skip-prompt.conf
 sudo systemctl enable getty@tty1.service
 
-while [[ $time != "Yes" && $time != "No" ]]; do
-	echo 'Do you want to set the time to the correct timezone and enable timesyncd? (y/n): '
-	time=$(gum choose "Yes" "No")
-done
+time=$(gum choose "Yes" "No")
 
 if [[ $time == "Yes" ]]; then
 	echo 'When entering timezone please use the following format: Region/City with correct capitalization.'
