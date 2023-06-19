@@ -38,16 +38,22 @@ set_variables() {
 
 backup() {
 	echo "Backing up ${hostname}"
-	if [[ -f ~/.backup_interrupted.lock && $reset != "--reset" ]]; then
+	if [[ $1 == "RemoveThisLaterYouFuckHeadThisIsJustTemp" ]]; then
 		#backup_interrupted
 	else
 		time=$(date +%Y-%m-%d-%H-%M-%S)
 
-		permission=$(zfs snapshot -r $path@${time}-${hostname}-${path_name})
+		if [[ -f ~/.backup_interrupted.lock ]]; then
+			transfer_snapshot=$(zfs list -t snapshot -o name | grep ${path}@ | awk '{z=$0} END{print z}')
+		else
+			permission=$(zfs snapshot -r $path@${time}-${hostname}-${path_name})
 
-		if [[ permission == *"permission denied"* ]]; then
-			echo "You do not have snapshot permissions, please make sure you have the correct permissions and have ran the permissions function."
-			exit 1
+			if [[ permission == *"permission denied"* ]]; then
+				echo "You do not have snapshot permissions, please make sure you have the correct permissions and have ran the permissions function."
+				exit 1
+			fi
+
+			transfer_snapshot="$path@${time}-${hostname}-${path_name}"
 		fi
 
 		path_exists=$(ssh truenas "zfs list -H -o name Vault/backups/${hostname}-${path_name}" | wc -l)
@@ -70,8 +76,7 @@ backup_interrupted() {
 }
 
 backup_new() {
-	#trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
-	trap "notify-send 'Backup Failed' && exit " INT ERR
+	trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
 	#zfs send -vwe -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
 	zfs send -vwe -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
 	notify-send "Backup Complete"
@@ -80,9 +85,8 @@ backup_new() {
 
 backup_normal() {
 	old_snapshot=$(zfs list -t snapshot -o name | grep ${path}@ | awk '{y=z; z=$0} END{print y}')
-	#trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
-	trap "notify-send 'Backup Failed' && exit " INT ERR
-	zfs send -vwe -I ${old_snapshot} -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
+	trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
+	zfs send -vwe -I ${old_snapshot} -R ${transfer_snapshot} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
 	notify-send "Backup Complete"
 	exit 0
 }
