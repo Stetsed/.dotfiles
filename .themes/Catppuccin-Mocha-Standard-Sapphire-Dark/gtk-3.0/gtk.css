@@ -97,18 +97,6 @@ entry selection, label selection, textview text selection:focus, textview text s
 /***************
  * Base States *
  ***************/
-.background {
-  background-color: #1e1e2e;
-  color: #FFFFFF;
-}
-
-.background.csd {
-  border-radius: 0 0 12px 12px;
-}
-
-.background.maximized, .background.solid-csd {
-  border-radius: 0;
-}
 
 *:disabled {
   -gtk-icon-effect: dim;
