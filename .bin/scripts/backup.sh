@@ -62,7 +62,7 @@ backup() {
 backup_interrupted() {
 	echo "Running in Backup Interrupted Mode so trying to fetch resume token"
 	trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit" INT ERR
-	resume_token=$(ssh truenas "zfs get all -r Vault/backups/FrameworkArch-zroot" | grep resume | awk '{print $3}')
+	resume_token=$(ssh truenas "zfs get all -r Vault/backups/$hostname-$path" | grep resume | awk '{print $3}')
 	zfs send -ve -t "${resume_token}" | ssh truenas "zfs receive -F -s Vault/backups/${hostname}-${path_name}"
 	rm ~/.backup_interrupted.lock
 	exit 0
