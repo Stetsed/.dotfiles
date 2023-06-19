@@ -25,7 +25,7 @@ Chroot_Setup_ZFS() {
 }
 
 Chroot_Install_Packages() {
-	pacman -S linux-headers zfs-dkms-git openssh networkmanager reflector
+	pacman -S linux-headers zfs-dkms-git zfs-utils-git openssh networkmanager reflector
 }
 
 Chroot_User() {
