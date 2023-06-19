@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Script to backup my system using ZFS-send and then sending it to TrueNAS scale box using zfs-recieve
+# Currently it doesn't support continuing after an interuption but I'm working on it in the commented code, it works but it requires the version on both server and client to be the same. Arch at time of writing is on 2.1.12 and TrueNAS is on 2.1.11 so it doesn't work.
 
 set -a
 
@@ -38,7 +39,7 @@ set_variables() {
 backup() {
 	echo "Backing up ${hostname}"
 	if [[ -f ~/.backup_interrupted.lock && $reset != "--reset" ]]; then
-		backup_interrupted
+		#backup_interrupted
 	else
 		time=$(date +%Y-%m-%d-%H-%M-%S)
 
@@ -69,17 +70,19 @@ backup_interrupted() {
 }
 
 backup_new() {
-	trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
-	zfs send -vwe -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
+	#trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
+	trap "notify-send 'Backup Failed' && exit " INT ERR
+	#zfs send -vwe -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
+	zfs send -vwe -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
 	notify-send "Backup Complete"
 	exit 0
 }
 
 backup_normal() {
-	trap "touch ~/.backup_interrupted.lock && exit " INT
 	old_snapshot=$(zfs list -t snapshot -o name | grep ${path}@ | awk '{y=z; z=$0} END{print y}')
-	trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
-	zfs send -vwe -I ${old_snapshot} -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
+	#trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
+	trap "notify-send 'Backup Failed' && exit " INT ERR
+	zfs send -vwe -I ${old_snapshot} -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
 	notify-send "Backup Complete"
 	exit 0
 }
