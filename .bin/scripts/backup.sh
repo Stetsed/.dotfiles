@@ -40,6 +40,7 @@ backup() {
 	echo "Backing up ${hostname}"
 	if [[ $1 == "RemoveThisLaterYouFuckHeadThisIsJustTemp" ]]; then
 		#backup_interrupted
+		echo 'f off'
 	else
 		time=$(date +%Y-%m-%d-%H-%M-%S)
 
