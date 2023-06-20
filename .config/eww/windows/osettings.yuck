@@ -458,7 +458,7 @@
              :halign "fill"
              :wrap true
              :class "osettings-btn osettings-btn-neutral"
-             :onclick "~/.local/bin/lock.sh &"
+             :onclick "~/.bin/scripts/lock.sh &"
              "Lock")))
 
           (revealer
@@ -536,7 +536,7 @@
              :halign "fill"
              :wrap true
              :class "osettings-btn osettings-btn-neutral"
-             :onclick "cp ~/.config/hypr/hyprland.conf temporary_config.conf && cp temporary_config.conf ~/.config/hypr/hyprland.conf && rm temporary_config.conf &"
+             :onclick "hyprctl reload &"
              "Reload config")))
 
           (revealer
