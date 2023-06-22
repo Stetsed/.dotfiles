@@ -1,4 +1,4 @@
-.ssh/*.key
-.ssh/config
+.ssh/*
+!.ssh/known*
 .env
 
