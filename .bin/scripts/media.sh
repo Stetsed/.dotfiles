@@ -23,6 +23,12 @@ if [[ $type == "screenshot" ]]; then
 
 	~/.bin/scripts/grimblast.sh --notify save area $file_path
 
+	if [[ $3 == "copy" ]]; then
+		wl-copy <$file_path
+		notify-send "Copied to clipboard"
+		exit 0
+	fi
+
 	if [[ -e $file_path ]]; then
 		json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
 
@@ -56,6 +62,12 @@ elif [[ $type == "video" ]]; then
 	eww close recording
 
 	notify-send "Video Taken $file_path"
+
+	if [[ $3 == "copy" ]]; then
+		wl-copy <$file_path
+		notify-send "Copied to clipboard"
+		exit 0
+	fi
 
 	json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
 
