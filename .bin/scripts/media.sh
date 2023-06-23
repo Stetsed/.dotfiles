@@ -23,7 +23,7 @@ if [[ $type == "screenshot" ]]; then
 
 	~/.bin/scripts/grimblast.sh --notify save area $file_path
 
-	if [[ $3 == "copy" ]]; then
+	if [[ $2 == "copy" ]]; then
 		wl-copy <$file_path
 		notify-send "Copied to clipboard"
 		exit 0
@@ -63,7 +63,7 @@ elif [[ $type == "video" ]]; then
 
 	notify-send "Video Taken $file_path"
 
-	if [[ $3 == "copy" ]]; then
+	if [[ $2 == "copy" ]]; then
 		wl-copy <$file_path
 		notify-send "Copied to clipboard"
 		exit 0
