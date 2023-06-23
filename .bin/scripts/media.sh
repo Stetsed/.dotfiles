@@ -23,29 +23,29 @@ if [[ $type == "screenshot" ]]; then
 
 	~/.bin/scripts/grimblast.sh --notify save area $file_path
 
-	if [[ $2 == "copy" ]]; then
-		wl-copy <$file_path
-		notify-send "Copied to clipboard"
-		exit 0
-	fi
-
 	if [[ -e $file_path ]]; then
-		json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
+		if [[ $2 == "copy" ]]; then
+			wl-copy <$file_path
+			notify-send "Copied to clipboard"
+			exit 0
+		elif [[ $2 == "upload" ]]; then
+			json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
 
-		responseError=$(echo "$json" | jq -r '.code')
+			responseError=$(echo "$json" | jq -r '.code')
 
-		if [[ $responseError == "403" ]]; then
-			notify-send -t 5000 "Authorization Token has probally expired douche bag."
-			exit 1
+			if [[ $responseError == "403" ]]; then
+				notify-send -t 5000 "Authorization Token has probally expired douche bag."
+				exit 1
+			fi
+
+			collectionName=$(echo "$json" | jq -r '.collectionName')
+			id=$(echo "$json" | jq -r '.id')
+			file=$(echo "$json" | jq -r '.file')
+
+			image_link="https://pocketbase.selfhostable.net/api/files/$collectionName/$id/$file"
+
+			wl-copy $image_link
 		fi
-
-		collectionName=$(echo "$json" | jq -r '.collectionName')
-		id=$(echo "$json" | jq -r '.id')
-		file=$(echo "$json" | jq -r '.file')
-
-		image_link="https://pocketbase.selfhostable.net/api/files/$collectionName/$id/$file"
-
-		wl-copy $image_link
 	else
 		echo "Screenshot not taken. Exiting."
 		exit 1
