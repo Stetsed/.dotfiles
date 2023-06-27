@@ -10,12 +10,13 @@ path=$2
 reset=$3
 
 help() {
-	echo "Usage: backup.sh [backup|permissions|reset] [path]"
+	echo "Usage: backup.sh [backup|permissions|reset] [path] [--all]"
 	echo "Note: Please give your user permission for send and snapshot for the dataset you want to backup."
 	echo "Options:"
 	echo "reset: Reset the backup and start from scratch."
 	echo "permissions: Give your user permission for send and snapshot for the dataset you want to backup."
 	echo "path: Pass the path to the volume you want to backup. Ex: zroot/data/home"
+	echo "all: Backup from the first snapshot to the most recent one"
 	exit 0
 }
 
@@ -60,8 +61,15 @@ backup() {
 		path_exists=$(ssh truenas "zfs list -H -o name Vault/backups/${hostname}-${path_name}" | wc -l)
 
 		if [[ $path_exists == 0 ]]; then
-			backup_new
-		else
+			if [[ $3 == "--all" ]]; then
+				backup_all
+			else
+				backup_new
+			fi
+		elif [[ $path_exists > 0 && $3 == "--all" ]]; then
+			echo "--all only works when nothing exists"
+			exit 1
+		elif [[ $path_exists > 0 ]]; then
 			backup_normal
 		fi
 	fi
@@ -78,8 +86,16 @@ backup_interrupted() {
 
 backup_new() {
 	trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
-	#zfs send -vwe -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -Fs Vault/backups/${hostname}-${path_name}"
-	zfs send -vwe -R $path@${time}-${hostname}-${path_name} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
+	zfs send -vwe -R ${transfer_snapshot} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
+	notify-send "Backup Complete"
+	exit 0
+}
+
+backup_new() {
+	trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
+	old=$(zfs list -t snapshot -o name | grep ${path}@ | head -n 1)
+	zfs send -vwe -R $old | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
+	zfs send -vwe -I ${old} -R ${transfer_snapshot} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
 	notify-send "Backup Complete"
 	exit 0
 }
