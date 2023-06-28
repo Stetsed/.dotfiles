@@ -88,6 +88,7 @@ backup_new() {
 	trap "touch ~/.backup_interrupted.lock && notify-send 'Backup Failed' && exit " INT ERR
 	zfs send -vwe -R ${transfer_snapshot} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
 	notify-send "Backup Complete"
+	rm ~/.backup_interrupted.lock
 	exit 0
 }
 
@@ -97,6 +98,7 @@ backup_new() {
 	zfs send -vwe -R $old | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
 	zfs send -vwe -I ${old} -R ${transfer_snapshot} | ssh truenas "zfs receive -F Vault/backups/${hostname}-${path_name}"
 	notify-send "Backup Complete"
+	rm ~/.backup_interrupted.lock
 	exit 0
 }
 
