@@ -1,33 +1,15 @@
 #!/usr/bin/env bash
 
 Main_Run() {
-	source /etc/os-release
+	sudo pacman-key --init
 
-	if [[ $ID == "debian" ]]; then
-		# check if gum is installed
-		if ! command -v gum &>/dev/null; then
-			echo "Gum is not installed, installing gum"
-			sudo apt install curl gpg
-			sudo mkdir -p /etc/apt/keyrings
-			curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-			echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-			sudo apt update && sudo apt install gum
-			sleep 5
-		fi
-	elif [[ $ID == "arch" ]]; then
-		sudo pacman-key --init
+	sudo pacman -Sy archlinux-keyring
 
-		sudo pacman -Sy archlinux-keyring
-
-		# check if gum is installed
-		if ! command -v gum &>/dev/null; then
-			echo "Gum is not installed, installing gum"
-			sudo pacman -Sy gum
-			sleep 5
-		fi
-	else
-		echo "This script is only for debian or arch based distros"
-		exit 1
+	# check if gum is installed
+	if ! command -v gum &>/dev/null; then
+		echo "Gum is not installed, installing gum"
+		sudo pacman -Sy gum
+		sleep 5
 	fi
 
 	clear
