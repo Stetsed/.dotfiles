@@ -67,25 +67,24 @@ elif [[ $type == "video" ]]; then
 		wl-copy <$file_path
 		notify-send "Copied to clipboard"
 		exit 0
+	elif [[ $2 == "upload" ]]; then
+		json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
+
+		responseError=$(echo "$json" | jq -r '.code')
+
+		if [[ $responseError == "403" ]]; then
+			notify-send -t 5000 "Authorization Token has probally expired douche bag."
+			exit 1
+		fi
+
+		collectionName=$(echo "$json" | jq -r '.collectionName')
+		id=$(echo "$json" | jq -r '.id')
+		file=$(echo "$json" | jq -r '.file')
+
+		image_link="https://pocketbase.selfhostable.net/api/files/$collectionName/$id/$file"
+
+		wl-copy $image_link
 	fi
-
-	json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
-
-	responseError=$(echo "$json" | jq -r '.code')
-
-	if [[ $responseError == "403" ]]; then
-		notify-send -t 5000 "Authorization Token has probally expired douche bag."
-		exit 1
-	fi
-
-	collectionName=$(echo "$json" | jq -r '.collectionName')
-	id=$(echo "$json" | jq -r '.id')
-	file=$(echo "$json" | jq -r '.file')
-
-	image_link="https://pocketbase.selfhostable.net/api/files/$collectionName/$id/$file"
-
-	wl-copy $image_link
-
 fi
 
 exit 0
