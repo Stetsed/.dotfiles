@@ -1,5 +1,5 @@
 function ssh --description 'alias ssh=kitty +kitten ssh'
-    if set -q $KITTY_PID
+    if test -n $KITTY_PID
         kitty +kitten ssh $argv
     else
         command ssh $argv
