@@ -6,7 +6,7 @@ if [ "$is_stetsed" == "Yes" ]; then
 	echo "10.4.78.251:/mnt/Vault/Storage /mnt/data nfs defaults,_netdev,x-systemd.automount,x-systemd.mount-timeout=10,noauto 0 0" | sudo tee -a /etc/fstab
 	sudo mkdir /mnt/data
 
-	sudo mount -t nfs 10.4.78.251:/mnt/Vault/Storage
+	sudo mount -t nfs 10.4.78.251:/Vault/Storage
 
 	mkdir ~/Network
 	ln -s /mnt/data/Stetsed/Storage ~/Network/Storage
@@ -19,7 +19,7 @@ if [ "$is_stetsed" == "Yes" ]; then
 
 	export GPG_TTY=$(tty)
 
-	gpg --pinetry-mode ask --import ~/Network/Storage/Long-Term/stetsed.asc
+	gpg --pinetry-mode ask --import ~/Network/Storage/Long-Term
 
 	yadm decrypt
 else

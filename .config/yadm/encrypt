@@ -1,5 +1,5 @@
 .ssh/*
 !.ssh/known*
 .env
-.ANSIBLE_VAULT_PASSWORD
+.ANSIBLE*
 

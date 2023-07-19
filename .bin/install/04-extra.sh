@@ -63,11 +63,19 @@ Server_Setup_Debian() {
 ZFS_Remote_Unlock_Setup() {
 	paru -Syu mkinitcpio-netconf mkinitcpio-dropbear
 
-	echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIezEg3z8pf+9ZoQlscHCrKd72d2sZMtEFyEIZjqSX3uJa0RfHK7miIBXqOEv8A8dlAwUlOP3n+A77TbY6FM5DAM/EFZ4v2Qxz8AJeCJN5YWm+WxE7+NNMIAt88WBtPuNNAmLgnLP10izAjnSJpHU1xc2nW49FoscI5VeoBUCr6UFbgsTqxBWwBBXjCF0dbAh6G1B6zRPkcfhes2aGpnvjrRYDsk3nfzsfMQgsrBrTmehNJDIDiEOQeBwnwsopkMBFKRnvfJ7a8MFnl5Mi19NneScktqpee7tGs7uZruAYmmJh/xm/Hp1Y0YOt/MYN4WAasCVh+n4+Exb0C+5tD7ck+W387440Tmpi1CkuMctB7uHjuUpbOLWh5UYOvQ76//6tWPGZu4/KkY7TXUzshzVvWqOXAk/5NZ45ysZcBn/Qy8Bd4kqrF3vXoHRIEXkZkGky8mcjraRBBUVQUuCgZVIEjgTemsy4ip1OjPN9RCANl8nhyJAMDLArF89dHuzWY50= stetsed@ArchHome" | sudo tee -a /etc/dropbear/root_key
+	echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIChekNRGHiQU2u+jWCSElqXG5St/FgfSVhncALLwmV1y" | sudo tee -a /etc/dropbear/root_key
 
 	echo " ip=dhcp" | sudo tee -a /etc/kernel/cmdline
 
 	sudo sed -i 's/zfs/netconf dropbear zfsencryptssh zfs/g' /etc/mkinitcpio.conf
+
+	echo "Do you want to make it down the enp8s0 interface so br0 can take over."
+	choose2=$(gum choose "Yes" "No")
+
+	if [[ $choose2 == "Yes" ]]; then
+		echo -e "[Unit]\nDescription=Script\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nExecStart=/usr/bin/nmcli connection down enp8s0" | sudo tee /etc/systemd/system/enp8s0-down.service
+		sudo systemctl enable enp8s0-down.service
+	fi
 
 	echo 'ZFS Remote Unlock Setup Complete'
 }
@@ -159,7 +167,7 @@ Sunshine_Setup() {
 }
 
 Setup_Local_Cache() {
-	echo 'Server = https://cache.selfhostable.net/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist
+	echo 'Server = https://cache.home.selfhostable.net/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist
 
 	sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/g' /etc/pacman.conf
 

@@ -7,6 +7,7 @@ return {
         tsserver = {},
         html = {},
         cssls = {},
+        astro = {},
       },
     },
   },

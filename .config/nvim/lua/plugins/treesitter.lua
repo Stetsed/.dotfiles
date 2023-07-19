@@ -10,6 +10,7 @@ return {
         "vimdoc",
         "svelte",
         "yuck",
+        "astro",
       })
     end
   end,
