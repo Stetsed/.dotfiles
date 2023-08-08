@@ -92,7 +92,7 @@ Chroot_Final() {
 	echo "LANG=en_US.UTF-8" >/etc/locale.conf
 
 	echo -n 'What hostname do you wanna use(ex: archlinux): '
-	hostname=$(gum input --placeholder="archlinux" --value="archlinux")
+	hostname=$(gum input --placeholder="archlinux")
 
 	echo $hostname >/etc/hostname
 

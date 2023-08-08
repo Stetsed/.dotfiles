@@ -14,7 +14,10 @@ set -x PATH $PATH ~/.cargo/bin
 set -x OBSIDIAN_USE_WAYLAND 1
 set -x WLR_NO_HARDWARE_CURSORS 1
 set -x GPG_TTY $(tty)
-export (cat ~/.env |xargs -L 1)
+
+if [ -f ~/.env ]
+    export (cat ~/.env |xargs -L 1)
+end
 
 if [ (tty) = /dev/tty1 ]
     Hyprland >/dev/null 2>&1 &

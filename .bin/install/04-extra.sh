@@ -10,7 +10,7 @@ Extra_Run() {
 	SUNSHINE_SETUP="Setup Sunshine"
 	SETUP_CACHE="Setup Cache"
 	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$SETUP_CACHE")
-	grep -q "$SERVER_SETUP" <<<"$SELECTION" && Server_Setup
+	grep -q "$SERVER_SETUP" <<<"$SELECTION" && Server_Setup_Arch
 	grep -q "$ZFS_REMOTE_UNLOCK" <<<"$SELECTION" && ZFS_Remote_Unlock_Setup
 	grep -q "$FRAMEWORK_TLP" <<<"$SELECTION" && Framework_TLP_Setup
 	grep -q "$FRAMEWORK_80_100" <<<"$SELECTION" && Framework_80_100_Setup
@@ -18,18 +18,6 @@ Extra_Run() {
 	grep -q "$TRANSFER_FILES" <<<"$SELECTION" && Transfer_Files
 	grep -q "$SUNSHINE_SETUP" <<<"$SELECTION" && Sunshine_Setup
 	grep -q "$SETUP_CACHE" <<<"$SELECTION" && Setup_Local_Cache
-}
-
-Server_Setup() {
-	source /etc/os-release
-
-	if [[ $ID == "debian" ]]; then
-		Server_Setup_Debian
-	elif [[ $ID == "arch" ]]; then
-		Server_Setup_Arch
-	else
-		echo "Unsupported operating system: $ID"
-	fi
 }
 
 Server_Setup_Arch() {
@@ -44,11 +32,9 @@ Server_Setup_Arch() {
 }
 
 Server_Setup_Debian() {
-	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-	ln -s ~/.local/kitty.app/bin/kitty /bin/kitty
-	ln -s ~/.local/kitty.app/bin/kitten /bin/kitten
+	apt install fish
 
-	sudo chsh -s /usr/bin/fish
+	chsh -s /usr/bin/fish
 
 	curl -sS https://starship.rs/install.sh | sh
 
