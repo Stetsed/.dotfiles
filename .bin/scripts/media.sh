@@ -53,11 +53,19 @@ if [[ $type == "screenshot" ]]; then
 elif [[ $type == "video" ]]; then
 	file_path=~/Network/Documents/Videos/$time.mp4
 
+	card_entry=$(/usr/bin/ls /dev/dri | grep -E "card[0-9]+" | head -n 1)
+
+	if [ -n "$card_entry" ]; then
+		card_entry="-d /dev/dri/$card_entry"
+	else
+		notify-send "No card entry found. Running without hardware acceleration."
+	fi
+
 	eww open recording
 
 	notify-send -t 5000 "Starting Recording..."
 
-	wf-recorder -c h264_vaapi -d /dev/dri/card0 -t -f $file_path
+	wf-recorder -c h264_vaapi $card_entry -t -f $file_path
 
 	eww close recording
 
