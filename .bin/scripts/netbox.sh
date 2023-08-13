@@ -19,10 +19,11 @@ while IFS=',' read -r ip vrf status role tenant assigned dns_name description re
 
 		# Check if the first octet is 10
 		if [ "$first_octet" = "10" ]; then
-			name=$(echo "$dns_name" | sed 's/(\(.*\)).*/\1/')
+			name="${dns_name%%.*}"
+			ip_without_mask=$(echo "$ip" | cut -d/ -f1)
 			echo "set service dhcp-server shared-network-name LAN-main-network subnet 10.0.0.0/8 static-mapping $name mac-address $description"
-			echo "set service dhcp-server shared-network-name LAN-main-network subnet 10.0.0.0/8 static-mapping $name ip-address $ip"
-			echo "set system static-host-mapping host-name $dns_name inet $ip"
+			echo "set service dhcp-server shared-network-name LAN-main-network subnet 10.0.0.0/8 static-mapping $name ip-address $ip_without_mask"
+			echo "set system static-host-mapping host-name $dns_name inet $ip_without_mask"
 		fi
 	fi
 done <"$csv_file"
