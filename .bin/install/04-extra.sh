@@ -9,7 +9,8 @@ Extra_Run() {
 	TRANSFER_FILES="Transfer Files"
 	SUNSHINE_SETUP="Setup Sunshine"
 	SETUP_CACHE="Setup Cache"
-	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$SETUP_CACHE")
+	AUTO_SHUTDOWN="Auto Shutdown"
+	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$SETUP_CACHE" "$AUTO_SHUTDOWN")
 	grep -q "$SERVER_SETUP" <<<"$SELECTION" && Server_Setup_Arch
 	grep -q "$ZFS_REMOTE_UNLOCK" <<<"$SELECTION" && ZFS_Remote_Unlock_Setup
 	grep -q "$FRAMEWORK_TLP" <<<"$SELECTION" && Framework_TLP_Setup
@@ -18,6 +19,7 @@ Extra_Run() {
 	grep -q "$TRANSFER_FILES" <<<"$SELECTION" && Transfer_Files
 	grep -q "$SUNSHINE_SETUP" <<<"$SELECTION" && Sunshine_Setup
 	grep -q "$SETUP_CACHE" <<<"$SELECTION" && Setup_Local_Cache
+	grep -q "$AUTO_SHUTDOWN" <<<"$SELECTION" && Auto_Shutdown
 }
 
 Server_Setup_Arch() {
@@ -165,4 +167,9 @@ Setup_Local_Cache() {
 	echo "Local Cache Setup Complete"
 }
 
+Auto_Shutdown() {
+	echo -e "[Unit]\nDescription=Run Auto Shutdown Script Every 5 Minutes\n\n[Timer]\nOnBootSec=10min\nOnUnitActiveSec=5min\nPersistent=true\n\n[Install]\nWantedBy=timers.target" | sudo tee /etc/systemd/system/auto_shutdown.timer
+	echo -e "[Unit]\nDescription=Auto Shutdown Script\n\n[Service]\nType=simple\nExecStart=/home/$(whoami)/.bin/scripts/auto_shutdown.sh\n\n[Install]\nWantedBy=default.target" | sudo tee /etc/systemd/system/auto_shutdown.service
+	sudo systemctl enable --now auto_shutdown.timer
+}
 Extra_Run
