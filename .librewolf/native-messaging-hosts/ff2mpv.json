@@ -1,7 +1,7 @@
 {
   "name": "ff2mpv",
   "description": "ff2mpv's external manifest",
-  "path": "/home/stetsed/.bin/scripts/ff2mpv-rust",
+  "path": "/home/stetsed/.bin/scripts/binary/ff2mpv-rust",
   "type": "stdio",
   "allowed_extensions": [
     "ff2mpv@yossarian.net"
