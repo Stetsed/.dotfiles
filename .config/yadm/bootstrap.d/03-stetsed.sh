@@ -19,9 +19,7 @@ if [ "$is_stetsed" == "Yes" ]; then
 
 	export GPG_TTY=$(tty)
 
-	gpg --pinetry-mode ask --import ~/Network/Storage/Long-Term/GPG/stetsed@selfhostable.asc
-
-	yadm decrypt
+	echo "Go get the GPG key from the server and decrypt it."
 else
 	exit 0
 fi
