@@ -15,6 +15,7 @@ set -x PATH $PATH ~/.cargo/bin
 set -x OBSIDIAN_USE_WAYLAND 1
 set -x WLR_NO_HARDWARE_CURSORS 1
 set -x GPG_TTY $(tty)
+set -x HASTEBIN_URL https://paste.selfhostable.net
 
 if [ -f ~/.env ]
     export (cat ~/.env |xargs -L 1)
