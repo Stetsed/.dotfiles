@@ -32,19 +32,19 @@ User_Paru() {
 
 	sudo pacman -Syu git
 
-	git clone https://aur.archlinux.org/paru-bin.git
+	git clone https://aur.archlinux.org/yay-bin.git
 
-	cd paru-bin
+	cd yay-bin
 
 	makepkg -s
 
-	sudo pacman -U paru-bin*
+	sudo pacman -U yay-bin*
 
 	cd ..
 
-	rm -rf paru-bin
+	rm -rf yay-bin
 
-	echo -e "[options]\nCacheDir = /var/lib/repo/aur\n\n[aur]\nSigLevel = PackageOptional DatabaseOptional\nServer = file:///var/lib/repo/aur" | sudo tee -a /etc/pacman.conf
+	#echo -e "[options]\nCacheDir = /var/lib/repo/aur\n\n[aur]\nSigLevel = PackageOptional DatabaseOptional\nServer = file:///var/lib/repo/aur" | sudo tee -a /etc/pacman.conf
 
 }
 
