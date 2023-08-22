@@ -51,11 +51,13 @@
 
 (defwidget center []
   (eventbox
-   :space-evenly false
-   :halign "center"
-   :tooltip "Change Background"
-   :onclick "scripts/wallpaper.sh change &"
-   " "))
+;   :space-evenly false
+;   :halign "center"
+;   :tooltip "Change Background"
+;   :onclick "scripts/wallpaper.sh change &"
+   " ")
+)
+
 
 (defwidget bar [] ; Class .bar applies automatically
   (box
