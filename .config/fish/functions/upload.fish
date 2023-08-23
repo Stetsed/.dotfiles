@@ -1,6 +1,11 @@
 function upload --wraps='~/.bin/scripts/upload.sh' --description 'Upload to the Hastebin'
-    set URL $(~/.bin/scripts/upload.sh $argv)
-    wl-copy $URL
-    notify-send "Upload Service" "URL Copied to clipboard"
-
+    if test -z "$argv"
+        ~/.bin/scripts/upload.sh
+    else
+        if test -f "$argv[1]"
+            command ~/.bin/scripts/upload.sh $argv[1]
+        else
+            echo "File not found"
+        end
+    end
 end
