@@ -35,4 +35,4 @@ fi
 
 # Construct the URL using the extracted key
 result_url="$HASTEBIN_URL/$key"
-echo $result_url
+wl-copy $result_url
