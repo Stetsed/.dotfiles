@@ -120,9 +120,12 @@ Transfer_Files_Too() {
 	pkill brave
 	gum spin -s dot --title "Copying Brave Files..." -- cp -r ~/.config/BraveSoftware ~/Network/Storage/Transfer/
 
-	rm -rf ~/.config/WebCord/Cache/
-	pkill webcord
-	gum spin -s dot --title "Copying WebCord Files..." -- cp -r ~/.config/WebCord ~/Network/Storage/Transfer/
+	#rm -rf ~/.config/WebCord/Cache/
+	#pkill webcord
+	#gum spin -s dot --title "Copying WebCord Files..." -- cp -r ~/.config/WebCord ~/Network/Storage/Transfer/
+
+	pkill discord
+	gum spin -s dot --title "Copying Discord Files..." -- cp -r ~/.config/Vencord ~/Network/Storage/Transfer/
 
 	exit
 }
@@ -135,9 +138,13 @@ Transfer_Files_From() {
 	pkill brave
 	gum spin -s dot --title "Moving brave files..." -- mv ~/Network/Storage/Transfer/BraveSoftware ~/.config/
 
-	pkill webcord
-	rm -rf ~/.config/WebCord
-	gum spin -s dot --title "Moving WebCord Files..." -- mv ~/Network/Storage/Transfer/WebCord ~/.config/
+	#pkill webcord
+	#rm -rf ~/.config/WebCord
+	#gum spin -s dot --title "Moving WebCord Files..." -- mv ~/Network/Storage/Transfer/WebCord ~/.config/
+
+	pkill discord
+	rm -rf ~/.config/Vencord
+	gum spin -s dot --title "Moving Discord Files..." -- mv ~/Network/Storage/Transfer/Vencord ~/.config/
 
 	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
 }

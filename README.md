@@ -1,4 +1,4 @@
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) [![Last Commit](https://img.shields.io/github/last-commit/stetsed/.dotfiles)](https://github.com/Stetsed/.dotfiles/commits/main)
+[![Last Commit](https://img.shields.io/github/last-commit/stetsed/.dotfiles)](https://github.com/Stetsed/.dotfiles/commits/main)
 
 
 # Stetsed's Dotfiles
