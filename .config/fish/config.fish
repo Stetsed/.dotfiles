@@ -22,6 +22,6 @@ if [ -f ~/.env ]
 end
 
 if [ (tty) = /dev/tty1 ]
-    Hyprland >/dev/null 2>&1 &
-    vlock -a
+    vlock -a &
+    Hyprland >/dev/null 2>&1
 end
