@@ -116,7 +116,7 @@
     "format": "",
     "format-disabled": "",
     "format-connected": "",
-    "on-click": "blueman-manager"
+    "on-click": "~/.config/eww/scripts/toggle-bluetooth.sh"
   },
   "custom/power-menu": {
     "format": " <span color='#6a92d7'>⏻ </span>",
