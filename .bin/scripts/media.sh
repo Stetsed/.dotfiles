@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# HOW TO USE
-# 1. Create a collection named "images" in PocketBase
-# 2. Copy the API key from PocketBase Local Storage
-# 3. Create a file named ".env" in your home directory
-# 4. Paste the API key in the .env file with the following format: AUTHORIZATION="(API key)"
-# 5. Make the file executable with the following command: chmod +x media.sh
-# 6. Update the URL's to match your pocketbase instance. So you want to replace pocketbase.selfhostable.net
-
 type=$1
 
 set -a
@@ -15,6 +7,10 @@ source ~/.env
 set +a
 
 time=$(date -u +%Y-%m-%dT%H:%M:%S%Z)
+
+S3_ALIAS="image-storage"
+S3_BUCKET="$S3_BUCKET"
+S3_WEB_LINK="$S3_WEB_LINK"
 
 # Make it execute the below commands if the screenshot paramter is passed in $1
 
@@ -29,22 +25,10 @@ if [[ $type == "screenshot" ]]; then
 			notify-send "Copied to clipboard"
 			exit 0
 		elif [[ $2 == "upload" ]]; then
-			json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
-
-			responseError=$(echo "$json" | jq -r '.code')
-
-			if [[ $responseError == "403" ]]; then
-				notify-send -t 5000 "Authorization Token has probally expired douche bag."
-				exit 1
-			fi
-
-			collectionName=$(echo "$json" | jq -r '.collectionName')
-			id=$(echo "$json" | jq -r '.id')
-			file=$(echo "$json" | jq -r '.file')
-
-			image_link="https://pocketbase.selfhostable.net/api/files/$collectionName/$id/$file"
-
-			wl-copy $image_link
+			RANDOM_IMAGE_STRING=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+			mcli cp $file_path "$S3_ALIAS/$S3_BUCKET/$RANDOM_IMAGE_STRING.png"
+			IMAGE_LINK="https://$S3_BUCKET.$S3_WEB_LINK/$RANDOM_IMAGE_STRING.png"
+			wl-copy $IMAGE_LINK
 		fi
 	else
 		echo "Screenshot not taken. Exiting."
@@ -55,17 +39,11 @@ elif [[ $type == "video" ]]; then
 
 	card_entry=$(/usr/bin/ls /dev/dri | grep -E "card[0-9]+" | head -n 1)
 
-	if [ -n "$card_entry" ]; then
-		card_entry="-d /dev/dri/$card_entry"
-	else
-		notify-send "No card entry found. Running without hardware acceleration."
-	fi
-
 	eww open recording
 
 	notify-send -t 5000 "Starting Recording..."
 
-	wf-recorder -c h264_vaapi $card_entry -t -f $file_path
+	wf-recorder -c h264_vaapi -f $file_path
 
 	eww close recording
 
@@ -76,22 +54,10 @@ elif [[ $type == "video" ]]; then
 		notify-send "Copied to clipboard"
 		exit 0
 	elif [[ $2 == "upload" ]]; then
-		json=$(curl -X POST -H "Authorization: $AUTHORIZATION_POCKETBASE" https://pocketbase.selfhostable.net/api/collections/upload/records --form "file=@\"$file_path\"")
-
-		responseError=$(echo "$json" | jq -r '.code')
-
-		if [[ $responseError == "403" ]]; then
-			notify-send -t 5000 "Authorization Token has probally expired douche bag."
-			exit 1
-		fi
-
-		collectionName=$(echo "$json" | jq -r '.collectionName')
-		id=$(echo "$json" | jq -r '.id')
-		file=$(echo "$json" | jq -r '.file')
-
-		image_link="https://pocketbase.selfhostable.net/api/files/$collectionName/$id/$file"
-
-		wl-copy $image_link
+		RANDOM_VIDEO_STRING=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+		mcli cp $file_path "$S3_ALIAS/$S3_BUCKET/$RANDOM_VIDEO_STRING.mp4"
+		VIDEO_LINK="https://$S3_BUCKET.$S3_WEB_LINK/$RANDOM_VIDEO_STRING.mp4"
+		wl-copy $VIDEO_LINK
 	fi
 fi
 
