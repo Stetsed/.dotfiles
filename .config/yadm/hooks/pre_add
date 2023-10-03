@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [[ $YADM_HOOK_FULL_COMMAND == *"-u"* ]]; then
+	yadm encrypt
+fi

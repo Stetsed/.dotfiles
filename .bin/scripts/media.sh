@@ -29,6 +29,7 @@ if [[ $type == "screenshot" ]]; then
 			mcli cp $file_path "$S3_ALIAS/$S3_BUCKET/$RANDOM_IMAGE_STRING.png"
 			IMAGE_LINK="https://$S3_BUCKET.$S3_WEB_LINK/$RANDOM_IMAGE_STRING.png"
 			wl-copy $IMAGE_LINK
+			notify-send "Image Uploaded"
 		fi
 	else
 		echo "Screenshot not taken. Exiting."
@@ -58,6 +59,7 @@ elif [[ $type == "video" ]]; then
 		mcli cp $file_path "$S3_ALIAS/$S3_BUCKET/$RANDOM_VIDEO_STRING.mp4"
 		VIDEO_LINK="https://$S3_BUCKET.$S3_WEB_LINK/$RANDOM_VIDEO_STRING.mp4"
 		wl-copy $VIDEO_LINK
+		notify-send "Video Uploaded"
 	fi
 fi
 
