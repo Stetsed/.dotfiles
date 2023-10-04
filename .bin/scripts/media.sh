@@ -25,11 +25,15 @@ if [[ $type == "screenshot" ]]; then
 			notify-send "Copied to clipboard"
 			exit 0
 		elif [[ $2 == "upload" ]]; then
-			RANDOM_IMAGE_STRING=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
-			mcli cp $file_path "$S3_ALIAS/$S3_BUCKET/$RANDOM_IMAGE_STRING.png"
-			IMAGE_LINK="https://$S3_BUCKET.$S3_WEB_LINK/$RANDOM_IMAGE_STRING.png"
-			wl-copy $IMAGE_LINK
+			RANDOM_STRING=$(
+				tr -dc A-Za-z0-9 </dev/urandom | head -c 18
+				echo ''
+			)
+			mcli cp $file_path "$S3_ALIAS/$S3_BUCKET/$RANDOM_STRING.png"
+			IMAGE_LINK="https://$S3_BUCKET.$S3_WEB_LINK/$RANDOM_STRING.png"
+			wl-copy "$IMAGE_LINK"
 			notify-send "Image Uploaded"
+			exit 0
 		fi
 	else
 		echo "Screenshot not taken. Exiting."
