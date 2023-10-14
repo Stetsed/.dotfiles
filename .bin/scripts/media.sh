@@ -15,7 +15,7 @@ S3_WEB_LINK="$S3_WEB_LINK"
 # Make it execute the below commands if the screenshot paramter is passed in $1
 
 if [[ $type == "screenshot" ]]; then
-	file_path=~/Network/Documents/Screenshots/$time.png
+	file_path=~/Documents/Screenshots/$time.png
 
 	~/.bin/scripts/grimblast.sh --notify save area $file_path
 
