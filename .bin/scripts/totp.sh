@@ -23,6 +23,7 @@ fi
 
 if [ ! "$(ls -A $TWOFA_DIRECTORY_USE)" ]; then
 	echo "No files with .gpg extension found in $TWOFA_DIRECTORY_USE"
+	exit 1
 fi
 
 for file in $TWOFA_DIRECTORY_USE/*.gpg; do
