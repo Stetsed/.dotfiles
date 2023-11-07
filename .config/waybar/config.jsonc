@@ -128,6 +128,6 @@
   },
   "custom/wallpaper": {
     "format": " <span color='#6a92d7'> </span>",
-    "on-click": "~/.bin/scripts/wallpaper.sh change",
+    "on-click": "~/.bin/scripts/media.sh screenshot upload",
   },
 }
