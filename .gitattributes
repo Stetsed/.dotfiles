@@ -1,1 +1,1 @@
-/.local/share/yadm filter=lfs diff=lfs merge=lfs -text
+/.local/share/yadm/archive filter=lfs diff=lfs merge=lfs -text
