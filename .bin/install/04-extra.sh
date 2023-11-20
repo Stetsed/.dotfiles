@@ -134,6 +134,8 @@ Transfer_Files_From() {
 	gum spin -s dot --title "Moving Librewolf Files..." -- mv ~/Network/Storage/Transfer/.librewolf ~/
 
 	pkill brave
+	rm -rf ~/.config/BraveSoftware/Profile*
+	rm -rf ~/.config/BraveSoftware/Default
 	gum spin -s dot --title "Moving brave files..." -- mv ~/Network/Storage/Transfer/Brave/* ~/.config/BraveSoftware/Brave-Browser/
 
 	pkill discord
