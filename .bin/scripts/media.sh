@@ -3,13 +3,13 @@
 type=$1
 
 set -a
+set -e
 source ~/.env
-set +a
 
 time=$(date -u +%Y-%m-%dT%H:%M:%S%Z)
 
-S3_ALIAS="image-storage"
-S3_BUCKET="$S3_BUCKET"
+S3_ALIAS="$S3_IMAGE_ALIAS"
+S3_BUCKET="$S3_IMAGE_BUCKET"
 S3_WEB_LINK="$S3_WEB_LINK"
 
 # Make it execute the below commands if the screenshot paramter is passed in $1
