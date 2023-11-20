@@ -1,2 +1,4 @@
 [yadm]
 	gpg-recipient = stetsed@selfhostable.net
+[lfs "https://git.selfhostable.net/Stetsed/.dotfiles.git/info/lfs"]
+	locksverify = true
