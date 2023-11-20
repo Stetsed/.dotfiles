@@ -118,11 +118,9 @@ Transfer_Files_Too() {
 	gum spin -s dot --title "Copying Librewolf Files..." -- cp -r ~/.librewolf ~/Network/Storage/Transfer/
 
 	pkill brave
-	gum spin -s dot --title "Copying Brave Files..." -- cp -r ~/.config/BraveSoftware ~/Network/Storage/Transfer/
-
-	#rm -rf ~/.config/WebCord/Cache/
-	#pkill webcord
-	#gum spin -s dot --title "Copying WebCord Files..." -- cp -r ~/.config/WebCord ~/Network/Storage/Transfer/
+	mkdir -p ~/Network/Storage/Transfer/Brave
+	gum spin -s dot --title "Copying Brave Profiles Files..." -- cp -r ~/.config/BraveSoftware/Profile* ~/Network/Storage/Transfer/Brave
+	gum spin -s dot --title "Copying Brave Profiles Files..." -- cp -r ~/.config/BraveSoftware/Default ~/Network/Storage/Transfer/Brave
 
 	pkill discord
 	gum spin -s dot --title "Copying Discord Files..." -- cp -r ~/.config/Vencord ~/Network/Storage/Transfer/
@@ -136,11 +134,7 @@ Transfer_Files_From() {
 	gum spin -s dot --title "Moving Librewolf Files..." -- mv ~/Network/Storage/Transfer/.librewolf ~/
 
 	pkill brave
-	gum spin -s dot --title "Moving brave files..." -- mv ~/Network/Storage/Transfer/BraveSoftware ~/.config/
-
-	#pkill webcord
-	#rm -rf ~/.config/WebCord
-	#gum spin -s dot --title "Moving WebCord Files..." -- mv ~/Network/Storage/Transfer/WebCord ~/.config/
+	gum spin -s dot --title "Moving brave files..." -- mv ~/Network/Storage/Transfer/Brave/* ~/.config/BraveSoftware/Brave-Browser/
 
 	pkill discord
 	rm -rf ~/.config/Vencord
