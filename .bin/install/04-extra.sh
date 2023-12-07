@@ -8,9 +8,8 @@ Extra_Run() {
 	FRAMEWORK_FINGERPRINT="Framework Fingerprint Setup"
 	TRANSFER_FILES="Transfer Files"
 	SUNSHINE_SETUP="Setup Sunshine"
-	SETUP_CACHE="Setup Cache"
 	AUTO_SHUTDOWN="Auto Shutdown"
-	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$SETUP_CACHE" "$AUTO_SHUTDOWN")
+	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$AUTO_SHUTDOWN")
 	grep -q "$SERVER_SETUP" <<<"$SELECTION" && Server_Setup_Arch
 	grep -q "$ZFS_REMOTE_UNLOCK" <<<"$SELECTION" && ZFS_Remote_Unlock_Setup
 	grep -q "$FRAMEWORK_TLP" <<<"$SELECTION" && Framework_TLP_Setup
@@ -18,7 +17,6 @@ Extra_Run() {
 	grep -q "$FRAMEWORK_FINGERPRINT" <<<"$SELECTION" && Framework_Fingerprint_Setup
 	grep -q "$TRANSFER_FILES" <<<"$SELECTION" && Transfer_Files
 	grep -q "$SUNSHINE_SETUP" <<<"$SELECTION" && Sunshine_Setup
-	grep -q "$SETUP_CACHE" <<<"$SELECTION" && Setup_Local_Cache
 	grep -q "$AUTO_SHUTDOWN" <<<"$SELECTION" && Auto_Shutdown
 }
 
@@ -119,8 +117,8 @@ Transfer_Files_Too() {
 
 	pkill brave
 	mkdir -p ~/Network/Storage/Transfer/Brave
-	gum spin -s dot --title "Copying Brave Profiles Files..." -- cp -r ~/.config/BraveSoftware/Profile* ~/Network/Storage/Transfer/Brave
-	gum spin -s dot --title "Copying Brave Profiles Files..." -- cp -r ~/.config/BraveSoftware/Default ~/Network/Storage/Transfer/Brave
+	gum spin -s dot --title "Copying Brave Profiles Files..." -- cp -r ~/.config/BraveSoftware/Brave-Browser/Profile\ 1 ~/Network/Storage/Transfer/Brave
+	gum spin -s dot --title "Copying Brave Profiles Files..." -- cp -r ~/.config/BraveSoftware/Brave-Browser/Default ~/Network/Storage/Transfer/Brave
 
 	pkill discord
 	gum spin -s dot --title "Copying Discord Files..." -- cp -r ~/.config/Vencord ~/Network/Storage/Transfer/
@@ -155,19 +153,6 @@ Sunshine_Setup() {
 	sudo setcap cap_sys_admin+p $(readlink -f $(which sunshine))
 
 	echo "Sunshine Setup Complete, please reboot"
-}
-
-Setup_Local_Cache() {
-	echo 'Server = https://cache.home.selfhostable.net/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist
-
-	sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/g' /etc/pacman.conf
-
-	sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
-
-	sudo systemctl disable --now reflector.service
-	sudo systemctl disable --now reflector.timer
-
-	echo "Local Cache Setup Complete"
 }
 
 Auto_Shutdown() {
