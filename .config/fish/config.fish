@@ -4,16 +4,12 @@ if status is-interactive
 end
 
 set -x fish_greeting ""
-set -x QT_QPA_PLATFORM wayland
-set -x MOZ_ENABLE_WAYLAND 1
 set -x EDITOR nvim
 set -x LIBVIRT_DEFAULT_URI "qemu:///system"
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set -x MANROFFOPT -c
 set -x BAT_THEME Catppuccin-mocha
 set -x PATH $PATH ~/.cargo/bin
-set -x OBSIDIAN_USE_WAYLAND 1
-set -x WLR_NO_HARDWARE_CURSORS 1
 set -x GPG_TTY $(tty)
 set -x HASTEBIN_URL https://paste.selfhostable.net
 
