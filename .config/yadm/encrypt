@@ -1,4 +1,4 @@
 .ssh/*
 !.ssh/known*
 .env
-
+.config/atuin
