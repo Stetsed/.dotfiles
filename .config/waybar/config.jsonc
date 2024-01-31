@@ -10,11 +10,9 @@
     "custom/launcher",
     "cpu",
     "memory",
-    "wlr/workspaces"
+    "hyprland/workspaces"
   ],
-  "modules-center": [
-    "custom/wallpaper"
-  ],
+  "modules-center": [],
   "modules-right": [
     "tray",
     "bluetooth",
@@ -24,7 +22,7 @@
     "clock",
     "custom/power-menu"
   ],
-  "wlr/workspaces": {
+  "hyprland/workspaces": {
     "format": "{icon}",
     "on-click": "activate",
     "format-icons": {
@@ -125,9 +123,5 @@
   "custom/launcher": {
     "format": " <span color='#6a92d7'> </span>",
     "on-click": "~/.config/eww/scripts/toggle-osettings.sh",
-  },
-  "custom/wallpaper": {
-    "format": " <span color='#6a92d7'> </span>",
-    "on-click": "~/.bin/scripts/media.sh screenshot upload",
   },
 }
