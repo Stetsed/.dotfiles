@@ -30,7 +30,7 @@ if [[ $type == "screenshot" ]]; then
 				echo ''
 			)
 			mcli cp $file_path "$S3_ALIAS/$S3_BUCKET/$RANDOM_STRING.png"
-			IMAGE_LINK="https://$S3_BUCKET.$S3_WEB_LINK/$RANDOM_STRING.png"
+			IMAGE_LINK="https://$S3_BUCKET$S3_WEB_LINK/$RANDOM_STRING.png"
 			wl-copy "$IMAGE_LINK"
 			notify-send "Image Uploaded"
 			exit 0
