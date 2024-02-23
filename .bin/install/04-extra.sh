@@ -1,7 +1,6 @@
 #!/bin/bash
 
 Extra_Run() {
-	SERVER_SETUP="Server Setup"
 	ZFS_REMOTE_UNLOCK="ZFS Remote Unlock Setup"
 	FRAMEWORK_TLP="Framework TLP Setup"
 	FRAMEWORK_80_100="Framework 80/100 Power Setup"
@@ -9,8 +8,7 @@ Extra_Run() {
 	TRANSFER_FILES="Transfer Files"
 	SUNSHINE_SETUP="Setup Sunshine"
 	AUTO_SHUTDOWN="Auto Shutdown"
-	SELECTION=$(gum choose "$SERVER_SETUP" "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$AUTO_SHUTDOWN")
-	grep -q "$SERVER_SETUP" <<<"$SELECTION" && Server_Setup_Arch
+	SELECTION=$(gum choose "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$AUTO_SHUTDOWN")
 	grep -q "$ZFS_REMOTE_UNLOCK" <<<"$SELECTION" && ZFS_Remote_Unlock_Setup
 	grep -q "$FRAMEWORK_TLP" <<<"$SELECTION" && Framework_TLP_Setup
 	grep -q "$FRAMEWORK_80_100" <<<"$SELECTION" && Framework_80_100_Setup
@@ -18,32 +16,6 @@ Extra_Run() {
 	grep -q "$TRANSFER_FILES" <<<"$SELECTION" && Transfer_Files
 	grep -q "$SUNSHINE_SETUP" <<<"$SELECTION" && Sunshine_Setup
 	grep -q "$AUTO_SHUTDOWN" <<<"$SELECTION" && Auto_Shutdown
-}
-
-Server_Setup_Arch() {
-	sudo pacman -Syu kitty fish starship
-	sudo chsh -s /usr/bin/fish
-	echo "Please exit this terminal with the exit command, this is to generate the fish start config"
-	fish
-	echo "starship init fish | source" >>~/.config/fish/config.fish
-
-	mkdir -p ~/.config/fish/functions
-	curl -sL https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.config/fish/functions/nano.fish >~/.config/fish/functions/nano.fish
-}
-
-Server_Setup_Debian() {
-	apt install fish
-
-	chsh -s /usr/bin/fish
-
-	curl -sS https://starship.rs/install.sh | sh
-
-	echo "Please exit this terminal with the exit command, this is to generate the fish start config"
-	fish
-	echo "starship init fish | source" >>~/.config/fish/config.fish
-
-	mkdir -p ~/.config/fish/functions
-	curl -sL https://raw.githubusercontent.com/Stetsed/.dotfiles/main/.config/fish/functions/nano.fish >~/.config/fish/functions/nano.fish
 }
 
 ZFS_Remote_Unlock_Setup() {
@@ -141,6 +113,8 @@ Transfer_Files_From() {
 	gum spin -s dot --title "Moving Discord Files..." -- mv ~/Network/Storage/Transfer/Vencord ~/.config/
 
 	gpg --import ~/Network/Storage/Long-Term/stetsed.asc
+
+	echo "66F394E23D4E3ADA88F03F93F8D00D233E9EBCE4:6:" | gpg --import-ownertrust
 }
 
 Sunshine_Setup() {
@@ -160,4 +134,5 @@ Auto_Shutdown() {
 	echo -e "[Unit]\nDescription=Auto Shutdown Script\n\n[Service]\nType=simple\nExecStart=/home/$(whoami)/.bin/scripts/auto_shutdown.sh\n\n[Install]\nWantedBy=default.target" | sudo tee /etc/systemd/system/auto_shutdown.service
 	sudo systemctl enable --now auto_shutdown.timer
 }
+
 Extra_Run
