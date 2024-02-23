@@ -35,5 +35,5 @@
              :y "20px"
              :width "100px"
              :height "53px"
-             :anchor "bottom center")
+             :anchor "top right")
   (osdwidget))
