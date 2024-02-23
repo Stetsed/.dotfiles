@@ -1,3 +1,4 @@
 .ssh/*
 !.ssh/known*
 .env
+.config/dconfig/user
