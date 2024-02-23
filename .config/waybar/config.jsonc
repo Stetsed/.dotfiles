@@ -122,6 +122,6 @@
   },
   "custom/launcher": {
     "format": " <span color='#6a92d7'> </span>",
-    "on-click": "~/.config/eww/scripts/toggle-osettings.sh",
+    "on-click": "rofi -show drun",
   },
 }

@@ -23,7 +23,6 @@ webcord-bin
 wl-clipboard
 librewolf-bin
 neofetch
-swaybg
 waybar
 nfs-utils
 btop
@@ -48,7 +47,6 @@ lazygit
 swayidle
 ranger
 cliphist
-swww
 eww-wayland
 socat
 light
@@ -78,3 +76,4 @@ oath-toolkit
 git-lfs
 pass
 pass-otp
+hyprpaper
