@@ -5,6 +5,9 @@ sudo systemctl enable --now bluetooth
 systemctl --user enable --now pipewire
 systemctl --user enable --now pipewire-pulse
 
+# Enable OSD service
+sudo systemctl enable --now swayosd-libinput-backend.service
+
 # Add autologin for the current user, assumes you will handle login on your WM/DE
 username=$(whoami)
 
