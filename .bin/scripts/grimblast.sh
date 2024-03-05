@@ -3,10 +3,11 @@
 ## Requirements:
 ##  - `grim`: screenshot utility for wayland
 ##  - `slurp`: to select an area
-##  - `hyprctl`: to read properties of current window
-##  - `wl-copy`: clipboard utility
+##  - `hyprctl`: to read properties of current window (provided by Hyprland)
+##  - `hyprpicker`: to freeze the screen when selecting area
+##  - `wl-copy`: clipboard utility (provided by wl-clipboard)
 ##  - `jq`: json utility to parse hyprctl output
-##  - `notify-send`: to show notifications
+##  - `notify-send`: to show notifications (provided by libnotify)
 ## Those are needed to be installed, if unsure, run `grimblast check`
 ##
 ## See `man 1 grimblast` or `grimblast usage` for further details.
@@ -40,6 +41,10 @@ env_editor_confirm() {
 
 NOTIFY=no
 CURSOR=
+FREEZE=
+WAIT=no
+SCALE=
+HYPRPICKER_PID=-1
 
 while [ $# -gt 0 ]; do
 	key="$1"
@@ -52,6 +57,29 @@ while [ $# -gt 0 ]; do
 	-c | --cursor)
 		CURSOR=yes
 		shift # past argument
+		;;
+	-f | --freeze)
+		FREEZE=yes
+		shift # past argument
+		;;
+	-w | --wait)
+		shift
+		WAIT=$1
+		if echo "$WAIT" | grep "[^0-9]" -q; then
+			echo "Invalid value for wait '$WAIT'" >&2
+			exit 3
+		fi
+		shift
+		;;
+	-s | --scale)
+		shift # past argument
+		if [ $# -gt 0 ]; then
+			SCALE="$1" # assign the next argument to SCALE
+			shift      # past argument
+		else
+			echo "Error: Missing argument for --scale option."
+			exit 1
+		fi
 		;;
 	*)     # unknown option
 		break # done with parsing --flags
@@ -66,7 +94,7 @@ FILE_EDITOR=${3:-$(tmp_editor_directory)/$(date -Ins).png}
 
 if [ "$ACTION" != "save" ] && [ "$ACTION" != "copy" ] && [ "$ACTION" != "edit" ] && [ "$ACTION" != "copysave" ] && [ "$ACTION" != "check" ]; then
 	echo "Usage:"
-	echo "  grimblast [--notify] [--cursor] (copy|save|copysave|edit) [active|screen|output|area] [FILE|-]"
+	echo "  grimblast [--notify] [--cursor] [--freeze] [--wait N] [--scale <scale>] (copy|save|copysave|edit) [active|screen|output|area] [FILE|-]"
 	echo "  grimblast check"
 	echo "  grimblast usage"
 	echo ""
@@ -106,7 +134,21 @@ notifyError() {
 	fi
 }
 
+resetFade() {
+	if [[ -n $FADE && -n $FADEOUT ]]; then
+		hyprctl keyword animation "$FADE" >/dev/null
+		hyprctl keyword animation "$FADEOUT" >/dev/null
+	fi
+}
+
+killHyprpicker() {
+	if [ ! $HYPRPICKER_PID -eq -1 ]; then
+		kill $HYPRPICKER_PID
+	fi
+}
+
 die() {
+	killHyprpicker
 	MSG=${1:-Bye}
 	notifyError "Error: $MSG"
 	exit 2
@@ -127,11 +169,18 @@ takeScreenshot() {
 	GEOM=$2
 	OUTPUT=$3
 	if [ -n "$OUTPUT" ]; then
-		grim ${CURSOR:+-c} -o "$OUTPUT" "$FILE" || die "Unable to invoke grim"
+		grim ${CURSOR:+-c} ${SCALE:+-s "$SCALE"} -o "$OUTPUT" "$FILE" || die "Unable to invoke grim"
 	elif [ -z "$GEOM" ]; then
-		grim ${CURSOR:+-c} "$FILE" || die "Unable to invoke grim"
+		grim ${CURSOR:+-c} ${SCALE:+-s "$SCALE"} "$FILE" || die "Unable to invoke grim"
 	else
-		grim ${CURSOR:+-c} -g "$GEOM" "$FILE" || die "Unable to invoke grim"
+		grim ${CURSOR:+-c} ${SCALE:+-s "$SCALE"} -g "$GEOM" "$FILE" || die "Unable to invoke grim"
+		resetFade
+	fi
+}
+
+wait() {
+	if [ "$WAIT" != "no" ]; then
+		sleep "$WAIT"
 	fi
 }
 
@@ -140,31 +189,53 @@ if [ "$ACTION" = "check" ]; then
 	check grim
 	check slurp
 	check hyprctl
+	check hyprpicker
 	check wl-copy
 	check jq
 	check notify-send
 	exit
 elif [ "$SUBJECT" = "active" ]; then
+	wait
 	FOCUSED=$(hyprctl activewindow -j)
 	GEOM=$(echo "$FOCUSED" | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
 	APP_ID=$(echo "$FOCUSED" | jq -r '.class')
 	WHAT="$APP_ID window"
 elif [ "$SUBJECT" = "screen" ]; then
+	wait
 	GEOM=""
 	WHAT="Screen"
 elif [ "$SUBJECT" = "output" ]; then
+	wait
 	GEOM=""
 	OUTPUT=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true)' | jq -r '.name')
 	WHAT="$OUTPUT"
 elif [ "$SUBJECT" = "area" ]; then
+	if [ "$FREEZE" = "yes" ] && [ "$(command -v "hyprpicker")" ] >/dev/null 2>&1; then
+		hyprpicker -r -z &
+		sleep 0.2
+		HYPRPICKER_PID=$!
+	fi
+
+	# get fade & fadeOut animation and unset it
+	# this removes the black border seen around screenshots
+	FADE="$(hyprctl -j animations | jq -jr '.[0][] | select(.name == "fade") | .name, ",", (if .enabled == true then "1" else "0" end), ",", (.speed|floor), ",", .bezier')"
+	FADEOUT="$(hyprctl -j animations | jq -jr '.[0][] | select(.name == "fadeOut") | .name, ",", (if .enabled == true then "1" else "0" end), ",", (.speed|floor), ",", .bezier')"
+	hyprctl keyword animation 'fade,0,1,default' >/dev/null
+	hyprctl keyword animation 'fadeOut,0,1,default' >/dev/null
+
 	WORKSPACES="$(hyprctl monitors -j | jq -r 'map(.activeWorkspace.id)')"
 	WINDOWS="$(hyprctl clients -j | jq -r --argjson workspaces "$WORKSPACES" 'map(select([.workspace.id] | inside($workspaces)))')"
-	GEOM=$(echo "$WINDOWS" | jq -r '.[] | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | slurp)
+	# shellcheck disable=2086 # if we don't split, spaces mess up slurp
+	GEOM=$(echo "$WINDOWS" | jq -r '.[] | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | slurp $SLURP_ARGS)
+
 	# Check if user exited slurp without selecting the area
 	if [ -z "$GEOM" ]; then
+		killHyprpicker
+		resetFade
 		exit 1
 	fi
 	WHAT="Area"
+	wait
 elif [ "$SUBJECT" = "window" ]; then
 	die "Subject 'window' is now included in 'area'"
 else
@@ -203,3 +274,5 @@ else
 		notifyError "Error taking screenshot with grim"
 	fi
 fi
+
+killHyprpicker
