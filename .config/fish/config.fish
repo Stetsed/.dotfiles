@@ -1,6 +1,8 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
     starship init fish | source
+
+    keychain --eval ~/.ssh/*.key | source
 end
 
 set -x fish_greeting ""

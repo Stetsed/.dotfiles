@@ -11,6 +11,7 @@ return {
         "svelte",
         "yuck",
         "astro",
+        "terraform",
       })
     end
   end,
