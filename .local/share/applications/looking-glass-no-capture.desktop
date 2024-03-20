@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Looking Glass No Capture
+Comment=Virtual machine display client
+Exec=/home/stetsed/.VirtualMachine/looking-glass-client input:captureonly=no
+Terminal=false
+Type=Application
+Categories=Utility;
+

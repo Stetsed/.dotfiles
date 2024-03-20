@@ -1,6 +1,7 @@
 #!/bin/bash
 
 Extra_Run() {
+	echo "Script designed to allow extra install/setup functions to be provided, use at your own risk."
 	ZFS_REMOTE_UNLOCK="ZFS Remote Unlock Setup"
 	FRAMEWORK_TLP="Framework TLP Setup"
 	FRAMEWORK_80_100="Framework 80/100 Power Setup"
@@ -8,7 +9,8 @@ Extra_Run() {
 	TRANSFER_FILES="Transfer Files"
 	SUNSHINE_SETUP="Setup Sunshine"
 	AUTO_SHUTDOWN="Auto Shutdown"
-	SELECTION=$(gum choose "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$AUTO_SHUTDOWN")
+	INSTALL_VENCORD="Install Vencord"
+	SELECTION=$(gum choose "$ZFS_REMOTE_UNLOCK" "$FRAMEWORK_TLP" "$FRAMEWORK_80_100" "$FRAMEWORK_FINGERPRINT" "$TRANSFER_FILES" "$SUNSHINE_SETUP" "$AUTO_SHUTDOWN" "$INSTALL_VENCORD")
 	grep -q "$ZFS_REMOTE_UNLOCK" <<<"$SELECTION" && ZFS_Remote_Unlock_Setup
 	grep -q "$FRAMEWORK_TLP" <<<"$SELECTION" && Framework_TLP_Setup
 	grep -q "$FRAMEWORK_80_100" <<<"$SELECTION" && Framework_80_100_Setup
@@ -16,6 +18,7 @@ Extra_Run() {
 	grep -q "$TRANSFER_FILES" <<<"$SELECTION" && Transfer_Files
 	grep -q "$SUNSHINE_SETUP" <<<"$SELECTION" && Sunshine_Setup
 	grep -q "$AUTO_SHUTDOWN" <<<"$SELECTION" && Auto_Shutdown
+	grep -q "$INSTALL_VENCORD" <<<"$SELECTION" && Install_Vencord
 }
 
 ZFS_Remote_Unlock_Setup() {
@@ -133,6 +136,20 @@ Auto_Shutdown() {
 	echo -e "[Unit]\nDescription=Run Auto Shutdown Script Every 5 Minutes\n\n[Timer]\nOnBootSec=10min\nOnUnitActiveSec=5min\nPersistent=true\n\n[Install]\nWantedBy=timers.target" | sudo tee /etc/systemd/system/auto_shutdown.timer
 	echo -e "[Unit]\nDescription=Auto Shutdown Script\n\n[Service]\nType=simple\nExecStart=/home/$(whoami)/.bin/scripts/auto_shutdown.sh\n\n[Install]\nWantedBy=default.target" | sudo tee /etc/systemd/system/auto_shutdown.service
 	sudo systemctl enable --now auto_shutdown.timer
+}
+
+Install_Vencord() {
+	wget -O vencord https://github.com/Vendicated/VencordInstaller/releases/latest/download/VencordInstallerCli-Linux
+	chmod +x vencord
+	if command -v sudo &>/dev/null; then
+		sudo ./vencord -branch stable -install -install-openasar
+	elif command -v doas &>/dev/null; then
+		doas ./vencord -branch stable -install -install-openasar
+	else
+		echo "Please install sudo or doas"
+	fi
+
+	rm vencord
 }
 
 Extra_Run
