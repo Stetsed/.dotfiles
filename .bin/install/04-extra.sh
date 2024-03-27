@@ -70,6 +70,8 @@ Framework_Fingerprint_Setup() {
 
 	echo -e "#\n# PAM configuration file for the swaylock screen locker. By default, it includes\n# the 'login' configuration file (see /etc/pam.d/login)\n#\n\nauth\t\tsufficient\t\tpam_unix.so try_first_pass likeauth nullok\nauth\t\tsufficient\t\tpam_fprintd.so\n\nauth include login" | sudo tee /etc/pam.d/swaylock
 
+	echo -e "#\n# PAM configuration file for the swaylock screen locker. By default, it includes\n# the 'login' configuration file (see /etc/pam.d/login)\n#\n\nauth\t\tsufficient\t\tpam_unix.so try_first_pass likeauth nullok\nauth\t\tsufficient\t\tpam_fprintd.so\n\nauth include login" | sudo tee /etc/pam.d/hyprlock
+
 	echo -e "#%PAM-1.0\n\nauth\t\tsufficient\t\tpam_unix.so try_first_pass likeauth nullok\n\nauth\t\tinclude\t\tsystem-auth\naccount\t\tinclude\t\tsystem-auth\npassword\t\tinclude\t\tsystem-auth\nsession\t\tinclude\t\tsystem-auth" | sudo tee /etc/pam.d/polkit-1
 
 	echo -e "#%PAM-1.0\n\nauth\t\tsufficient\t\tpam_unix.so try_first_pass likeauth nullok\n\nauth\t\tinclude\t\t\t\t\t\t\t\tsystem-login\naccount\t\tinclude\t\t\t\t\t\t\tsystem-login\npassword\tinclude\t\t\t\t\t\t\tsystem-login\nsession\t\tinclude\t\t\t\t\t\t\tsystem-login" | sudo tee /etc/pam.d/system-local-login

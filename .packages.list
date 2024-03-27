@@ -44,7 +44,6 @@ wlogout
 nano
 ttf-jetbrains-mono-nerd
 lazygit
-swayidle
 ranger
 cliphist
 eww-wayland
@@ -78,3 +77,5 @@ pass
 pass-otp
 hyprpaper
 swayosd-git
+hyprlock
+hypridle
