@@ -12,6 +12,7 @@ return {
         "yuck",
         "astro",
         "terraform",
+        "cpp",
       })
     end
   end,
