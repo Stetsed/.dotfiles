@@ -14,7 +14,7 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
     },
-    { import = "lazyvim.plugins.extras.coding.codeium" },
+    --{ import = "lazyvim.plugins.extras.coding.codeium" },
     -- import ok.poggers
     -- Langs
     { import = "lazyvim.plugins.extras.lang.typescript" },
