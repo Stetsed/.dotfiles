@@ -9,7 +9,7 @@
       "prep-cmd": [
         {
           "do": "echo 'hello'",
-          "undo": "hyprctl keyword monitor HDMI-A-1,2560x1440,1706x0,1.5"
+          "undo": "echo 'hello'"
         }
       ]
     },
@@ -19,6 +19,18 @@
         "setsid steam steam:\/\/open\/bigpicture"
       ],
       "image-path": "steam.png"
+    },
+    {
+      "name": "Gregtech New Horizons",
+      "output": "",
+      "cmd": "prismlauncher -l GT_New_Horizons_2.6.0_Java_17-21",
+      "exclude-global-prep-cmd": "false",
+      "elevated": "false",
+      "auto-detach": "true",
+      "wait-all": "true",
+      "exit-timeout": "5",
+      "image-path": "",
+      "working-dir": "$HOME"
     }
   ]
 }
