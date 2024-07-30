@@ -1,6 +1,8 @@
 #!/bin/bash
 
 type=$1
+use=$2
+area=$3
 
 set -a
 set -e
@@ -17,7 +19,13 @@ S3_WEB_LINK="$S3_WEB_LINK"
 if [[ $type == "screenshot" ]]; then
 	file_path=~/Documents/Screenshots/$time.png
 
-	~/.bin/scripts/grimblast.sh --notify save area $file_path
+	if [[ $area == "area" ]]; then
+		~/.bin/scripts/grimblast.sh --notify save area $file_path
+	elif [[ $area == "output" ]]; then
+		~/.bin/scripts/grimblast.sh --notify save output $file_path
+	elif [[ $area == "window" ]]; then
+		~/.bin/scripts/grimblast.sh --notify save window $file_path
+	fi
 
 	if [[ -e $file_path ]]; then
 		if [[ $2 == "copy" ]]; then
