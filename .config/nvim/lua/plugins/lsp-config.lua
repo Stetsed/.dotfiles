@@ -3,7 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       -- General Config
-      diagnostics = { virtual_text = false },
+      -- diagnostics = { virtual_text = false },
       -- Language Servers
       servers = {
         -- Script Dev
@@ -17,6 +17,11 @@ return {
         rust_analyzer = {
           mason = false,
         },
+      },
+      setup = {
+        rust_analyzer = function(_, opts)
+          return true
+        end,
       },
     },
   },
