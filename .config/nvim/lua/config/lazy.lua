@@ -27,6 +27,8 @@ require("lazy").setup({
 
     { import = "lazyvim.plugins.extras.lsp.none-ls" },
 
+    { import = "lazyvim.plugins.extras.lang.ansible" },
+
     -- UI
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
     { import = "lazyvim.plugins.extras.ui.mini-starter" },
