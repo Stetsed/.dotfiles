@@ -21,13 +21,11 @@ thunar-archive-plugin
 thunar-volman
 webcord-bin
 wl-clipboard
-librewolf-bin
 neofetch
 waybar
 nfs-utils
 btop
 tldr
-swaylock-effects-git
 obsidian
 fish
 hyprland
@@ -46,7 +44,6 @@ ttf-jetbrains-mono-nerd
 lazygit
 ranger
 cliphist
-eww-wayland
 socat
 light
 jq

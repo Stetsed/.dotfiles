@@ -15,26 +15,9 @@ if [[ -z $HASTEBIN_URL && $# -eq 0 ]]; then
 	exit 1
 fi
 
-S3_ALIAS="$S3_IMAGE_ALIAS"
-S3_BUCKET="$S3_IMAGE_BUCKET"
-S3_WEB_LINK="$S3_WEB_LINK"
-
 # Check if a file is provided as an argument
 if [[ $# -eq 1 ]] && [[ -f $1 ]]; then
-	if [[ $S3_BUCKET == "" || $S3_ALIAS == "" || $S3_WEB_LINK == "" ]]; then
-		echo "Error: S3_BUCKET, S3_ALIAS, S3_WEB_LINK are not set. Please set the environment variable with the correct variables"
-		exit 1
-	fi
-	RANDOM_STRING=$(
-		tr -dc A-Za-z0-9 </dev/urandom | head -c 18
-		echo ''
-	)
-	FILE_EXTENSION="${1##*.}"
-	# Upload the file to the S3 and then copy the URL to the clipboard
-	mcli cp -q $1 "$S3_ALIAS/$S3_BUCKET/$RANDOM_STRING.$FILE_EXTENSION"
-	IMAGE_LINK="https://$S3_BUCKET.$S3_WEB_LINK/$RANDOM_STRING.$FILE_EXTENSION"
-	wl-copy $IMAGE_LINK
-	response=$(curl -sS -X POST -H "Content-Type: text/plain" --data-binary "@$1" "$HASTEBIN_URL/documents")
+	echo "Todo Reimplement this shit you fuck"
 
 elif [ ! -t 0 ]; then
 	# If stdin is not empty, read from stdin and perform a POST request
