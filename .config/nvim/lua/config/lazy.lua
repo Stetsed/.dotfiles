@@ -32,6 +32,7 @@ require("lazy").setup({
     -- UI
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
     { import = "lazyvim.plugins.extras.ui.mini-starter" },
+    { import = "lazyvim.plugins.extras.editor.inc-rename" },
     -- import/override with your plugins
     { import = "plugins" },
   },
