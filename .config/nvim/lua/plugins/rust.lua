@@ -23,6 +23,8 @@ return {
             buildScripts = {
               enable = true,
             },
+            allTargets = false,
+            target = "x86_64-unknown-linux-gnu",
           },
           -- Add clippy lints for Rust.
           checkOnSave = true,
