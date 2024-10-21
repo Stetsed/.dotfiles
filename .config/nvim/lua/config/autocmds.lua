@@ -6,4 +6,5 @@ vim.cmd([[:unmenu PopUp.How-to\ disable\ mouse]])
 vim.cmd([[:unmenu PopUp.-1-]])
 vim.cmd([[:unmenu PopUp.Select\ All]])
 
-local mode = { "n", "v", "i" }
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
