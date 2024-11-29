@@ -13,6 +13,7 @@ return {
         "astro",
         "terraform",
         "cpp",
+        "typst",
       })
     end
   end,
