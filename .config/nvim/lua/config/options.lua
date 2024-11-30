@@ -6,4 +6,5 @@ vim.g.completeopt = "menu, menuone, noselect, noinsert"
 
 local opt = vim.opt
 opt.wrap = true
+opt.linebreak = false
 opt.spelllang = { "en_us", "nl" }

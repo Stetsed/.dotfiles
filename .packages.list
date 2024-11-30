@@ -14,7 +14,6 @@ bluedevil
 bluez-utils
 neovim
 network-manager-applet
-rofi-lbonn-wayland-git
 starship
 thunar
 thunar-archive-plugin
@@ -28,9 +27,7 @@ btop
 tldr
 obsidian
 fish
-hyprland
 npm
-xdg-desktop-portal-hyprland
 eza
 noto-fonts-emoji
 qt5-wayland
@@ -43,7 +40,6 @@ nano
 ttf-jetbrains-mono-nerd
 lazygit
 ranger
-cliphist
 socat
 light
 jq
@@ -72,11 +68,17 @@ oath-toolkit
 git-lfs
 pass
 pass-otp
-hyprpaper
 swayosd-git
+vesktop-bin
+clipse
+
+#Main_Desktop_Packages
 hyprlock
 hypridle
-vesktop-bin
+hyprpaper
+hyprland
+xdg-desktop-portal-hyprland
+rofi-wayland
 
 #Packages_needed_for_HyprPanel
 bun-bin
@@ -94,3 +96,4 @@ matugen-bin
 aylurs-gtk-shell-git
 gpu-screen-recorder
 grimblast-git
+

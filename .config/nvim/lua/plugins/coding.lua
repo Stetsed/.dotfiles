@@ -34,4 +34,20 @@ return {
       },
     },
   },
+
+  {
+    "mrcjkb/rustaceanvim",
+    opts = {
+      server = {
+        default_settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allTargets = false,
+              --target = "x86_64-unknown-linux-gnu"
+            },
+          },
+        },
+      },
+    },
+  },
 }

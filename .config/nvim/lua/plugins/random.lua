@@ -7,4 +7,5 @@ return {
       colorscheme = "catppuccin-mocha",
     },
   },
+  { "folke/todo-comments.nvim", enabled = false },
 }

@@ -18,11 +18,6 @@ return {
           mason = false,
         },
       },
-      setup = {
-        rust_analyzer = function(_, opts)
-          return true
-        end,
-      },
     },
   },
 }
