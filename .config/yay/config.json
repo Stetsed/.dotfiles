@@ -30,7 +30,7 @@
   "bottomup": true,
   "sudoloop": true,
   "timeupdate": false,
-  "devel": false,
+  "devel": true,
   "cleanAfter": true,
   "provides": false,
   "pgpfetch": true,
