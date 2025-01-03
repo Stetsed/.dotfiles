@@ -15,6 +15,5 @@ vim.api.nvim_create_autocmd({
     vim.api.nvim_buf_set_option(buf, "filetype", "typst")
   end,
 })
-
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us" }

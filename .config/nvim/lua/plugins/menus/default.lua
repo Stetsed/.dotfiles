@@ -66,9 +66,8 @@ return {
   { name = "separator" },
 
   {
-    name = "  Color Picker",
-    cmd = function()
-      require("minty.huefy").open()
-    end,
+    name = " Search Keybinds",
+    cmd = "FzfLua keymaps",
+    rtxt = "ks",
   },
 }

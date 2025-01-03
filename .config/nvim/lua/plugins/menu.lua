@@ -20,8 +20,6 @@ return {
         "<leader>p",
         mode = { "n" },
         function()
-          vim.cmd.exec('"normal! \\<RightMouse>"')
-
           require("menu").open(require("plugins.menus.default"))
         end,
         desc = "Quick Menu",
