@@ -2,10 +2,9 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 
-vim.cmd([[:unmenu PopUp.How-to\ disable\ mouse]])
-vim.cmd([[:unmenu PopUp.-1-]])
-vim.cmd([[:unmenu PopUp.Select\ All]])
+vim.cmd([[:aunmenu PopUp]])
 
+-- Add supports for Typst File types
 vim.api.nvim_create_autocmd({
   "BufNewFile",
   "BufRead",
