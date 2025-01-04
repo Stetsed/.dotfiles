@@ -79,6 +79,7 @@ hyprpaper
 hyprland
 xdg-desktop-portal-hyprland
 rofi-wayland
+uwsm
 
 #Packages_needed_for_HyprPanel
 bun-bin

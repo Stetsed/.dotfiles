@@ -21,6 +21,11 @@ if [ -f ~/.env ]
     export (cat ~/.env |xargs -L 1)
 end
 
-if [ (tty) = /dev/tty1 ]
-    Hyprland >/dev/null 2>&1
+#if [ (tty) = /dev/tty1 ]
+#    Hyprland >/dev/null 2>&1
+#end
+if uwsm check may-start
+    if uwsm select
+        uwsm start default
+    end
 end
