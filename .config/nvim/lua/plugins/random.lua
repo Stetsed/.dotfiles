@@ -9,4 +9,8 @@ return {
   },
   { "folke/todo-comments.nvim", enabled = false },
   { "folke/which-key.nvim", opts = { preset = "modern" } },
+  {
+    "stevearc/overseer.nvim",
+    opts = {},
+  },
 }
